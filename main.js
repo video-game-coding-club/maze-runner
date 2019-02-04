@@ -30,7 +30,11 @@ function preload() {
 
 function create() {
   this.map = this.make.tilemap({
-    key: "map"
+    key: "map",
+    tileWidth: 32,
+    tileHeight: 32,
+    width: 30,
+    height: 100
   });
 
   /* addTilesetImage(tilesetName [, key] [, tileWidth] [, tileHeight] [, tileMargin] [, tileSpacing] [, gid])
@@ -78,6 +82,7 @@ function create() {
   this.dude = this.physics.add.sprite(10, 10, "dude");
   this.dude.setBounce(0.2);
   this.dude.setGravityY(300);
+  this.dude.setCollideWorldBounds(true);
 
   /* This will watch the player and layer every frame to check for
      collisions.
@@ -86,7 +91,11 @@ function create() {
 
   this.cursors = this.input.keyboard.createCursorKeys();
 
-  this.cameras.main.startFollow(this.dude);
+  this.cameras.main.startFollow(this.dude,
+                                false,
+                                0.1,
+                                0.1);
+  this.cameras.main.setBounds(0, 0, 32 * 30, 32 * 100);
 };
 
 function update(time, delta) {
