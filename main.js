@@ -110,7 +110,7 @@ function create() {
                                 false,
                                 0.1,
                                 0.1);
-  this.cameras.main.setBounds(0, 0, 32 * 30, 32 * 100);
+  this.cameras.main.setBounds(0, 0, 26 * 32, 14 * 32);
 };
 
 function update(time, delta) {
