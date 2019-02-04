@@ -60,7 +60,7 @@ function create() {
 
      It's important to remember that a static layer cannot be
      modified. See StaticTilemapLayer for more information.
-*/
+  */
   this.layer = this.map.createStaticLayer(0, this.tiles, 0, 0);
 
   /* setCollisionBetween(start, stop [, collides] [, recalculateFaces] [, layer])
@@ -84,6 +84,23 @@ function create() {
   this.dude.setGravityY(300);
   this.dude.setCollideWorldBounds(true);
 
+  this.anims.create({
+    key: "stand",
+    frames: [ { key: "dude", frame: 7 } ]
+  });
+
+  this.anims.create({
+    key: "jump",
+    frames: [ { key: "dude", frame: 4 } ]
+  });
+
+  this.anims.create({
+    key: 'walk',
+    frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 6 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
   /* This will watch the player and layer every frame to check for
      collisions.
   */
@@ -101,12 +118,17 @@ function create() {
 function update(time, delta) {
 
   if (this.cursors.right.isDown) {
+    this.dude.setFlipX(false);
     this.dude.setVelocityX(100);
+    this.dude.anims.play("walk", true);
   } else if (this.cursors.left.isDown) {
+    this.dude.setFlipX(true);
     this.dude.setVelocityX(-100);
+    this.dude.anims.play("walk", true);
   } else {
     /* Stop any previous movement. */
     this.dude.setVelocityX(0);
+    this.dude.anims.play("stand");
   }
 
   if (this.cursors.up.isDown) {
