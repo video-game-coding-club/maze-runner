@@ -25,47 +25,12 @@ function preload() {
                         { frameWidth: 32,
                           frameHeight: 32
                         });
+  this.load.tilemapCSV("map", "assets/Maze Runner Levels - Level 1.csv");
 };
 
 function create() {
-  /* Create empty tile map. */
-  let level = [];
-  for (let i = 0; i < 30; i++) {
-    level[i] = [];
-    for (let j = 0; j < 30; j++) {
-      level[i][j] = -1;
-    }
-  }
-
-  /* Create the level layout. */
-  level[3].fill(5, 0, 10);
-
-  /* Class: Tilemap
-
-     Phaser.Tilemaps. Tilemap
-
-     A Tilemap is a container for Tilemap data. This isn't a display
-     object, rather, it holds data about the map and allows you to add
-     tilesets and tilemap layers to it. A map can have one or more
-     tilemap layers (StaticTilemapLayer or DynamicTilemapLayer), which
-     are the display objects that actually render tiles.
-
-     The Tilemap data be parsed from a Tiled JSON file, a CSV file or
-     a 2D array. Tiled is a free software package specifically for
-     creating tile maps, and is available from:
-     http://www.mapeditor.org
-
-     A Tilemap has handy methods for getting & manipulating the tiles
-     within a layer. You can only use the methods that change tiles
-     (e.g. removeTileAt) on a DynamicTilemapLayer.
-
-     Note that all Tilemaps use a base tile size to calculate
-     dimensions from, but that a StaticTilemapLayer or
-     DynamicTilemapLayer may have its own unique tile size that
-     overrides it.
-  */
   this.map = this.make.tilemap({
-    data: level
+    key: "map"
   });
 
   /* addTilesetImage(tilesetName [, key] [, tileWidth] [, tileHeight] [, tileMargin] [, tileSpacing] [, gid])
@@ -114,17 +79,24 @@ function create() {
   this.dude.setBounce(0.2);
   this.dude.setGravityY(300);
 
+  /* This will watch the player and layer every frame to check for
+     collisions.
+  */
+  this.physics.add.collider(this.dude, this.layer);
+
   this.cursors = this.input.keyboard.createCursorKeys();
+
+  this.cameras.main.startFollow(this.dude);
 };
 
 function update(time, delta) {
-  this.physics.collide(this.dude, this.layer);
 
   if (this.cursors.right.isDown) {
     this.dude.setVelocityX(100);
   } else if (this.cursors.left.isDown) {
     this.dude.setVelocityX(-100);
   } else {
+    /* Stop any previous movement. */
     this.dude.setVelocityX(0);
   }
 
