@@ -32,9 +32,7 @@ function create() {
   this.map = this.make.tilemap({
     key: "map",
     tileWidth: 32,
-    tileHeight: 32,
-    width: 30,
-    height: 100
+    tileHeight: 32
   });
 
   /* addTilesetImage(tilesetName [, key] [, tileWidth] [, tileHeight] [, tileMargin] [, tileSpacing] [, gid])
@@ -45,7 +43,7 @@ function create() {
      editor.
 
   */
-  this.tiles = this.map.addTilesetImage("tiles", null, 32, 32, 0, 0);
+  this.tiles = this.map.addTilesetImage("tiles");
 
   /* createStaticLayer(layerID, tileset, x, y)
 
