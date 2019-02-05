@@ -111,6 +111,13 @@ function create() {
                                 0.1,
                                 0.1);
   this.cameras.main.setBounds(0, 0, 26 * 32, 14 * 32);
+
+  // const debugGraphics = this.add.graphics().setAlpha(0.75);
+  // this.layer.renderDebug(debugGraphics, {
+  //   tileColor: null, // Color of non-colliding tiles
+  //   collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+  //   faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+  // });
 };
 
 function update(time, delta) {
