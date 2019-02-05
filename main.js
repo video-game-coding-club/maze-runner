@@ -73,6 +73,9 @@ function create() {
   */
   this.map.setCollisionBetween(0, 22, this.layer);
 
+  /* Resize world to fit the level. */
+  this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+
   /* sprite(x, y, key [, frame])
 
      Creates a new Arcade Sprite object with a Dynamic body.
