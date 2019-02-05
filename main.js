@@ -109,6 +109,7 @@ function create() {
   this.cursors = this.input.keyboard.createCursorKeys();
 
   this.cameras.main.startFollow(this.dude);
+  this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
   // const debugGraphics = this.add.graphics().setAlpha(0.75);
   // this.layer.renderDebug(debugGraphics, {
