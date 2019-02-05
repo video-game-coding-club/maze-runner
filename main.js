@@ -122,6 +122,8 @@ function create() {
   this.cameras.main.startFollow(this.dude);
   this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
+  this.play_music = 0;
+  this.background_music = this.sound.add("background_music", { loop: true });
 };
 
 function update(time, delta) {
@@ -146,5 +148,14 @@ function update(time, delta) {
     } else if (this.dude.body.onWall()) {
       this.dude.setVelocityY(-50);
     }
+  }
+
+  if (this.controls.music.isDown && (time - this.play_music > 1000)) {
+    if (this.background_music.isPlaying) {
+      this.background_music.stop();
+    } else {
+      this.background_music.play();
+    }
+    this.play_music = time;
   }
 };
