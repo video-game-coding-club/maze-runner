@@ -100,17 +100,12 @@ function create() {
   });
 
   /* This will watch the player and layer every frame to check for
-     collisions.
-  */
+     collisions. */
   this.physics.add.collider(this.dude, this.layer);
 
   this.cursors = this.input.keyboard.createCursorKeys();
 
-  this.cameras.main.startFollow(this.dude,
-                                false,
-                                0.1,
-                                0.1);
-  this.cameras.main.setBounds(0, 0, 26 * 32, 14 * 32);
+  this.cameras.main.startFollow(this.dude);
 
   // const debugGraphics = this.add.graphics().setAlpha(0.75);
   // this.layer.renderDebug(debugGraphics, {
