@@ -5,7 +5,7 @@ const config = {
   physics: {
     default: "arcade",
     acrcade: {
-      debug: false,
+      debug: true,
       gravity: {
         y: 300
       }
@@ -15,6 +15,9 @@ const config = {
     preload: preload,
     create: create,
     update: update,
+  },
+  audio: {
+    disableWebAudio: true
   }
 };
 
@@ -27,6 +30,8 @@ function preload() {
                           frameHeight: 32
                         });
   this.load.tilemapCSV("map", "assets/Maze Runner Levels - Level 1.csv");
+  this.load.audio("background_music",
+                  "assets/Ove - Earth Is All We Have .ogg");
 };
 
 function create() {
@@ -107,26 +112,27 @@ function create() {
      collisions. */
   this.physics.add.collider(this.dude, this.layer);
 
-  this.cursors = this.input.keyboard.createCursorKeys();
+  this.controls = this.input.keyboard.addKeys({
+    "up": Phaser.Input.Keyboard.KeyCodes.UP,
+    "left": Phaser.Input.Keyboard.KeyCodes.LEFT,
+    "right": Phaser.Input.Keyboard.KeyCodes.RIGHT,
+    "music": Phaser.Input.Keyboard.KeyCodes.M
+  });
 
   this.cameras.main.startFollow(this.dude);
   this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
-  // const debugGraphics = this.add.graphics().setAlpha(0.75);
-  // this.layer.renderDebug(debugGraphics, {
-  //   tileColor: null, // Color of non-colliding tiles
-  //   collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-  //   faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-  // });
+  this.play_music = 0;
+  this.background_music = this.sound.add("background_music", { loop: true });
 };
 
 function update(time, delta) {
 
-  if (this.cursors.right.isDown) {
+  if (this.controls.right.isDown) {
     this.dude.setFlipX(false);
     this.dude.setVelocityX(100);
     this.dude.anims.play("walk", true);
-  } else if (this.cursors.left.isDown) {
+  } else if (this.controls.left.isDown) {
     this.dude.setFlipX(true);
     this.dude.setVelocityX(-100);
     this.dude.anims.play("walk", true);
@@ -136,11 +142,20 @@ function update(time, delta) {
     this.dude.anims.play("stand");
   }
 
-  if (this.cursors.up.isDown) {
+  if (this.controls.up.isDown) {
     if (this.dude.body.onFloor()) {
       this.dude.setVelocityY(-100);
     } else if (this.dude.body.onWall()) {
       this.dude.setVelocityY(-50);
     }
+  }
+
+  if (this.controls.music.isDown && (time - this.play_music > 1000)) {
+    if (this.background_music.isPlaying) {
+      this.background_music.stop();
+    } else {
+      this.background_music.play();
+    }
+    this.play_music = time;
   }
 };
