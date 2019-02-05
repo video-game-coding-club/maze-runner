@@ -5,6 +5,7 @@ const config = {
   physics: {
     default: "arcade",
     acrcade: {
+      debug: false,
       gravity: {
         y: 300
       }
