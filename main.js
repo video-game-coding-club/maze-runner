@@ -15,6 +15,9 @@ const config = {
     preload: preload,
     create: create,
     update: update,
+  },
+  audio: {
+    disableWebAudio: true
   }
 };
 
@@ -27,6 +30,8 @@ function preload() {
                           frameHeight: 32
                         });
   this.load.tilemapCSV("map", "assets/Maze Runner Levels - Level 1.csv");
+  this.load.audio("background_music",
+                  "assets/Ove - Earth Is All We Have .ogg");
 };
 
 function create() {
