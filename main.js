@@ -136,6 +136,10 @@ function update(time, delta) {
   }
 
   if (this.cursors.up.isDown) {
-    this.dude.setVelocityY(-100);
+    if (this.dude.body.onFloor()) {
+      this.dude.setVelocityY(-100);
+    } else if (this.dude.body.onWall()) {
+      this.dude.setVelocityY(-50);
+    }
   }
 };
