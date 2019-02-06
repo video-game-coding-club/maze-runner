@@ -65,7 +65,7 @@ function create() {
      It's important to remember that a static layer cannot be
      modified. See StaticTilemapLayer for more information.
   */
-  this.layer = this.map.createStaticLayer(0, this.tiles, 0, 0);
+  this.layer = this.map.createStaticLayer(0, this.tiles);
 
   /* setCollisionBetween(start, stop [, collides] [, recalculateFaces] [, layer])
 
