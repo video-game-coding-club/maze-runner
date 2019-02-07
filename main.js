@@ -25,8 +25,9 @@ const game = new Phaser.Game(config);
 
 function preload() {
   this.load.image("tiles", "assets/tiles.png");
+  //this.load.tilemapTiledJSON("map", "assets/map.json");
   //this.load.tilemapCSV("map", "assets/Maze Runner Levels - Level 1.csv");
-  this.load.tilemapTiledJSON("map", "assets/map.json");
+  this.load.tilemapCSV("map", "assets/Lucas.csv");
   this.load.spritesheet("dude", "assets/dude.png",
                         { frameWidth: 32,
                           frameHeight: 32
@@ -41,7 +42,11 @@ function preload() {
 
 function create() {
   /* Create the map. */
-  this.map = this.make.tilemap({ key: "map" });
+  this.map = this.make.tilemap({
+    key: "map",
+    tileWidth: 32,
+    tileHeight: 32
+  });
   this.tiles = this.map.addTilesetImage("tiles");
   this.layer = this.map.createStaticLayer(0, this.tiles);
   this.map.setCollisionBetween(0, 22, this.layer);
