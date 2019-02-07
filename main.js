@@ -30,6 +30,10 @@ function preload() {
                           frameHeight: 32
                         });
   this.load.tilemapCSV("map", "assets/Maze Runner Levels - Level 1.csv");
+  this.load.spritesheet("heart", "assets/heart.png",
+                        { frameWidth: 10,
+                          frameHeight: 10
+                        });
   this.load.audio("background_music",
                   "assets/Ove - Earth Is All We Have .ogg");
 };
@@ -112,6 +116,22 @@ function create() {
      collisions. */
   this.physics.add.collider(this.dude, this.layer);
 
+  /* Create the hearts. */
+  this.hearts = this.physics.add.sprite(300, 10, "heart");
+  this.hearts.setBounce(0.2);
+  this.hearts.setGravityY(100);
+  this.hearts.setCollideWorldBounds(true);
+
+  this.anims.create({
+    key: "glimmer",
+    frames: this.anims.generateFrameNumbers("heart"),
+    frameRate: 5,
+    repeat: -1
+  });
+  this.hearts.anims.play("glimmer");
+  this.physics.add.collider(this.hearts, this.layer);
+  this.physics.add.overlap(this.dude, this.hearts, collectHearts, null, this);
+
   this.controls = this.input.keyboard.addKeys({
     "up": Phaser.Input.Keyboard.KeyCodes.UP,
     "left": Phaser.Input.Keyboard.KeyCodes.LEFT,
@@ -124,6 +144,10 @@ function create() {
 
   this.play_music = 0;
   this.background_music = this.sound.add("background_music", { loop: true });
+
+  this.heart_points = 0;
+  this.statusText = this.add.text(560, 16, 'Hearts: 0',
+                                  { fontSize: '32px', fill: '#ffffff' });
 };
 
 function update(time, delta) {
@@ -158,4 +182,10 @@ function update(time, delta) {
     }
     this.play_music = time;
   }
+};
+
+function collectHearts(dude, heart) {
+  heart.disableBody(true, true);
+  this.heart_points += 10;
+  this.statusText.setText('Hearts: ' + this.heart_points);
 };
