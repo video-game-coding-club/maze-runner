@@ -12,9 +12,32 @@
          "width":100,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":2,
+         "name":"hearts",
+         "objects":[
+                {
+                 "gid":25,
+                 "height":10,
+                 "id":1,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":60,
+                 "x":1223.5,
+                 "y":1466
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":2,
- "nextobjectid":1,
+ "nextlayerid":3,
+ "nextobjectid":2,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.0",
@@ -32,6 +55,29 @@
          "tilecount":24,
          "tileheight":32,
          "tilewidth":32
+        }, 
+        {
+         "columns":0,
+         "firstgid":25,
+         "grid":
+            {
+             "height":10,
+             "orientation":"orthogonal",
+             "width":10
+            },
+         "margin":0,
+         "name":"heart",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":10,
+         "tiles":[
+                {
+                 "id":0,
+                 "image":"heart.png",
+                 "imageheight":10,
+                 "imagewidth":60
+                }],
+         "tilewidth":60
         }],
  "tilewidth":32,
  "type":"map",
