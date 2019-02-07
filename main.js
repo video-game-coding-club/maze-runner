@@ -77,18 +77,26 @@ function create() {
   this.physics.add.collider(this.dude, this.layer);
 
   /* Create the hearts. */
-  this.hearts = this.physics.add.sprite(300, 10, "heart");
-  this.hearts.setBounce(0.2);
-  this.hearts.setGravityY(100);
-  this.hearts.setCollideWorldBounds(true);
-
   this.anims.create({
     key: "glimmer",
     frames: this.anims.generateFrameNumbers("heart"),
     frameRate: 5,
     repeat: -1
   });
-  this.hearts.anims.play("glimmer");
+
+  this.hearts = this.physics.add.group({
+    key: "heart",
+    repeat: 10
+  });
+
+  for (let i = 0; i < this.hearts.children.size; i++) {
+    this.hearts.children.entries[i].setBounce(0.2);
+    this.hearts.children.entries[i].setGravityY(100);
+    this.hearts.children.entries[i].setCollideWorldBounds(true);
+    this.hearts.children.entries[i].anims.play("glimmer");
+    this.hearts.children.entries[i].setPosition(200 * i, 10);
+  }
+
   this.physics.add.collider(this.hearts, this.layer);
   this.physics.add.overlap(this.dude, this.hearts, collectHearts, null, this);
 
