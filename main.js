@@ -29,7 +29,7 @@ function preload() {
   //this.load.tilemapCSV("map", "assets/Maze Runner Levels - Level 1.csv");
   this.load.tilemapCSV("map", "assets/Lucas.csv");
   this.load.spritesheet("dude", "assets/dude.png",
-                        { frameWidth: 32,
+                        { frameWidth: 24,
                           frameHeight: 32
                         });
   this.load.spritesheet("heart", "assets/heart.png",
@@ -62,17 +62,17 @@ function create() {
 
   this.anims.create({
     key: "stand",
-    frames: [ { key: "dude", frame: 7 } ]
+    frames: [ { key: "dude", frame: 2 } ]
   });
 
   this.anims.create({
     key: "jump",
-    frames: [ { key: "dude", frame: 4 } ]
+    frames: [ { key: "dude", frame: 0 } ]
   });
 
   this.anims.create({
     key: 'walk',
-    frames: this.anims.generateFrameNumbers("dude", { start: 5, end: 6 }),
+    frames: this.anims.generateFrameNumbers("dude", { start: 1, end: 2 }),
     frameRate: 10,
     repeat: -1
   });
@@ -146,6 +146,10 @@ function update(time, delta) {
     } else if (this.dude.body.onWall()) {
       this.dude.setVelocityY(-50);
     }
+  }
+
+  if (!(this.dude.body.onFloor() || this.dude.body.onWall())) {
+    this.dude.anims.play("jump");
   }
 
   if (this.controls.music.isDown && (time - this.play_music > 1000)) {
