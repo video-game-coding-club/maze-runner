@@ -12,7 +12,7 @@ window.onload = function() {
         }
       }
     },
-    scene: [ playLevel ],
+    scene: [ splashScreen, playLevel ],
     audio: {
       disableWebAudio: true
     }
@@ -20,6 +20,42 @@ window.onload = function() {
 
   const game = new Phaser.Game(config);
 };
+
+class splashScreen extends Phaser.Scene {
+  constructor() {
+    super("SplashScreen");
+  };
+
+  preload() {
+    this.load.image("splash", "assets/splash_screen.png");
+  }
+
+  create() {
+    let splash = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "splash");
+    this.input.keyboard.on("keydown", () => {
+      this.scene.start("PlayLevel");
+    });
+    this.messageShown = false;
+  }
+
+  update(time, delta) {
+    if (time > 2000 && !this.messageShown) {
+      let message = this.make.text({
+        x: this.cameras.main.width / 2,
+        y: 100,
+        text: "Press any key to start the game",
+        style: {
+          font: "30px monospace",
+          fill: "#ffffff"
+        }
+      });
+      message.setOrigin(0.5, 0.5);
+      message.setStroke("#101010", 3);
+      message.setShadow(10, 10, "#000000", 5, true);
+      this.messageShown = true;
+    }
+  }
+}
 
 class playLevel extends Phaser.Scene {
   constructor() {
