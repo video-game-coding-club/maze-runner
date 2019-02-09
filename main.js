@@ -127,8 +127,6 @@ class playLevel extends Phaser.Scene {
 
     this.load.image("tiles", "assets/tiles.png");
     this.load.tilemapTiledJSON("map", "assets/map.json");
-    //this.load.tilemapCSV("map", "assets/Maze Runner Levels - Level 1.csv");
-    //this.load.tilemapCSV("map", "assets/Lucas.csv");
     this.load.spritesheet("dude", "assets/dude.png",
                           { frameWidth: 24,
                             frameHeight: 32
