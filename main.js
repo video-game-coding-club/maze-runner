@@ -1,27 +1,29 @@
-const config = {
-  type: Phaser.AUTO,
-  width: 800,
-  height: 600,
-  physics: {
-    default: "arcade",
-    acrcade: {
-      debug: true,
-      gravity: {
-        y: 300
+window.onload = function() {
+  const config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    physics: {
+      default: "arcade",
+      acrcade: {
+        debug: true,
+        gravity: {
+          y: 300
+        }
       }
+    },
+    scene: {
+      preload: preload,
+      create: create,
+      update: update,
+    },
+    audio: {
+      disableWebAudio: true
     }
-  },
-  scene: {
-    preload: preload,
-    create: create,
-    update: update,
-  },
-  audio: {
-    disableWebAudio: true
-  }
-};
+  };
 
-const game = new Phaser.Game(config);
+  const game = new Phaser.Game(config);
+};
 
 function preload() {
   let progressBar = this.add.graphics();
