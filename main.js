@@ -33,7 +33,7 @@ class splashScreen extends Phaser.Scene {
   create() {
     let splash = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "splash");
     this.input.keyboard.on("keydown", () => {
-      this.scene.start("PlayLevel");
+      this.scene.start("SelectLevel");
     });
     this.messageShown = false;
   }
@@ -57,12 +57,12 @@ class splashScreen extends Phaser.Scene {
   }
 }
 
-class playLevel extends Phaser.Scene {
+class selectLevel extends Phaser.Scene {
   constructor() {
-    super("PlayLevel");
+    super("SelectLevel");
   }
 
-  preload() {
+  progressBar() {
     let progressBar = this.add.graphics();
     let progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
@@ -124,7 +124,10 @@ class playLevel extends Phaser.Scene {
       percentText.destroy();
       assetText.destroy();
     });
+  }
 
+  preload() {
+    this.progressBar();
     this.load.image("tiles", "assets/tiles.png");
     this.load.tilemapTiledJSON("map", "assets/map.json");
     this.load.spritesheet("dude", "assets/dude.png",
@@ -137,6 +140,23 @@ class playLevel extends Phaser.Scene {
                           });
     this.load.audio("background_music",
                     "assets/Ove - Earth Is All We Have .ogg");
+    this.load.image("button", "assets/button.png");
+  }
+
+  create() {
+    this.button = this.add.sprite(10, 10, "button");
+  }
+
+  update() {
+  }
+}
+
+class playLevel extends Phaser.Scene {
+  constructor() {
+    super("PlayLevel");
+  }
+
+  preload() {
   }
 
   create() {
