@@ -108,10 +108,11 @@ class Credits extends Phaser.Scene {
     this.add.text(creditOffsetX, (creditOffsetY += 80), "The Phaser.io framework and", paragraphStyle);
     this.add.text(creditOffsetX, (creditOffsetY += 30), "the awesome Phaser community!", paragraphStyle);
     this.add.text(creditOffsetX, (creditOffsetY += 40), "https://photonstorm.github.io/", paragraphStyle);
+    this.creditsLength = creditOffsetY + 600;
   }
 
   update(time, delta) {
-    this.cameraOffset = (this.cameraOffset + 0.03 * delta) % 2000;
+    this.cameraOffset = (this.cameraOffset + 0.03 * delta) % this.creditsLength;
     this.cameras.main.setScroll(0, this.initialCameraOffset + this.cameraOffset);
   }
 }
