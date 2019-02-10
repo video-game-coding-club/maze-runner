@@ -96,6 +96,7 @@ class selectLevel extends Phaser.Scene {
       this.buttonText[i].setStroke("#101010", 3);
       this.buttonText[i].setShadow();
     }
+    this.sound.stopAll();
     this.background_music = this.sound.add("title_music", { loop: true });
     this.background_music.play();
   }
@@ -206,15 +207,15 @@ class playLevel extends Phaser.Scene {
       "up": Phaser.Input.Keyboard.KeyCodes.UP,
       "left": Phaser.Input.Keyboard.KeyCodes.LEFT,
       "right": Phaser.Input.Keyboard.KeyCodes.RIGHT,
-      "music": Phaser.Input.Keyboard.KeyCodes.M,
       "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
     });
 
     this.cameras.main.startFollow(this.dude);
     this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
-    this.play_music = 0;
+    this.sound.stopAll();
     this.background_music = this.sound.add("background_music", { loop: true });
+    this.background_music.play();
 
     this.heart_points = 0;
     this.statusText = this.add.text(560, 16, 'Hearts: 0',
@@ -248,13 +249,6 @@ class playLevel extends Phaser.Scene {
       this.dude.anims.play("jump");
     }
 
-    if (this.controls.music.isDown && (time - this.play_music > 1000)) {
-      if (this.background_music.isPlaying) {
-        this.background_music.stop();
-      } else {
-        this.background_music.play();
-      }
-      this.play_music = time;
     }
 
     if (this.controls.back.isDown) {
