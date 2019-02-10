@@ -207,7 +207,6 @@ class playLevel extends Phaser.Scene {
       "up": Phaser.Input.Keyboard.KeyCodes.UP,
       "left": Phaser.Input.Keyboard.KeyCodes.LEFT,
       "right": Phaser.Input.Keyboard.KeyCodes.RIGHT,
-      "music": Phaser.Input.Keyboard.KeyCodes.M,
       "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
     });
 
@@ -250,13 +249,6 @@ class playLevel extends Phaser.Scene {
       this.dude.anims.play("jump");
     }
 
-    if (this.controls.music.isDown && (time - this.play_music > 1000)) {
-      if (this.background_music.isPlaying) {
-        this.background_music.stop();
-      } else {
-        this.background_music.play();
-      }
-      this.play_music = time;
     }
 
     if (this.controls.back.isDown) {
