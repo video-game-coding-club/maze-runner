@@ -72,7 +72,18 @@ class Credits extends Phaser.Scene {
   }
 
   create() {
-    this.add.text(10, 10, "Credits...", { fontSize: "32px", fill: "#ffffff" });
+    let creditOffset = 600;
+    this.cameraOffset = 0;
+    this.add.text(400, creditOffset, "Credits", {
+      fontSize: "48px",
+      fill: "#ffffff",
+      stroke: "#202020"
+    });
+  }
+
+  update(time, delta) {
+    this.cameraOffset += 0.02 * delta;
+    this.cameras.main.setScroll(0, this.cameraOffset);
   }
 }
 
