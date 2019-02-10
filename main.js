@@ -249,8 +249,6 @@ class playLevel extends Phaser.Scene {
       this.dude.anims.play("jump");
     }
 
-    }
-
     if (this.controls.back.isDown) {
       this.scene.start("SelectLevel");
     }
