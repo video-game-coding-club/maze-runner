@@ -17,9 +17,9 @@ window.onload = function() {
       }
     },
     scene: [
-      splashScreen,
-      selectLevel,
-      playLevel
+      SplashScreen,
+      SelectLevel,
+      PlayLevel
     ],
     audio: {
       disableWebAudio: true
@@ -29,7 +29,7 @@ window.onload = function() {
   const game = new Phaser.Game(config);
 };
 
-class splashScreen extends Phaser.Scene {
+class SplashScreen extends Phaser.Scene {
   constructor() {
     super("SplashScreen");
   };
@@ -65,7 +65,7 @@ class splashScreen extends Phaser.Scene {
   }
 }
 
-class selectLevel extends Phaser.Scene {
+class SelectLevel extends Phaser.Scene {
   constructor() {
     super("SelectLevel");
   }
@@ -118,7 +118,7 @@ class selectLevel extends Phaser.Scene {
   }
 }
 
-class playLevel extends Phaser.Scene {
+class PlayLevel extends Phaser.Scene {
   constructor() {
     super("PlayLevel");
   }
