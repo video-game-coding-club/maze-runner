@@ -98,13 +98,18 @@ class Credits extends Phaser.Scene {
     this.add.text(creditOffsetX, (creditOffsetY += 40), "Levi Gibson (@LeviCodes)", paragraphStyle);
     this.add.text(creditOffsetX, (creditOffsetY += 40), "Lucas Price (@lucasprice)", paragraphStyle);
     this.add.text(creditOffsetX, (creditOffsetY += 40), "Zach Gibson (@zachgib)", paragraphStyle);
-    this.add.text(creditOffsetX, (creditOffsetY += 80), "Artwork", headerStyle);
+    this.add.text(creditOffsetX, (creditOffsetY += 100), "Level Design", headerStyle);
+    this.add.text(creditOffsetX, (creditOffsetY += 80), "Level 1 - Adis Bock", paragraphStyle);
+    this.add.text(creditOffsetX, (creditOffsetY += 40), "Level 2 - Lucas Price", paragraphStyle);
+    this.add.text(creditOffsetX, (creditOffsetY += 40), "Level 3 - Zach Gibson", paragraphStyle);
+    this.add.text(creditOffsetX, (creditOffsetY += 40), "Level 4 - Levi Gibson", paragraphStyle);
+    this.add.text(creditOffsetX, (creditOffsetY += 100), "Artwork", headerStyle);
     this.add.text(creditOffsetX, (creditOffsetY += 80), "https://opengameart.org/", paragraphStyle);
-    this.add.text(creditOffsetX, (creditOffsetY += 80), "Music", headerStyle);
+    this.add.text(creditOffsetX, (creditOffsetY += 100), "Music", headerStyle);
     this.add.text(creditOffsetX, (creditOffsetY += 80), "https://opengameart.org/", paragraphStyle);
-    this.add.text(creditOffsetX, (creditOffsetY += 80), "Sound effects", headerStyle);
+    this.add.text(creditOffsetX, (creditOffsetY += 100), "Sound effects", headerStyle);
     this.add.text(creditOffsetX, (creditOffsetY += 80), "https://opengameart.org/", paragraphStyle);
-    this.add.text(creditOffsetX, (creditOffsetY += 80), "Special Thanks", headerStyle);
+    this.add.text(creditOffsetX, (creditOffsetY += 100), "Special Thanks", headerStyle);
     this.add.text(creditOffsetX, (creditOffsetY += 80), "The Phaser.io framework and", paragraphStyle);
     this.add.text(creditOffsetX, (creditOffsetY += 30), "the awesome Phaser community!", paragraphStyle);
     this.add.text(creditOffsetX, (creditOffsetY += 40), "https://photonstorm.github.io/", paragraphStyle);
@@ -144,9 +149,13 @@ class SelectLevel extends Phaser.Scene {
                                          {
                                            fontSize: '32px',
                                            fill: '#ffffff',
+                                           stroke: "#202020",
+                                           strokeThickness: 3,
+                                           shadowOffsetX: 5,
+                                           shadowOffsetY: 5,
+                                           shadowBlur: 2,
+                                           shadowColor: "#101010"
                                          });
-      this.buttonText[i].setStroke("#101010", 3);
-      this.buttonText[i].setShadow();
     }
     this.sound.stopAll();
     this.background_music = this.sound.add("title_music", { loop: true });
