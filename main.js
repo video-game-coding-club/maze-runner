@@ -103,15 +103,19 @@ class selectLevel extends Phaser.Scene {
   update(time, delta) {
     if (this.levelControls.one.isDown) {
       gameData.level = 1;
+      this.background_music.stop();
       this.scene.start("PlayLevel");
     } else if (this.levelControls.two.isDown) {
       gameData.level = 2;
+      this.background_music.stop();
       this.scene.start("PlayLevel");
     } else if (this.levelControls.three.isDown) {
       gameData.level = 3;
+      this.background_music.stop();
       this.scene.start("PlayLevel");
     } else if (this.levelControls.four.isDown) {
       gameData.level = 4;
+      this.background_music.stop();
       this.scene.start("PlayLevel");
     }
   }
@@ -215,6 +219,7 @@ class playLevel extends Phaser.Scene {
 
     this.play_music = 0;
     this.background_music = this.sound.add("background_music", { loop: true });
+    this.background_music.play();
 
     this.heart_points = 0;
     this.statusText = this.add.text(560, 16, 'Hearts: 0',
@@ -258,6 +263,7 @@ class playLevel extends Phaser.Scene {
     }
 
     if (this.controls.back.isDown) {
+      this.background_music.stop();
       this.scene.start("SelectLevel");
     }
   }
