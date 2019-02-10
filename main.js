@@ -1,3 +1,7 @@
+var gameData = {
+  level: -1
+};
+
 window.onload = function() {
   const config = {
     type: Phaser.AUTO,
@@ -12,7 +16,7 @@ window.onload = function() {
         }
       }
     },
-    scene: [ splashScreen, playLevel ],
+    scene: [ splashScreen, selectLevel, playLevel ],
     audio: {
       disableWebAudio: true
     }
@@ -33,7 +37,7 @@ class splashScreen extends Phaser.Scene {
   create() {
     let splash = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "splash");
     this.input.keyboard.on("keydown", () => {
-      this.scene.start("PlayLevel");
+      this.scene.start("SelectLevel");
     });
     this.messageShown = false;
   }
@@ -57,12 +61,12 @@ class splashScreen extends Phaser.Scene {
   }
 }
 
-class playLevel extends Phaser.Scene {
+class selectLevel extends Phaser.Scene {
   constructor() {
-    super("PlayLevel");
+    super("SelectLevel");
   }
 
-  preload() {
+  progressBar() {
     let progressBar = this.add.graphics();
     let progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
@@ -124,11 +128,61 @@ class playLevel extends Phaser.Scene {
       percentText.destroy();
       assetText.destroy();
     });
+  }
 
+  preload() {
+    /* Set up the progress bar. */
+    //this.progressBar();
+    this.load.image("button", "assets/button.png");
+  }
+
+  create() {
+    this.button = [];
+    this.buttonText = [];
+    for (let i = 0; i < 4; i++) {
+      this.button[i] = this.add.sprite(150, 60 + i * 80, "button");
+      this.button[i].setScale(0.3, 0.15);
+      this.levelControls = this.input.keyboard.addKeys({
+        "one": Phaser.Input.Keyboard.KeyCodes.ONE,
+        "two": Phaser.Input.Keyboard.KeyCodes.TWO,
+        "three": Phaser.Input.Keyboard.KeyCodes.THREE,
+        "four": Phaser.Input.Keyboard.KeyCodes.FOUR
+      });
+      this.buttonText[i] = this.add.text(80, 40 + i * 80, 'Level ' + (i + 1),
+                                         {
+                                           fontSize: '32px',
+                                           fill: '#ffffff',
+                                         });
+      this.buttonText[i].setStroke("#101010", 3);
+      this.buttonText[i].setShadow();
+    }
+  }
+
+  update() {
+    if (this.levelControls.one.isDown) {
+      gameData.level = 1;
+      this.scene.start("PlayLevel");
+    } else if (this.levelControls.two.isDown) {
+      gameData.level = 2;
+      this.scene.start("PlayLevel");
+    } else if (this.levelControls.three.isDown) {
+      gameData.level = 3;
+      this.scene.start("PlayLevel");
+    } else if (this.levelControls.four.isDown) {
+      gameData.level = 4;
+      this.scene.start("PlayLevel");
+    }
+  }
+}
+
+class playLevel extends Phaser.Scene {
+  constructor() {
+    super("PlayLevel");
+  }
+
+  preload() {
     this.load.image("tiles", "assets/tiles.png");
     this.load.tilemapTiledJSON("map", "assets/map.json");
-    //this.load.tilemapCSV("map", "assets/Maze Runner Levels - Level 1.csv");
-    //this.load.tilemapCSV("map", "assets/Lucas.csv");
     this.load.spritesheet("dude", "assets/dude.png",
                           { frameWidth: 24,
                             frameHeight: 32
@@ -149,7 +203,7 @@ class playLevel extends Phaser.Scene {
       tileHeight: 32
     });
     this.tiles = this.map.addTilesetImage("tiles");
-    this.layer = this.map.createStaticLayer(0, this.tiles);
+    this.layer = this.map.createStaticLayer(gameData.level - 1, this.tiles);
     this.map.setCollisionBetween(0, 22, this.layer);
 
     /* Resize world to fit the level. */
@@ -211,7 +265,8 @@ class playLevel extends Phaser.Scene {
       "left": Phaser.Input.Keyboard.KeyCodes.LEFT,
       "right": Phaser.Input.Keyboard.KeyCodes.RIGHT,
       "music": Phaser.Input.Keyboard.KeyCodes.M,
-      "debug": Phaser.Input.Keyboard.KeyCodes.D
+      "debug": Phaser.Input.Keyboard.KeyCodes.D,
+      "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
     });
 
     this.cameras.main.startFollow(this.dude);
@@ -273,6 +328,10 @@ class playLevel extends Phaser.Scene {
       } else {
         this.debugGraphics.destroy();
       }
+    }
+
+    if (this.controls.back.isDown) {
+      this.scene.start("SelectLevel");
     }
   }
 
