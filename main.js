@@ -18,6 +18,7 @@ window.onload = function() {
     },
     scene: [
       SplashScreen,
+      Credits,
       SelectLevel,
       PlayLevel
     ],
@@ -65,6 +66,16 @@ class SplashScreen extends Phaser.Scene {
   }
 }
 
+class Credits extends Phaser.Scene {
+  constructor() {
+    super("Credits");
+  }
+
+  create() {
+    this.add.text(10, 10, "Credits...", { fontSize: "32px", fill: "#ffffff" });
+  }
+}
+
 class SelectLevel extends Phaser.Scene {
   constructor() {
     super("SelectLevel");
@@ -99,20 +110,26 @@ class SelectLevel extends Phaser.Scene {
     this.sound.stopAll();
     this.background_music = this.sound.add("title_music", { loop: true });
     this.background_music.play();
+
+    this.scene.launch("Credits");
   }
 
   update(time, delta) {
     if (this.levelControls.one.isDown) {
       gameData.level = 1;
+      this.scene.stop("Credits");
       this.scene.start("PlayLevel");
     } else if (this.levelControls.two.isDown) {
       gameData.level = 2;
+      this.scene.stop("Credits");
       this.scene.start("PlayLevel");
     } else if (this.levelControls.three.isDown) {
       gameData.level = 3;
+      this.scene.stop("Credits");
       this.scene.start("PlayLevel");
     } else if (this.levelControls.four.isDown) {
       gameData.level = 4;
+      this.scene.stop("Credits");
       this.scene.start("PlayLevel");
     }
   }
