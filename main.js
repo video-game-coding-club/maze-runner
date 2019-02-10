@@ -207,7 +207,6 @@ class playLevel extends Phaser.Scene {
       "left": Phaser.Input.Keyboard.KeyCodes.LEFT,
       "right": Phaser.Input.Keyboard.KeyCodes.RIGHT,
       "music": Phaser.Input.Keyboard.KeyCodes.M,
-      "debug": Phaser.Input.Keyboard.KeyCodes.D,
       "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
     });
 
@@ -256,19 +255,6 @@ class playLevel extends Phaser.Scene {
         this.background_music.play();
       }
       this.play_music = time;
-    }
-
-    if (this.controls.debug.isDown) {
-      if (!this.debugGraphics) {
-        this.debugGraphics = this.add.graphics().setAlpha(0.75);
-        this.layer.renderDebug(this.debugGraphics, {
-          tileColor: null, // Color of non-colliding tiles
-          collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-          faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        });
-      } else {
-        this.debugGraphics.destroy();
-      }
     }
 
     if (this.controls.back.isDown) {
