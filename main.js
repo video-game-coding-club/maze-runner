@@ -96,6 +96,7 @@ class selectLevel extends Phaser.Scene {
       this.buttonText[i].setStroke("#101010", 3);
       this.buttonText[i].setShadow();
     }
+    this.sound.stopAll();
     this.background_music = this.sound.add("title_music", { loop: true });
     this.background_music.play();
   }
@@ -103,19 +104,15 @@ class selectLevel extends Phaser.Scene {
   update(time, delta) {
     if (this.levelControls.one.isDown) {
       gameData.level = 1;
-      this.background_music.stop();
       this.scene.start("PlayLevel");
     } else if (this.levelControls.two.isDown) {
       gameData.level = 2;
-      this.background_music.stop();
       this.scene.start("PlayLevel");
     } else if (this.levelControls.three.isDown) {
       gameData.level = 3;
-      this.background_music.stop();
       this.scene.start("PlayLevel");
     } else if (this.levelControls.four.isDown) {
       gameData.level = 4;
-      this.background_music.stop();
       this.scene.start("PlayLevel");
     }
   }
@@ -217,7 +214,7 @@ class playLevel extends Phaser.Scene {
     this.cameras.main.startFollow(this.dude);
     this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
-    this.play_music = 0;
+    this.sound.stopAll();
     this.background_music = this.sound.add("background_music", { loop: true });
     this.background_music.play();
 
@@ -263,7 +260,6 @@ class playLevel extends Phaser.Scene {
     }
 
     if (this.controls.back.isDown) {
-      this.background_music.stop();
       this.scene.start("SelectLevel");
     }
   }
