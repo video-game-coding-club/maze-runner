@@ -16,7 +16,11 @@ window.onload = function() {
         }
       }
     },
-    scene: [ splashScreen, selectLevel, playLevel ],
+    scene: [
+      splashScreen,
+      selectLevel,
+      playLevel
+    ],
     audio: {
       disableWebAudio: true
     }
@@ -66,73 +70,7 @@ class selectLevel extends Phaser.Scene {
     super("SelectLevel");
   }
 
-  progressBar() {
-    let progressBar = this.add.graphics();
-    let progressBox = this.add.graphics();
-    progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect(240, 270, 320, 50);
-
-    let width = this.cameras.main.width;
-    let height = this.cameras.main.height;
-    let loadingText = this.make.text({
-      x: width / 2,
-      y: height / 2 - 50,
-      text: 'Loading...',
-      style: {
-        font: '20px monospace',
-        fill: '#ffffff'
-      }
-    });
-    loadingText.setOrigin(0.5, 0.5);
-
-    let percentText = this.make.text({
-      x: width / 2,
-      y: height / 2 - 5,
-      text: '0%',
-      style: {
-        font: '18px monospace',
-        fill: '#ffffff'
-      }
-    });
-    percentText.setOrigin(0.5, 0.5);
-
-    let assetText = this.make.text({
-      x: width / 2,
-      y: height / 2 + 50,
-      text: '',
-      style: {
-        font: '18px monospace',
-        fill: '#ffffff'
-      }
-    });
-    assetText.setOrigin(0.5, 0.5);
-
-    this.load.on('progress', function (value) {
-      console.log(value);
-      progressBar.clear();
-      progressBar.fillStyle(0xffffff, 1);
-      progressBar.fillRect(250, 280, 300 * value, 30);
-      percentText.setText(parseInt(value * 100) + '%');
-    });
-
-    this.load.on('fileprogress', function (file) {
-      console.log(file.src);
-      assetText.setText('Loading asset: ' + file.key);
-    });
-
-    this.load.on('complete', function () {
-      console.log('complete');
-      progressBar.destroy();
-      progressBox.destroy();
-      loadingText.destroy();
-      percentText.destroy();
-      assetText.destroy();
-    });
-  }
-
   preload() {
-    /* Set up the progress bar. */
-    //this.progressBar();
     this.load.image("button", "assets/button.png");
   }
 
@@ -158,7 +96,7 @@ class selectLevel extends Phaser.Scene {
     }
   }
 
-  update() {
+  update(time, delta) {
     if (this.levelControls.one.isDown) {
       gameData.level = 1;
       this.scene.start("PlayLevel");
@@ -281,7 +219,6 @@ class playLevel extends Phaser.Scene {
   }
 
   update(time, delta) {
-
     if (this.controls.right.isDown) {
       this.dude.setFlipX(false);
       this.dude.setVelocityX(100);
@@ -340,4 +277,68 @@ class playLevel extends Phaser.Scene {
     this.heart_points += 10;
     this.statusText.setText('Hearts: ' + this.heart_points);
   }
+}
+
+function progressBar() {
+  let progressBar = this.add.graphics();
+  let progressBox = this.add.graphics();
+  progressBox.fillStyle(0x222222, 0.8);
+  progressBox.fillRect(240, 270, 320, 50);
+
+  let width = this.cameras.main.width;
+  let height = this.cameras.main.height;
+  let loadingText = this.make.text({
+    x: width / 2,
+    y: height / 2 - 50,
+    text: 'Loading...',
+    style: {
+      font: '20px monospace',
+      fill: '#ffffff'
+    }
+  });
+  loadingText.setOrigin(0.5, 0.5);
+
+  let percentText = this.make.text({
+    x: width / 2,
+    y: height / 2 - 5,
+    text: '0%',
+    style: {
+      font: '18px monospace',
+      fill: '#ffffff'
+    }
+  });
+  percentText.setOrigin(0.5, 0.5);
+
+  let assetText = this.make.text({
+    x: width / 2,
+    y: height / 2 + 50,
+    text: '',
+    style: {
+      font: '18px monospace',
+      fill: '#ffffff'
+    }
+  });
+  assetText.setOrigin(0.5, 0.5);
+
+  this.load.on('progress', function (value) {
+    console.log(value);
+    progressBar.clear();
+    progressBar.fillStyle(0xffffff, 1);
+    progressBar.fillRect(250, 280, 300 * value, 30);
+    percentText.setText(parseInt(value * 100) + '%');
+  });
+
+  this.load.on('fileprogress', function (file) {
+    console.log(file.src);
+    assetText.setText('Loading asset: ' + file.key);
+  });
+
+  this.load.on('complete', function () {
+    console.log('complete');
+    progressBar.destroy();
+    progressBox.destroy();
+    loadingText.destroy();
+    percentText.destroy();
+    assetText.destroy();
+  });
 }
