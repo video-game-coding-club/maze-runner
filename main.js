@@ -134,6 +134,8 @@ class selectLevel extends Phaser.Scene {
     /* Set up the progress bar. */
     //this.progressBar();
     this.load.image("button", "assets/button.png");
+    this.load.audio("title_music",
+                    "assets/Maze Runner Level Select Music.mp3");
   }
 
   create() {
@@ -156,6 +158,8 @@ class selectLevel extends Phaser.Scene {
       this.buttonText[i].setStroke("#101010", 3);
       this.buttonText[i].setShadow();
     }
+    this.background_music = this.sound.add("title_music", { loop: true });
+    this.background_music.play();
   }
 
   update() {
