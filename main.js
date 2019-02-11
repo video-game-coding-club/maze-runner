@@ -296,7 +296,7 @@ class PlayLevel extends Phaser.Scene {
       this.hearts.children.entries[i].setGravityY(100);
       this.hearts.children.entries[i].setCollideWorldBounds(true);
       this.hearts.children.entries[i].anims.play("glimmer");
-      this.hearts.children.entries[i].setPosition(200 * i, 10);
+      this.hearts.children.entries[i].setPosition(200 * (i + 1), 10);
     }
 
     this.physics.add.collider(this.hearts, this.layer);
