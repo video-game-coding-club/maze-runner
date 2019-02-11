@@ -2,34 +2,6 @@ var gameData = {
   level: -1
 };
 
-window.onload = function() {
-  const config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    physics: {
-      default: "arcade",
-      acrcade: {
-        debug: true,
-        gravity: {
-          y: 300
-        }
-      }
-    },
-    scene: [
-      SplashScreen,
-      Credits,
-      SelectLevel,
-      PlayLevel
-    ],
-    audio: {
-      disableWebAudio: true
-    }
-  };
-
-  const game = new Phaser.Game(config);
-};
-
 class SplashScreen extends Phaser.Scene {
   constructor() {
     super("SplashScreen");
@@ -387,3 +359,32 @@ class PlayLevel extends Phaser.Scene {
     this.statusText.setText('Hearts: ' + this.heart_points);
   }
 }
+
+window.onload = function() {
+  const config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    physics: {
+      default: "arcade",
+      acrcade: {
+        debug: true,
+        gravity: {
+          y: 300
+        }
+      }
+    },
+    scene: [
+      SplashScreen,
+      Credits,
+      SelectLevel,
+      PlayLevel
+    ],
+    audio: {
+      disableWebAudio: true
+    }
+  };
+
+  const game = new Phaser.Game(config);
+};
+
