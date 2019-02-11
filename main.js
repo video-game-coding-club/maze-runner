@@ -2,7 +2,6 @@ var gameData = {
   level: -1
 };
 
-// this is a test, please ignore
 class SplashScreen extends Phaser.Scene {
   constructor() {
     super("SplashScreen");
@@ -191,7 +190,8 @@ class SelectLevel extends Phaser.Scene {
         "one": Phaser.Input.Keyboard.KeyCodes.ONE,
         "two": Phaser.Input.Keyboard.KeyCodes.TWO,
         "three": Phaser.Input.Keyboard.KeyCodes.THREE,
-        "four": Phaser.Input.Keyboard.KeyCodes.FOUR
+        "four": Phaser.Input.Keyboard.KeyCodes.FOUR,
+        "five": Phaser.Input.Keyboard.KeyCodes.FIVE
       });
       this.buttonText[i] = this.add.text(80, 40 + i * 80, 'Level ' + (i + 1),
                                          {
@@ -229,6 +229,10 @@ class SelectLevel extends Phaser.Scene {
       gameData.level = 4;
       this.scene.stop("Credits");
       this.scene.start("PlayLevel");
+    } else if (this.levelControls.five.isDown) {
+      gameData.level = 5;
+      this.scene.stop("Credits");
+      this.scene.start("PlayLevel");
     }
   }
 }
@@ -247,7 +251,7 @@ class PlayLevel extends Phaser.Scene {
     });
     this.tiles = this.map.addTilesetImage("tiles");
     this.layer = this.map.createStaticLayer(gameData.level - 1, this.tiles);
-    this.map.setCollisionBetween(0, 22, this.layer);
+    this.map.setCollisionBetween(0, 23, this.layer);
 
     /* Resize world to fit the level. */
     this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
