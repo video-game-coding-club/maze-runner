@@ -101,6 +101,22 @@ class SplashScreen extends Phaser.Scene {
 
   preload() {
     this.load.image("splash", "assets/splash_screen.png");
+    this.load.image("button", "assets/button.png");
+    this.load.audio("title_music",
+                    "assets/Maze Runner Level Select Music.mp3");
+    this.load.image("tiles", "assets/tiles.png");
+    this.load.image("explosion", "assets/explosion.png");
+    this.load.tilemapTiledJSON("map", "assets/map.json");
+    this.load.spritesheet("dude", "assets/dude.png",
+                          { frameWidth: 24,
+                            frameHeight: 32
+                          });
+    this.load.spritesheet("heart", "assets/heart.png",
+                          { frameWidth: 10,
+                            frameHeight: 10
+                          });
+    this.load.audio("background_music",
+                    "assets/Ove - Earth Is All We Have .ogg");
   }
 
   create() {
@@ -191,12 +207,6 @@ class SelectLevel extends Phaser.Scene {
     super("SelectLevel");
   }
 
-  preload() {
-    this.load.image("button", "assets/button.png");
-    this.load.audio("title_music",
-                    "assets/Maze Runner Level Select Music.mp3");
-  }
-
   create() {
     this.button = [];
     this.buttonText = [];
@@ -252,21 +262,6 @@ class SelectLevel extends Phaser.Scene {
 class PlayLevel extends Phaser.Scene {
   constructor() {
     super("PlayLevel");
-  }
-
-  preload() {
-    this.load.image("tiles", "assets/tiles.png");
-    this.load.tilemapTiledJSON("map", "assets/map.json");
-    this.load.spritesheet("dude", "assets/dude.png",
-                          { frameWidth: 24,
-                            frameHeight: 32
-                          });
-    this.load.spritesheet("heart", "assets/heart.png",
-                          { frameWidth: 10,
-                            frameHeight: 10
-                          });
-    this.load.audio("background_music",
-                    "assets/Ove - Earth Is All We Have .ogg");
   }
 
   create() {
