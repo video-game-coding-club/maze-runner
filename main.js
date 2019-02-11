@@ -2,41 +2,94 @@ var gameData = {
   level: -1
 };
 
-window.onload = function() {
-  const config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    physics: {
-      default: "arcade",
-      acrcade: {
-        debug: true,
-        gravity: {
-          y: 300
-        }
-      }
-    },
-    scene: [
-      SplashScreen,
-      Credits,
-      SelectLevel,
-      PlayLevel
-    ],
-    audio: {
-      disableWebAudio: true
-    }
-  };
-
-  const game = new Phaser.Game(config);
-};
-
 class SplashScreen extends Phaser.Scene {
   constructor() {
     super("SplashScreen");
   };
 
+  progressBar() {
+    let progressBar = this.add.graphics();
+    let progressBox = this.add.graphics();
+    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillRect(240, 270, 320, 50);
+
+    let width = this.cameras.main.width;
+    let height = this.cameras.main.height;
+    let loadingText = this.make.text({
+      x: width / 2,
+      y: height / 2 - 50,
+      text: 'Loading...',
+      style: {
+        font: '20px monospace',
+        fill: '#ffffff'
+      }
+    });
+    loadingText.setOrigin(0.5, 0.5);
+
+    let percentText = this.make.text({
+      x: width / 2,
+      y: height / 2 - 5,
+      text: '0%',
+      style: {
+        font: '18px monospace',
+        fill: '#ffffff'
+      }
+    });
+    percentText.setOrigin(0.5, 0.5);
+
+    let assetText = this.make.text({
+      x: width / 2,
+      y: height / 2 + 50,
+      text: '',
+      style: {
+        font: '18px monospace',
+        fill: '#ffffff'
+      }
+    });
+    assetText.setOrigin(0.5, 0.5);
+
+    this.load.on('progress', function (value) {
+      console.log(value);
+      progressBar.clear();
+      progressBar.fillStyle(0xffffff, 1);
+      progressBar.fillRect(250, 280, 300 * value, 30);
+      percentText.setText(parseInt(value * 100) + '%');
+    });
+
+    this.load.on('fileprogress', function (file) {
+      console.log(file.src);
+      assetText.setText('Loading asset: ' + file.key);
+    });
+
+    this.load.on('complete', function () {
+      console.log('complete');
+      progressBar.destroy();
+      progressBox.destroy();
+      loadingText.destroy();
+      percentText.destroy();
+      assetText.destroy();
+    });
+  }
+
   preload() {
+    this.progressBar();
     this.load.image("splash", "assets/splash_screen.png");
+    this.load.image("button", "assets/button.png");
+    this.load.audio("title_music",
+                    "assets/Maze Runner Level Select Music.mp3");
+    this.load.image("tiles", "assets/tiles.png");
+    this.load.image("explosion", "assets/explosion.png");
+    this.load.tilemapTiledJSON("map", "assets/map.json");
+    this.load.spritesheet("dude", "assets/dude.png",
+                          { frameWidth: 24,
+                            frameHeight: 32
+                          });
+    this.load.spritesheet("heart", "assets/heart.png",
+                          { frameWidth: 10,
+                            frameHeight: 10
+                          });
+    this.load.audio("background_music",
+                    "assets/Ove - Earth Is All We Have .ogg");
   }
 
   create() {
@@ -127,12 +180,6 @@ class SelectLevel extends Phaser.Scene {
     super("SelectLevel");
   }
 
-  preload() {
-    this.load.image("button", "assets/button.png");
-    this.load.audio("title_music",
-                    "assets/Maze Runner Level Select Music.mp3");
-  }
-
   create() {
     this.button = [];
     this.buttonText = [];
@@ -188,21 +235,6 @@ class SelectLevel extends Phaser.Scene {
 class PlayLevel extends Phaser.Scene {
   constructor() {
     super("PlayLevel");
-  }
-
-  preload() {
-    this.load.image("tiles", "assets/tiles.png");
-    this.load.tilemapTiledJSON("map", "assets/map.json");
-    this.load.spritesheet("dude", "assets/dude.png",
-                          { frameWidth: 24,
-                            frameHeight: 32
-                          });
-    this.load.spritesheet("heart", "assets/heart.png",
-                          { frameWidth: 10,
-                            frameHeight: 10
-                          });
-    this.load.audio("background_music",
-                    "assets/Ove - Earth Is All We Have .ogg");
   }
 
   create() {
@@ -264,7 +296,7 @@ class PlayLevel extends Phaser.Scene {
       this.hearts.children.entries[i].setGravityY(100);
       this.hearts.children.entries[i].setCollideWorldBounds(true);
       this.hearts.children.entries[i].anims.play("glimmer");
-      this.hearts.children.entries[i].setPosition(200 * i, 10);
+      this.hearts.children.entries[i].setPosition(200 * (i + 1), 10);
     }
 
     this.physics.add.collider(this.hearts, this.layer);
@@ -284,9 +316,8 @@ class PlayLevel extends Phaser.Scene {
     this.background_music = this.sound.add("background_music", { loop: true });
     this.background_music.play();
 
-    this.heart_points = 0;
-    this.statusText = this.add.text(560, 16, 'Hearts: 0',
-                                    { fontSize: '32px', fill: '#ffffff' });
+    this.heartPoints = 0;
+    this.scene.launch("StatusDisplay");
   }
 
   update(time, delta) {
@@ -317,77 +348,59 @@ class PlayLevel extends Phaser.Scene {
     }
 
     if (this.controls.back.isDown) {
+      this.scene.stop("StatusDisplay");
       this.scene.start("SelectLevel");
     }
   }
 
   collectHearts(dude, heart) {
     heart.disableBody(true, true);
-    this.heart_points += 10;
-    this.statusText.setText('Hearts: ' + this.heart_points);
+    this.heartPoints += 10;
+    this.scene.get("StatusDisplay").updateStatus(this.heartPoints);
   }
 }
 
-function progressBar() {
-  let progressBar = this.add.graphics();
-  let progressBox = this.add.graphics();
-  progressBox.fillStyle(0x222222, 0.8);
-  progressBox.fillRect(240, 270, 320, 50);
+class StatusDisplay extends Phaser.Scene {
+  constructor() {
+    super("StatusDisplay");
+  }
 
-  let width = this.cameras.main.width;
-  let height = this.cameras.main.height;
-  let loadingText = this.make.text({
-    x: width / 2,
-    y: height / 2 - 50,
-    text: 'Loading...',
-    style: {
-      font: '20px monospace',
-      fill: '#ffffff'
-    }
-  });
-  loadingText.setOrigin(0.5, 0.5);
+  create() {
+    this.statusText = this.add.text(560, 16, 'Hearts: 0',
+                                    { fontSize: '32px', fill: '#ffffff' });
+  }
 
-  let percentText = this.make.text({
-    x: width / 2,
-    y: height / 2 - 5,
-    text: '0%',
-    style: {
-      font: '18px monospace',
-      fill: '#ffffff'
-    }
-  });
-  percentText.setOrigin(0.5, 0.5);
-
-  let assetText = this.make.text({
-    x: width / 2,
-    y: height / 2 + 50,
-    text: '',
-    style: {
-      font: '18px monospace',
-      fill: '#ffffff'
-    }
-  });
-  assetText.setOrigin(0.5, 0.5);
-
-  this.load.on('progress', function (value) {
-    console.log(value);
-    progressBar.clear();
-    progressBar.fillStyle(0xffffff, 1);
-    progressBar.fillRect(250, 280, 300 * value, 30);
-    percentText.setText(parseInt(value * 100) + '%');
-  });
-
-  this.load.on('fileprogress', function (file) {
-    console.log(file.src);
-    assetText.setText('Loading asset: ' + file.key);
-  });
-
-  this.load.on('complete', function () {
-    console.log('complete');
-    progressBar.destroy();
-    progressBox.destroy();
-    loadingText.destroy();
-    percentText.destroy();
-    assetText.destroy();
-  });
+  updateStatus(heartPoints) {
+    this.statusText.setText('Hearts: ' + heartPoints);
+  }
 }
+
+window.onload = function() {
+  const config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    physics: {
+      default: "arcade",
+      acrcade: {
+        debug: true,
+        gravity: {
+          y: 300
+        }
+      }
+    },
+    scene: [
+      SplashScreen,
+      Credits,
+      SelectLevel,
+      PlayLevel,
+      StatusDisplay
+    ],
+    audio: {
+      disableWebAudio: true
+    }
+  };
+
+  const game = new Phaser.Game(config);
+};
+
