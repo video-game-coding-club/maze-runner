@@ -316,9 +316,8 @@ class PlayLevel extends Phaser.Scene {
     this.background_music = this.sound.add("background_music", { loop: true });
     this.background_music.play();
 
-    this.heart_points = 0;
-    this.statusText = this.add.text(560, 16, 'Hearts: 0',
-                                    { fontSize: '32px', fill: '#ffffff' });
+    this.heartPoints = 0;
+    this.scene.launch("StatusDisplay");
   }
 
   update(time, delta) {
@@ -349,14 +348,30 @@ class PlayLevel extends Phaser.Scene {
     }
 
     if (this.controls.back.isDown) {
+      this.scene.stop("StatusDisplay");
       this.scene.start("SelectLevel");
     }
   }
 
   collectHearts(dude, heart) {
     heart.disableBody(true, true);
-    this.heart_points += 10;
-    this.statusText.setText('Hearts: ' + this.heart_points);
+    this.heartPoints += 10;
+    this.scene.get("StatusDisplay").updateStatus(this.heartPoints);
+  }
+}
+
+class StatusDisplay extends Phaser.Scene {
+  constructor() {
+    super("StatusDisplay");
+  }
+
+  create() {
+    this.statusText = this.add.text(560, 16, 'Hearts: 0',
+                                    { fontSize: '32px', fill: '#ffffff' });
+  }
+
+  updateStatus(heartPoints) {
+    this.statusText.setText('Hearts: ' + heartPoints);
   }
 }
 
@@ -378,7 +393,8 @@ window.onload = function() {
       SplashScreen,
       Credits,
       SelectLevel,
-      PlayLevel
+      PlayLevel,
+      StatusDisplay
     ],
     audio: {
       disableWebAudio: true
