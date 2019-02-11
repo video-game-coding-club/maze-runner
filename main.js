@@ -100,6 +100,7 @@ class SplashScreen extends Phaser.Scene {
   }
 
   preload() {
+    this.progressBar();
     this.load.image("splash", "assets/splash_screen.png");
     this.load.image("button", "assets/button.png");
     this.load.audio("title_music",
