@@ -2,6 +2,7 @@ var gameData = {
   level: -1
 };
 
+// this is a test, please ignore
 class SplashScreen extends Phaser.Scene {
   constructor() {
     super("SplashScreen");
@@ -405,4 +406,3 @@ window.onload = function() {
 
   const game = new Phaser.Game(config);
 };
-
