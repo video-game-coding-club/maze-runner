@@ -74,6 +74,7 @@ class SplashScreen extends Phaser.Scene {
   preload() {
     this.progressBar();
     this.load.audio("background_music", "assets/Ove - Earth Is All We Have .ogg");
+    this.load.audio("coin", "assets/coin.mp3");
     this.load.audio("title_music", "assets/Maze Runner Level Select Music.mp3");
     this.load.image("button", "assets/button.png");
     this.load.image("explosion", "assets/explosion.png");
@@ -308,6 +309,8 @@ class PlayLevel extends Phaser.Scene {
     this.background_music = this.sound.add("background_music", { loop: true });
     this.background_music.play();
 
+    this.heartSoundEffect = this.sound.add("coin");
+
     this.heartPoints = 0;
     this.scene.launch("StatusDisplay");
   }
@@ -348,6 +351,7 @@ class PlayLevel extends Phaser.Scene {
   collectHearts(dude, heart) {
     heart.disableBody(true, true);
     this.heartPoints += 10;
+    this.heartSoundEffect.play();
     this.scene.get("StatusDisplay").updateStatus(this.heartPoints);
   }
 }
