@@ -73,23 +73,16 @@ class SplashScreen extends Phaser.Scene {
 
   preload() {
     this.progressBar();
-    this.load.image("splash", "assets/splash_screen.png");
+    this.load.audio("background_music", "assets/Ove - Earth Is All We Have .ogg");
+    this.load.audio("coin", "assets/coin.mp3");
+    this.load.audio("title_music", "assets/Maze Runner Level Select Music.mp3");
     this.load.image("button", "assets/button.png");
-    this.load.audio("title_music",
-                    "assets/Maze Runner Level Select Music.mp3");
-    this.load.image("tiles", "assets/tiles.png");
     this.load.image("explosion", "assets/explosion.png");
+    this.load.image("splash", "assets/splash_screen.png");
+    this.load.image("tiles", "assets/tiles.png");
+    this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32});
+    this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 10, frameHeight: 10});
     this.load.tilemapTiledJSON("map", "assets/map.json");
-    this.load.spritesheet("dude", "assets/dude.png",
-                          { frameWidth: 24,
-                            frameHeight: 32
-                          });
-    this.load.spritesheet("heart", "assets/heart.png",
-                          { frameWidth: 10,
-                            frameHeight: 10
-                          });
-    this.load.audio("background_music",
-                    "assets/Ove - Earth Is All We Have .ogg");
   }
 
   create() {
@@ -316,6 +309,8 @@ class PlayLevel extends Phaser.Scene {
     this.background_music = this.sound.add("background_music", { loop: true });
     this.background_music.play();
 
+    this.heartSoundEffect = this.sound.add("coin");
+
     this.heartPoints = 0;
     this.scene.launch("StatusDisplay");
   }
@@ -356,6 +351,7 @@ class PlayLevel extends Phaser.Scene {
   collectHearts(dude, heart) {
     heart.disableBody(true, true);
     this.heartPoints += 10;
+    this.heartSoundEffect.play();
     this.scene.get("StatusDisplay").updateStatus(this.heartPoints);
   }
 }
