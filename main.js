@@ -247,11 +247,6 @@ class PlayLevel extends Phaser.Scene {
     /* Resize world to fit the level. */
     this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
-    /* Add the dude. */
-    this.dude = this.physics.add.sprite(10, 10, "dude");
-    this.dude.setBounce(0.2);
-    this.dude.setGravityY(300);
-    this.dude.setCollideWorldBounds(true);
 
     this.anims.create({
       key: "stand",
@@ -270,10 +265,6 @@ class PlayLevel extends Phaser.Scene {
       repeat: -1
     });
 
-    /* This will watch the player and layer every frame to check for
-       collisions. */
-    this.physics.add.collider(this.dude, this.background);
-
     /* Create the hearts. */
     this.anims.create({
       key: "glimmer",
@@ -282,6 +273,15 @@ class PlayLevel extends Phaser.Scene {
       repeat: -1
     });
 
+    /* Add the dude. */
+    this.dude = this.physics.add.sprite(10, 10, "dude");
+    this.dude.setBounce(0.2);
+    this.dude.setGravityY(300);
+    this.dude.setCollideWorldBounds(true);
+
+    /* This will watch the player and layer every frame to check for
+       collisions. */
+    this.physics.add.collider(this.dude, this.backgroundLayer);
     this.hearts = this.physics.add.group({
       key: "heart",
       repeat: 10
