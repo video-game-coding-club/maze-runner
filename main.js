@@ -240,14 +240,17 @@ class PlayLevel extends Phaser.Scene {
       tileWidth: 32,
       tileHeight: 32
     });
-    this.tiles = this.map.addTilesetImage("tiles");
-    this.background = this.map.createStaticLayer("background", this.tiles);
-    this.map.setCollisionBetween(0, 22, this.background);
-
     /* Resize world to fit the level. */
     this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
+    /* Create tileset for background. */
+    this.backgroundTiles = this.map.addTilesetImage("tiles");
 
+    /* Create background layer. */
+    this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
+    this.map.setCollisionBetween(0, 21);
+
+    /* Create Dude animations. */
     this.anims.create({
       key: "stand",
       frames: [ { key: "dude", frame: 2 } ]
@@ -265,7 +268,7 @@ class PlayLevel extends Phaser.Scene {
       repeat: -1
     });
 
-    /* Create the hearts. */
+    /* Create the heart animation. */
     this.anims.create({
       key: "glimmer",
       frames: this.anims.generateFrameNumbers("heart"),
@@ -282,6 +285,8 @@ class PlayLevel extends Phaser.Scene {
     /* This will watch the player and layer every frame to check for
        collisions. */
     this.physics.add.collider(this.dude, this.backgroundLayer);
+
+    /* Create the hearts. */
     this.hearts = this.physics.add.group({
       key: "heart",
       repeat: 10
@@ -295,7 +300,7 @@ class PlayLevel extends Phaser.Scene {
       this.hearts.children.entries[i].setPosition(200 * (i + 1), 10);
     }
 
-    this.physics.add.collider(this.hearts, this.background);
+    this.physics.add.collider(this.hearts, this.backgroundLayer);
     this.physics.add.overlap(this.dude, this.hearts, this.collectHearts, null, this);
 
     this.controls = this.input.keyboard.addKeys({
