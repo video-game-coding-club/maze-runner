@@ -82,7 +82,10 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("tiles", "assets/tiles.png");
     this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32});
     this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 10, frameHeight: 10});
-    this.load.tilemapTiledJSON("map", "assets/map.json");
+    this.load.tilemapTiledJSON("map_1", "assets/map-level-1.json");
+    this.load.tilemapTiledJSON("map_2", "assets/map-level-2.json");
+    this.load.tilemapTiledJSON("map_3", "assets/map-level-3.json");
+    this.load.tilemapTiledJSON("map_4", "assets/map-level-4.json");
   }
 
   create() {
@@ -233,7 +236,7 @@ class PlayLevel extends Phaser.Scene {
   create() {
     /* Create the map. */
     this.map = this.make.tilemap({
-      key: "map",
+      key: "map_" + gameData.level,
       tileWidth: 32,
       tileHeight: 32
     });
