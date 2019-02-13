@@ -79,7 +79,7 @@ class SplashScreen extends Phaser.Scene {
                     "assets/Maze Runner Level Select Music.mp3");
     this.load.image("tiles", "assets/tiles.png");
     this.load.image("explosion", "assets/explosion.png");
-    this.load.tilemapTiledJSON("map", "assets/map.json");
+    this.load.tilemapTiledJSON("map", "assets/map2.json");
     this.load.spritesheet("dude", "assets/dude.png",
                           { frameWidth: 24,
                             frameHeight: 32
@@ -229,13 +229,11 @@ class SelectLevel extends Phaser.Scene {
       gameData.level = 4;
       this.scene.stop("Credits");
       this.scene.start("PlayLevel");
-    } else if (this.levelControls.five.isDown) {
-      gameData.level = 5;
-      this.scene.stop("Credits");
-      this.scene.start("PlayLevel");
     }
   }
 }
+
+var LavaLayer;
 
 class PlayLevel extends Phaser.Scene {
   constructor() {
@@ -250,8 +248,10 @@ class PlayLevel extends Phaser.Scene {
       tileHeight: 32
     });
     this.tiles = this.map.addTilesetImage("tiles");
-    this.layer = this.map.createStaticLayer(gameData.level - 1, this.tiles);
-    this.map.setCollisionBetween(0, 23, this.layer);
+    this.layer = this.map.createStaticLayer(0, this.tiles); //base layer
+    LavaLayer = this.map.createDynamicLayer(1, this.tiles);
+    this.layer.setCollisionBetween(0, 22, this.layer);
+    //LavaLayer.setCollisionBetween(23, 23, LavaLayer);
 
     /* Resize world to fit the level. */
     this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
@@ -261,6 +261,9 @@ class PlayLevel extends Phaser.Scene {
     this.dude.setBounce(0.2);
     this.dude.setGravityY(300);
     this.dude.setCollideWorldBounds(true);
+
+    //this.layer.setTileIndexCallback(23, this.hitLava, this.dude);
+
 
     this.anims.create({
       key: "stand",
@@ -282,6 +285,10 @@ class PlayLevel extends Phaser.Scene {
     /* This will watch the player and layer every frame to check for
        collisions. */
     this.physics.add.collider(this.dude, this.layer);
+    //this.physics.add.collider(this.dude, LavaLayer);
+
+    this.physics.add.overlap(this.dude, LavaLayer, this.hitLava, null, this);
+    //LavaLayer.setTileIndexCallback(23, this.hitLava, this);
 
     /* Create the hearts. */
     this.anims.create({
@@ -356,6 +363,14 @@ class PlayLevel extends Phaser.Scene {
       this.scene.stop("StatusDisplay");
       this.scene.start("SelectLevel");
     }
+  }
+
+
+  hitLava(dude, tile) {
+      tile.alpha = 0.5;
+      //LavaLayer.removeTileAt(tile.x, tile.y); // remove the tile/coin
+      //layer.dirty = true;
+      //return false;
   }
 
   collectHearts(dude, heart) {
