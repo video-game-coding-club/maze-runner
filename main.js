@@ -82,7 +82,10 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("tiles", "assets/tiles.png");
     this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32});
     this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 10, frameHeight: 10});
-    this.load.tilemapTiledJSON("map", "assets/map.json");
+    this.load.tilemapTiledJSON("map_1", "assets/map-level-1.json");
+    this.load.tilemapTiledJSON("map_2", "assets/map-level-2.json");
+    this.load.tilemapTiledJSON("map_3", "assets/map-level-3.json");
+    this.load.tilemapTiledJSON("map_4", "assets/map-level-4.json");
   }
 
   create() {
@@ -233,23 +236,24 @@ class PlayLevel extends Phaser.Scene {
   create() {
     /* Create the map. */
     this.map = this.make.tilemap({
-      key: "map",
+      key: "map_" + gameData.level,
       tileWidth: 32,
       tileHeight: 32
     });
-    this.tiles = this.map.addTilesetImage("tiles");
-    this.layer = this.map.createStaticLayer(gameData.level - 1, this.tiles);
-    this.map.setCollisionBetween(0, 22, this.layer);
-
     /* Resize world to fit the level. */
     this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
-    /* Add the dude. */
-    this.dude = this.physics.add.sprite(10, 10, "dude");
-    this.dude.setBounce(0.2);
-    this.dude.setGravityY(300);
-    this.dude.setCollideWorldBounds(true);
+    /* Create tileset for background. */
+    this.backgroundTiles = this.map.addTilesetImage("tiles");
 
+    /* Create background layer. */
+    this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
+    this.map.setCollisionBetween(0, 21);
+
+    /* Add exit layer. */
+    this.exitLayer = this.map.createStaticLayer("exit", this.backgroundTiles);
+
+    /* Create Dude animations. */
     this.anims.create({
       key: "stand",
       frames: [ { key: "dude", frame: 2 } ]
@@ -267,11 +271,7 @@ class PlayLevel extends Phaser.Scene {
       repeat: -1
     });
 
-    /* This will watch the player and layer every frame to check for
-       collisions. */
-    this.physics.add.collider(this.dude, this.layer);
-
-    /* Create the hearts. */
+    /* Create the heart animation. */
     this.anims.create({
       key: "glimmer",
       frames: this.anims.generateFrameNumbers("heart"),
@@ -279,6 +279,21 @@ class PlayLevel extends Phaser.Scene {
       repeat: -1
     });
 
+    /* Add the dude. */
+    this.dude = this.physics.add.sprite(10, 10, "dude");
+    this.dude.setBounce(0.2);
+    this.dude.setGravityY(300);
+    this.dude.setCollideWorldBounds(true);
+
+    /* This will watch the player and layer every frame to check for
+       collisions. */
+    this.physics.add.collider(this.dude, this.backgroundLayer);
+
+    /* Check whether the Dude is leaving. */
+    this.exitLayer.setTileIndexCallback(19, this.dudeIsLeaving, this);
+    this.physics.add.overlap(this.dude, this.exitLayer);
+
+    /* Create the hearts. */
     this.hearts = this.physics.add.group({
       key: "heart",
       repeat: 10
@@ -292,7 +307,7 @@ class PlayLevel extends Phaser.Scene {
       this.hearts.children.entries[i].setPosition(200 * (i + 1), 10);
     }
 
-    this.physics.add.collider(this.hearts, this.layer);
+    this.physics.add.collider(this.hearts, this.backgroundLayer);
     this.physics.add.overlap(this.dude, this.hearts, this.collectHearts, null, this);
 
     this.controls = this.input.keyboard.addKeys({
@@ -353,6 +368,10 @@ class PlayLevel extends Phaser.Scene {
     this.heartPoints += 10;
     this.heartSoundEffect.play();
     this.scene.get("StatusDisplay").updateStatus(this.heartPoints);
+  }
+
+  dudeIsLeaving(dude, tile) {
+    console.log("The dude is leaving");
   }
 }
 
