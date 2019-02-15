@@ -207,23 +207,21 @@ class SelectLevel extends Phaser.Scene {
     this.scene.launch("Credits");
   }
 
+  playLevel(level) {
+    gameData.level = level;
+    this.scene.stop("Credits");
+    this.scene.start("PlayLevel");
+  }
+
   update(time, delta) {
     if (this.levelControls.one.isDown) {
-      gameData.level = 1;
-      this.scene.stop("Credits");
-      this.scene.start("PlayLevel");
+      this.playLevel(1);
     } else if (this.levelControls.two.isDown) {
-      gameData.level = 2;
-      this.scene.stop("Credits");
-      this.scene.start("PlayLevel");
+      this.playLevel(2);
     } else if (this.levelControls.three.isDown) {
-      gameData.level = 3;
-      this.scene.stop("Credits");
-      this.scene.start("PlayLevel");
+      this.playLevel(3);
     } else if (this.levelControls.four.isDown) {
-      gameData.level = 4;
-      this.scene.stop("Credits");
-      this.scene.start("PlayLevel");
+      this.playLevel(4);
     }
   }
 }
