@@ -182,12 +182,6 @@ class SelectLevel extends Phaser.Scene {
     for (let i = 0; i < 4; i++) {
       this.button[i] = this.add.sprite(150, 60 + i * 80, "button");
       this.button[i].setScale(0.3, 0.15);
-      this.levelControls = this.input.keyboard.addKeys({
-        "one": Phaser.Input.Keyboard.KeyCodes.ONE,
-        "two": Phaser.Input.Keyboard.KeyCodes.TWO,
-        "three": Phaser.Input.Keyboard.KeyCodes.THREE,
-        "four": Phaser.Input.Keyboard.KeyCodes.FOUR
-      });
       this.buttonText[i] = this.add.text(80, 40 + i * 80, 'Level ' + (i + 1),
                                          {
                                            fontSize: '32px',
@@ -200,6 +194,13 @@ class SelectLevel extends Phaser.Scene {
                                            shadowColor: "#101010"
                                          });
     }
+    this.levelControls = this.input.keyboard.addKeys({
+      "zero": Phaser.Input.Keyboard.KeyCodes.ZERO,
+      "one": Phaser.Input.Keyboard.KeyCodes.ONE,
+      "two": Phaser.Input.Keyboard.KeyCodes.TWO,
+      "three": Phaser.Input.Keyboard.KeyCodes.THREE,
+      "four": Phaser.Input.Keyboard.KeyCodes.FOUR
+    });
     this.sound.stopAll();
     this.background_music = this.sound.add("title_music", { loop: true });
     this.background_music.play();
