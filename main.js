@@ -82,6 +82,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("tiles", "assets/tiles.png");
     this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32});
     this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 10, frameHeight: 10});
+    this.load.tilemapTiledJSON("map_0", "assets/map-level-0.json");
     this.load.tilemapTiledJSON("map_1", "assets/map-level-1.json");
     this.load.tilemapTiledJSON("map_2", "assets/map-level-2.json");
     this.load.tilemapTiledJSON("map_3", "assets/map-level-3.json");
@@ -179,10 +180,10 @@ class SelectLevel extends Phaser.Scene {
   create() {
     this.button = [];
     this.buttonText = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
       this.button[i] = this.add.sprite(150, 60 + i * 80, "button");
       this.button[i].setScale(0.3, 0.15);
-      this.buttonText[i] = this.add.text(80, 40 + i * 80, 'Level ' + (i + 1),
+      this.buttonText[i] = this.add.text(80, 40 + i * 80, 'Level ' + i,
                                          {
                                            fontSize: '32px',
                                            fill: '#ffffff',
@@ -215,7 +216,9 @@ class SelectLevel extends Phaser.Scene {
   }
 
   update(time, delta) {
-    if (this.levelControls.one.isDown) {
+    if (this.levelControls.zero.isDown) {
+      this.playLevel(0);
+    } else if (this.levelControls.one.isDown) {
       this.playLevel(1);
     } else if (this.levelControls.two.isDown) {
       this.playLevel(2);
