@@ -298,17 +298,15 @@ class PlayLevel extends Phaser.Scene {
     this.gameLayer.setTileIndexCallback(19, this.dudeIsLeaving, this);
 
     /* Create the hearts. */
-    this.hearts = this.physics.add.group({
-      key: "heart",
-      repeat: 10
+    this.hearts = this.map.createFromObjects("hearts", 0, {
+      key: "heart", frame: 0
     });
 
-    for (let i = 0; i < this.hearts.children.size; i++) {
+    for (let i = 0; i < this.hearts.length; i++) {
       this.hearts.children.entries[i].setBounce(0.2);
       this.hearts.children.entries[i].setGravityY(100);
       this.hearts.children.entries[i].setCollideWorldBounds(true);
       this.hearts.children.entries[i].anims.play("glimmer");
-      this.hearts.children.entries[i].setPosition(200 * (i + 1), 10);
     }
 
     /* Watch for overlap between the dude and the hearts. */
