@@ -253,6 +253,7 @@ class PlayLevel extends Phaser.Scene {
 
     /* Create background layer. */
     this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
+    this.gameLayer = this.map.createStaticLayer("game", this.backgroundTiles);
     this.map.setCollisionBetween(0, 21);
 
     /* Add exit layer. */
@@ -292,7 +293,7 @@ class PlayLevel extends Phaser.Scene {
 
     /* This will watch the player and layer every frame to check for
        collisions. */
-    this.physics.add.collider(this.dude, this.backgroundLayer);
+    this.physics.add.collider(this.dude, this.gameLayer);
 
     /* Check whether the Dude is leaving. */
     this.physics.add.overlap(this.dude, this.exitLayer, this.dudeIsLeaving);
@@ -311,7 +312,7 @@ class PlayLevel extends Phaser.Scene {
       this.hearts.children.entries[i].setPosition(200 * (i + 1), 10);
     }
 
-    this.physics.add.collider(this.hearts, this.backgroundLayer);
+    this.physics.add.collider(this.hearts, this.gameLayer);
     this.physics.add.overlap(this.dude, this.hearts, this.collectHearts, null, this);
 
     this.controls = this.input.keyboard.addKeys({
