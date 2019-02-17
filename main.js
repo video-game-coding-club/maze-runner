@@ -254,7 +254,7 @@ class PlayLevel extends Phaser.Scene {
     /* Create background layer. */
     this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
     this.gameLayer = this.map.createStaticLayer("game", this.backgroundTiles);
-    this.map.setCollisionBetween(0, 21);
+    this.map.setCollisionByProperty({ collides: true });
 
     /* Add exit layer. */
     this.exitLayer = this.map.createStaticLayer("exit", this.backgroundTiles);
@@ -296,7 +296,7 @@ class PlayLevel extends Phaser.Scene {
     this.physics.add.collider(this.dude, this.gameLayer);
 
     /* Check whether the Dude is leaving. */
-    this.physics.add.overlap(this.dude, this.exitLayer, this.dudeIsLeaving);
+    this.physics.add.overlap(this.dude, this.backgroundLayer, this.dudeIsLeaving);
 
     /* Create the hearts. */
     this.hearts = this.physics.add.group({
