@@ -77,6 +77,8 @@ class SplashScreen extends Phaser.Scene {
     this.load.audio("coin", "assets/coin.mp3");
     this.load.audio("title_music", "assets/Maze Runner Level Select Music.mp3");
     this.load.image("button", "assets/button.png");
+    this.load.image("energyEmpty", "assets/emergy_bar_empty.png");
+    this.load.image("energyFull", "assets/emergy_bar_full.png");
     this.load.image("explosion", "assets/explosion.png");
     this.load.image("splash", "assets/splash_screen.png");
     this.load.image("tiles", "assets/tiles.png");
