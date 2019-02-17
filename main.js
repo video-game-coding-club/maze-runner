@@ -80,6 +80,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("energyEmpty", "assets/emergy_bar_empty.png");
     this.load.image("energyFull", "assets/emergy_bar_full.png");
     this.load.image("explosion", "assets/explosion.png");
+    this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("splash", "assets/splash_screen.png");
     this.load.image("tiles", "assets/tiles.png");
     this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32});
@@ -384,8 +385,8 @@ class StatusDisplay extends Phaser.Scene {
   }
 
   create() {
-    this.statusHeart = this.add.sprite(540, 28, "heart");
-    this.statusHeart.setScale(3.5);
+    this.statusHeart = this.add.sprite(540, 30, "heartIcon");
+    this.statusHeart.setScale(1.8);
     this.statusText = this.add.text(560, 16, '0',
                                     { fontSize: '32px', fill: '#ffffff' });
   }
