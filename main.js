@@ -384,8 +384,8 @@ class StatusDisplay extends Phaser.Scene {
   }
 
   create() {
-    this.statusHeart = this.add.sprite(540, 28, "heart");
-    this.statusHeart.setScale(3.5);
+    this.statusHeart = this.add.sprite(540, 30, "heartIcon");
+    this.statusHeart.setScale(1.8);
     this.statusText = this.add.text(560, 16, '0',
                                     { fontSize: '32px', fill: '#ffffff' });
   }
