@@ -296,7 +296,7 @@ class PlayLevel extends Phaser.Scene {
     this.physics.add.collider(this.dude, this.gameLayer);
 
     /* Check whether the Dude is leaving. */
-    this.physics.add.overlap(this.dude, this.backgroundLayer, this.dudeIsLeaving);
+    this.physics.add.overlap(this.dude, this.exitLayer, this.dudeIsLeaving);
 
     /* Create the hearts. */
     this.hearts = this.physics.add.group({
