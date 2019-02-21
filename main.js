@@ -384,6 +384,8 @@ class PlayLevel extends Phaser.Scene {
 
   dudeIsLeaving(dude, tile) {
     console.log("The dude is leaving");
+    this.scene.stop("StatusDisplay");
+    this.scene.start("SelectLevel");
   }
 }
 
