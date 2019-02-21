@@ -253,8 +253,9 @@ class PlayLevel extends Phaser.Scene {
 
     /* Create background layer. */
     this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
+
+    /* Create the game layer. */
     this.gameLayer = this.map.createStaticLayer("game", this.backgroundTiles);
-    this.map.setCollisionByProperty({ collides: true });
 
     /* Add exit layer. */
     this.exitLayer = this.map.createStaticLayer("exit", this.backgroundTiles);
@@ -293,10 +294,12 @@ class PlayLevel extends Phaser.Scene {
 
     /* This will watch the player and layer every frame to check for
        collisions. */
+    this.gameLayer.setCollisionByProperty({ collides: true });
     this.physics.add.collider(this.dude, this.gameLayer);
 
     /* Check whether the Dude is leaving. */
-    this.physics.add.overlap(this.dude, this.backgroundLayer, this.dudeIsLeaving);
+    this.exitLayer.setTileIndexCallback(19, this.dudeIsLeaving, this);
+    this.physics.add.overlap(this.dude, this.exitLayer);
 
     /* Create the hearts. */
     this.hearts = this.physics.add.group({
@@ -312,6 +315,7 @@ class PlayLevel extends Phaser.Scene {
       this.hearts.children.entries[i].setPosition(200 * (i + 1), 10);
     }
 
+    /* Watch for overlap between the dude and the hearts. */
     this.physics.add.collider(this.hearts, this.gameLayer);
     this.physics.add.overlap(this.dude, this.hearts, this.collectHearts, null, this);
 
@@ -322,15 +326,18 @@ class PlayLevel extends Phaser.Scene {
       "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
     });
 
+    /* Set up the camera. */
     this.cameras.main.startFollow(this.dude);
     this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
+    /* Setup the sound. */
     this.sound.stopAll();
     this.background_music = this.sound.add("background_music", { loop: true });
     this.background_music.play();
 
     this.heartSoundEffect = this.sound.add("coin");
 
+    /* Launch the status display. */
     this.heartPoints = 0;
     this.scene.launch("StatusDisplay");
   }
@@ -377,6 +384,8 @@ class PlayLevel extends Phaser.Scene {
 
   dudeIsLeaving(dude, tile) {
     console.log("The dude is leaving");
+    this.scene.stop("StatusDisplay");
+    this.scene.start("SelectLevel");
   }
 }
 

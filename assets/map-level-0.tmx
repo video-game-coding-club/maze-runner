@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="1">
- <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" tilecount="24" columns="6">
-  <image source="tiles.png" width="192" height="128"/>
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="1">
+ <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" tilecount="36" columns="6">
+  <image source="tiles.png" width="192" height="192"/>
   <tile id="0">
    <properties>
     <property name="collides" type="bool" value="true"/>
@@ -114,67 +114,121 @@
   </tile>
   <tile id="22">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="23">
+   <properties>
+    <property name="collides" type="bool" value="false"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="30">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="31">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="35">
    <properties>
     <property name="collides" type="bool" value="true"/>
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="25" name="heart" tilewidth="10" tileheight="10" tilecount="6" columns="6">
+ <tileset firstgid="37" name="heart" tilewidth="10" tileheight="10" tilecount="6" columns="6">
   <image source="heart.png" width="60" height="10"/>
  </tileset>
- <layer id="7" name="background" width="30" height="20" opacity="0.5">
+ <layer id="9" name="background" width="10" height="10" opacity="0.5">
   <data encoding="csv">
-7,12,8,9,8,7,9,7,7,9,8,8,9,8,7,9,7,9,8,7,12,8,9,7,9,12,8,12,8,9,
-9,8,12,8,8,9,8,12,12,8,9,9,7,8,7,8,8,9,8,7,12,9,9,8,9,9,9,8,7,9,
-12,12,8,12,9,9,8,12,8,7,12,7,12,7,12,12,9,7,7,8,9,8,9,7,8,7,12,9,9,9,
-8,12,9,8,9,8,8,12,9,9,12,9,7,8,12,7,12,7,12,12,12,7,8,9,7,7,9,12,8,12,
-9,8,8,12,9,9,8,8,9,8,12,9,12,12,7,8,7,9,9,12,9,8,8,12,7,8,7,12,12,12,
-8,12,12,9,9,8,7,7,8,9,7,8,8,12,8,12,8,8,7,9,9,7,8,7,9,8,7,8,9,12,
-9,7,12,9,7,7,9,12,8,8,8,9,7,8,12,7,7,7,7,7,7,9,7,12,7,12,8,9,7,7,
-9,7,12,7,7,9,12,12,7,9,9,9,8,12,8,9,9,9,8,12,7,8,12,7,7,9,12,7,9,9,
-9,8,7,12,12,9,12,8,8,8,8,8,7,9,7,9,9,8,7,9,12,7,7,8,9,9,12,9,7,8,
-7,12,9,8,9,8,12,8,7,7,8,9,7,8,9,12,7,12,7,12,7,12,12,7,12,7,12,7,12,7,
-7,9,8,8,7,7,8,9,8,7,8,9,9,8,9,9,12,7,8,9,9,7,12,12,9,9,7,8,8,8,
-7,12,9,12,7,12,8,8,7,8,9,8,8,7,9,7,9,8,8,12,12,8,7,12,12,8,8,12,7,12,
-8,8,7,7,9,8,9,8,7,8,9,8,12,7,7,8,12,7,7,7,12,8,9,7,7,9,12,8,8,8,
-12,12,7,9,8,9,7,7,9,9,12,8,12,9,8,9,12,7,12,9,9,9,7,12,7,9,7,12,7,8,
-12,7,12,9,12,9,12,12,7,12,7,8,8,8,8,8,12,8,12,8,12,7,9,7,12,8,12,12,7,8,
-7,8,7,8,9,7,8,12,12,12,8,7,8,12,9,12,9,7,8,7,12,7,7,7,8,12,8,8,8,12,
-9,7,9,9,8,9,12,12,8,7,7,8,8,9,7,9,8,9,7,9,8,9,8,9,8,12,9,9,9,7,
-9,12,7,7,12,8,8,12,9,7,7,8,8,8,12,9,7,9,9,7,7,8,9,7,7,7,8,9,12,7,
-9,12,8,12,9,7,7,8,8,9,7,7,9,12,12,9,7,8,9,12,12,8,9,8,7,12,9,12,7,8,
-8,7,9,9,9,12,8,8,12,8,8,7,12,12,8,12,8,9,9,9,12,9,7,7,7,7,7,12,7,8
+7,12,8,9,8,7,9,7,7,9,
+9,8,12,8,8,9,8,12,12,8,
+12,12,8,12,9,9,8,12,8,7,
+8,12,9,8,9,8,8,12,9,9,
+9,8,8,12,9,9,8,8,9,8,
+8,12,12,9,9,8,7,7,8,9,
+9,7,12,9,7,7,9,12,8,8,
+9,7,12,7,7,9,12,12,7,9,
+9,8,7,12,12,9,12,8,8,8,
+7,12,9,8,9,8,12,8,7,7
 </data>
  </layer>
- <layer id="5" name="game" width="30" height="20">
+ <layer id="10" name="game" width="10" height="10">
   <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-6,6,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,5,3,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,5,3,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,5,5,3,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-4,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-6,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-6,6,6,1,6,6,6,6,1,6,6,6,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-6,1,6,6,6,6,6,6,6,0,6,6,6,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+6,6,6,6,0,0,0,0,0,0,
+0,0,0,5,3,5,0,0,0,0,
+0,0,0,0,0,5,3,5,5,0,
+0,0,0,0,0,5,5,3,5,0,
+4,0,0,0,0,0,0,0,0,0,
+6,0,0,0,0,0,0,0,0,0,
+6,6,6,1,6,6,6,6,1,6,
+6,1,6,6,6,6,6,6,6,0
+</data>
+ </layer>
+ <layer id="11" name="exit" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,19,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
  <objectgroup id="7" name="hearts">
-  <object id="1" gid="25" x="108" y="53" width="10" height="10"/>
+  <object id="1" gid="37" x="108" y="53" width="10" height="10"/>
  </objectgroup>
 </map>
