@@ -1,6 +1,4 @@
-# maze-runner
-
-Maze Runner
+# Maze Runner
 
 ## Quick Links
 
