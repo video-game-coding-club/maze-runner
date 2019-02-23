@@ -370,13 +370,13 @@ class PlayLevel extends Phaser.Scene {
     heart.destroy();
     this.heartPoints += 10;
     this.heartSoundEffect.play();
-    this.scene.get("StatusDisplay").updateStatus(this.heartPoints);
+    this.scene.get("StatusDisplay").setHeartPoints(this.heartPoints);
   }
 
   dudeInLava(dude, tile) {
     console.log("The dude in lava");
     this.healthPoints -= 1;
-    this.scene.get("StatusDisplay").updateStatus(this.healthPoints);
+    this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
   }
 
   dudeIsLeaving(dude, tile) {
@@ -398,21 +398,23 @@ class StatusDisplay extends Phaser.Scene {
   }
 
   create() {
-    this.statusHeart = this.add.sprite(540, 30, "heartIcon");
+    this.statusHeart = this.add.sprite(120, 30, "heartIcon");
     this.statusHeart.setScale(1.8);
-    this.statusText = this.add.text(560, 16, '0',
+    this.statusText = this.add.text(145, 16, '0',
                                     { fontSize: '32px', fill: '#ffffff' });
+
     // health status - to be replaced with icons
-    this.healthText = this.add.text(20, 16, 'health:',
+    this.healthText = this.add.text(10, 50, 'health',
                                    { fontSize: '32px', fill: '#ffffff' });
-    this.healthStatusText = this.add.text(150, 16, '100',
+    this.healthStatusText = this.add.text(145, 50, '100',
                                    { fontSize: '32px', fill: '#ffffff' });
   }
 
-  updateStatus(heartPoints) {
+  setHeartPoints(heartPoints) {
     this.statusText.setText(heartPoints);
   }
-  updateStatus(healthPoints) {
+
+  setHealthPoints(healthPoints) {
     this.healthStatusText.setText(healthPoints);
   }
 }
