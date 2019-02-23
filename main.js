@@ -257,6 +257,9 @@ class PlayLevel extends Phaser.Scene {
     /* Create the game layer. */
     this.gameLayer = this.map.createStaticLayer("game", this.backgroundTiles);
 
+    /* Create foreground layer. Uses same tileset as background */
+    this.foregroundLayer = this.map.createStaticLayer("foreground", this.backgroundTiles);
+
     /* Create Dude animations. */
     this.anims.create({
       key: "stand",
@@ -296,6 +299,7 @@ class PlayLevel extends Phaser.Scene {
 
     /* Check whether the Dude is leaving. */
     this.gameLayer.setTileIndexCallback(19, this.dudeIsLeaving, this);
+    this.gameLayer.setTileIndexCallback(37, this.dudeInLava, this);
 
     /* Create the hearts. */
     this.hearts = this.map.createFromObjects("hearts", 37, { key: "heart" });
@@ -325,6 +329,7 @@ class PlayLevel extends Phaser.Scene {
 
     /* Launch the status display. */
     this.heartPoints = 0;
+    this.healthPoints = 100;
     this.scene.launch("StatusDisplay");
   }
 
@@ -368,6 +373,12 @@ class PlayLevel extends Phaser.Scene {
     this.scene.get("StatusDisplay").updateStatus(this.heartPoints);
   }
 
+  dudeInLava(dude, tile) {
+    console.log("The dude in lava");
+    this.healthPoints -= 1;
+    this.scene.get("StatusDisplay").updateStatus(this.healthPoints);
+  }
+
   dudeIsLeaving(dude, tile) {
     console.log("The dude is leaving");
     this.cameras.main.fade(1000, 0, 0, 0, false, this.dudeIsOut);
@@ -391,10 +402,18 @@ class StatusDisplay extends Phaser.Scene {
     this.statusHeart.setScale(1.8);
     this.statusText = this.add.text(560, 16, '0',
                                     { fontSize: '32px', fill: '#ffffff' });
+    // health status - to be replaced with icons
+    this.healthText = this.add.text(20, 16, 'health:',
+                                   { fontSize: '32px', fill: '#ffffff' });
+    this.healthStatusText = this.add.text(150, 16, '100',
+                                   { fontSize: '32px', fill: '#ffffff' });
   }
 
   updateStatus(heartPoints) {
     this.statusText.setText(heartPoints);
+  }
+  updateStatus(healthPoints) {
+    this.healthStatusText.setText(healthPoints);
   }
 }
 
