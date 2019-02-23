@@ -257,9 +257,6 @@ class PlayLevel extends Phaser.Scene {
     /* Create the game layer. */
     this.gameLayer = this.map.createStaticLayer("game", this.backgroundTiles);
 
-    /* Create foreground layer. Uses same tileset as background */
-    this.foregroundLayer = this.map.createStaticLayer("foreground", this.backgroundTiles);
-
     /* Create Dude animations. */
     this.anims.create({
       key: "stand",
@@ -299,7 +296,13 @@ class PlayLevel extends Phaser.Scene {
 
     /* Check whether the Dude is leaving. */
     this.gameLayer.setTileIndexCallback(19, this.dudeIsLeaving, this);
-    this.gameLayer.setTileIndexCallback(37, this.dudeInLava, this);
+
+    /* Create foreground layer. Uses same tileset as background */
+    this.foregroundLayer = this.map.createStaticLayer("foreground", this.backgroundTiles);
+
+    /* Check whether the dude is in lava. */
+    this.physics.add.collider(this.dude, this.foregroundLayer);
+    this.foregroundLayer.setTileIndexCallback(37, this.dudeInLava, this);
 
     /* Create the hearts. */
     this.hearts = this.map.createFromObjects("hearts", 37, { key: "heart" });
