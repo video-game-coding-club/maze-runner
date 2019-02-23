@@ -297,7 +297,9 @@ class PlayLevel extends Phaser.Scene {
     /* Check whether the Dude is leaving. */
     this.gameLayer.setTileIndexCallback(19, this.dudeIsLeaving, this);
 
-    /* Create foreground layer. Uses same tileset as background */
+    /* Create foreground layer. Uses same tileset as background. We
+     * need to create this layer _after_ we add the dude sprite so
+     * that the dude is hidden by this layer. */
     this.foregroundLayer = this.map.createStaticLayer("foreground", this.backgroundTiles);
 
     /* Check whether the dude is in lava. */
