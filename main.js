@@ -253,6 +253,9 @@ class PlayLevel extends Phaser.Scene {
     /* Create tileset for background. */
     this.backgroundTiles = this.map.addTilesetImage("tiles");
 
+    /* Add lava tiles. */
+    this.lavaTiles = this.map.addTilesetImage("lava");
+
     /* Create background layer. */
     this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
 
@@ -299,14 +302,27 @@ class PlayLevel extends Phaser.Scene {
     /* Check whether the Dude is leaving. */
     this.gameLayer.setTileIndexCallback(19, this.dudeIsLeaving, this);
 
-    /* Create foreground layer. Uses same tileset as background. We
-     * need to create this layer _after_ we add the dude sprite so
-     * that the dude is hidden by this layer. */
-    this.foregroundLayer = this.map.createStaticLayer("foreground", this.backgroundTiles);
+    /* Create foreground layer. We need to create this layer _after_
+     * we add the dude sprite so that the dude is hidden by this
+     * layer. */
+    this.anims.create({
+      key: "lava",
+      frames: this.anims.generateFrameNumbers("lava"),
+      frameRate: 1,
+      repeat: -1
+    });
 
-    /* Check whether the dude is in lava. */
-    this.physics.add.collider(this.dude, this.foregroundLayer);
-    this.foregroundLayer.setTileIndexCallback(37, this.dudeInLava, this);
+    this.foregroundLayer = this.map.createDynamicLayer("foreground", this.lavaTiles);
+    this.lavaTiles = this.physics.add.staticGroup();
+    this.foregroundLayer.forEachTile(tile => {
+      if (tile.index in [44, 45]) {
+        const x = tile.getCenterX();
+        const y = tile.getCenterY();
+        const lava = this.lavaTiles.create(x, y, "lava");
+        lava.anims.play("lava");
+        this.foregroundLayer.removeTileAt(tile.x, tile.y);
+      }
+    });
 
     /* Create the hearts. */
     this.hearts = this.map.createFromObjects("hearts", 43, { key: "heart" });
@@ -372,6 +388,10 @@ class PlayLevel extends Phaser.Scene {
       this.scene.stop("StatusDisplay");
       this.scene.start("SelectLevel");
     }
+
+    if (this.physics.world.overlap(this.dude, this.lavaTiles)) {
+      console.log("lava....");
+    }
   }
 
   collectHearts(dude, heart) {
@@ -385,9 +405,11 @@ class PlayLevel extends Phaser.Scene {
   }
 
   dudeInLava(dude, tile) {
-    console.log("The dude in lava");
-    this.healthPoints -= 1;
-    this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
+    if (tile.index >= 0) {
+      console.log("The dude in lava");
+      this.healthPoints -= 1;
+      this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
+    }
   }
 
   dudeIsLeaving(dude, tile) {
