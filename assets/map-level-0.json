@@ -14,7 +14,7 @@
          "y":0
         }, 
         {
-         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 5, 0, 0, 19, 0, 0, 0, 0, 0, 0, 5, 3, 5, 5, 0, 0, 0, 0, 0, 0, 5, 5, 3, 5, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 1, 6, 6, 6, 6, 1, 6, 6, 1, 6, 6, 6, 6, 6, 6, 6, 0],
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 5, 5, 0, 19, 0, 0, 0, 0, 5, 5, 3, 5, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 1, 6, 6, 6, 6, 1, 6, 6, 1, 6, 6, 6, 6, 6, 6, 6, 0],
          "height":10,
          "id":10,
          "name":"game",
@@ -27,20 +27,68 @@
         }, 
         {
          "draworder":"topdown",
-         "id":7,
+         "id":16,
          "name":"hearts",
          "objects":[
                 {
                  "gid":37,
-                 "height":10,
-                 "id":1,
+                 "height":18,
+                 "id":6,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":10,
-                 "x":108,
-                 "y":53
+                 "width":18,
+                 "x":167,
+                 "y":58
+                }, 
+                {
+                 "gid":37,
+                 "height":18,
+                 "id":7,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":18,
+                 "x":198,
+                 "y":90
+                }, 
+                {
+                 "gid":37,
+                 "height":18,
+                 "id":9,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":18,
+                 "x":43,
+                 "y":251
+                }, 
+                {
+                 "gid":37,
+                 "height":18,
+                 "id":10,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":18,
+                 "x":134,
+                 "y":251
+                }, 
+                {
+                 "gid":37,
+                 "height":18,
+                 "id":11,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":18,
+                 "x":258,
+                 "y":252
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -48,8 +96,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":12,
- "nextobjectid":1,
+ "nextlayerid":17,
+ "nextobjectid":13,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.2",
@@ -399,17 +447,17 @@
          "tilewidth":32
         }, 
         {
-         "columns":6,
+         "columns":1,
          "firstgid":37,
-         "image":"heart.png",
-         "imageheight":10,
-         "imagewidth":60,
+         "image":"heart_green_frame.png",
+         "imageheight":18,
+         "imagewidth":18,
          "margin":0,
          "name":"heart",
          "spacing":0,
-         "tilecount":6,
-         "tileheight":10,
-         "tilewidth":10
+         "tilecount":1,
+         "tileheight":18,
+         "tilewidth":18
         }],
  "tilewidth":32,
  "type":"map",
