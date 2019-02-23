@@ -86,6 +86,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("tiles", "assets/tiles.png");
     this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32});
     this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 10, frameHeight: 10});
+    this.load.spritesheet("lava", "assets/lava.png", { frameWidth: 32, frameHeight: 32});
     this.load.tilemapTiledJSON("map_0", "assets/map-level-0.json");
     this.load.tilemapTiledJSON("map_1", "assets/map-level-1.json");
     this.load.tilemapTiledJSON("map_2", "assets/map-level-2.json");
