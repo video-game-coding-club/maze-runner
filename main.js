@@ -324,6 +324,7 @@ class PlayLevel extends Phaser.Scene {
     /* Set up the camera. */
     this.cameras.main.startFollow(this.dude);
     this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+    this.cameras.main.setZoom(2);
 
     /* Setup the sound. */
     this.sound.stopAll();
