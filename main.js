@@ -80,6 +80,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("energyEmpty", "assets/emergy_bar_empty.png");
     this.load.image("energyFull", "assets/emergy_bar_full.png");
     this.load.image("explosion", "assets/explosion.png");
+    this.load.image("gameOver", "assets/game_over.png");
     this.load.image("healthStatus", "assets/health_status.png");
     this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("splash", "assets/splash_screen.png");
@@ -390,7 +391,13 @@ class PlayLevel extends Phaser.Scene {
     }
 
     if (this.physics.world.overlap(this.dude, this.lavaTiles)) {
-      console.log("lava....");
+      console.log("The dude in lava");
+      this.healthPoints -= 0.1;
+      if (this.healthPoints <= 0) {
+        this.scene.start("GameOver");
+      } else {
+        this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
+      }
     }
   }
 
@@ -402,14 +409,6 @@ class PlayLevel extends Phaser.Scene {
     }
     this.heartSoundEffect.play();
     this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
-  }
-
-  dudeInLava(dude, tile) {
-    if (tile.index >= 0) {
-      console.log("The dude in lava");
-      this.healthPoints -= 1;
-      this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
-    }
   }
 
   dudeIsLeaving(dude, tile) {
@@ -440,6 +439,17 @@ class StatusDisplay extends Phaser.Scene {
   }
 }
 
+class GameOver extends Phaser.Scene {
+  constructor() {
+    super("GameOver");
+  }
+
+  create() {
+    this.gameOver = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "gameOver");
+    this.gameOver.setScale(0.2);
+  }
+}
+
 window.onload = function() {
   const config = {
     type: Phaser.AUTO,
@@ -462,7 +472,8 @@ window.onload = function() {
       Credits,
       SelectLevel,
       PlayLevel,
-      StatusDisplay
+      StatusDisplay,
+      GameOver
     ],
     audio: {
       disableWebAudio: true
