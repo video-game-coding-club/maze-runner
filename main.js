@@ -1,5 +1,6 @@
 var gameData = {
-  level: -1
+  level: -1,
+  gameOver: false
 };
 
 class SplashScreen extends Phaser.Scene {
@@ -80,12 +81,14 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("energyEmpty", "assets/emergy_bar_empty.png");
     this.load.image("energyFull", "assets/emergy_bar_full.png");
     this.load.image("explosion", "assets/explosion.png");
+    this.load.image("gameOver", "assets/game_over.png");
     this.load.image("healthStatus", "assets/health_status.png");
     this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("splash", "assets/splash_screen.png");
     this.load.image("tiles", "assets/tiles.png");
     this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32});
     this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 10, frameHeight: 10});
+    this.load.spritesheet("lava", "assets/lava.png", { frameWidth: 32, frameHeight: 32});
     this.load.tilemapTiledJSON("map_0", "assets/map-level-0.json");
     this.load.tilemapTiledJSON("map_1", "assets/map-level-1.json");
     this.load.tilemapTiledJSON("map_2", "assets/map-level-2.json");
@@ -252,6 +255,9 @@ class PlayLevel extends Phaser.Scene {
     /* Create tileset for background. */
     this.backgroundTiles = this.map.addTilesetImage("tiles");
 
+    /* Add lava tiles. */
+    this.lavaTiles = this.map.addTilesetImage("lava");
+
     /* Create background layer. */
     this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
 
@@ -298,14 +304,27 @@ class PlayLevel extends Phaser.Scene {
     /* Check whether the Dude is leaving. */
     this.gameLayer.setTileIndexCallback(19, this.dudeIsLeaving, this);
 
-    /* Create foreground layer. Uses same tileset as background. We
-     * need to create this layer _after_ we add the dude sprite so
-     * that the dude is hidden by this layer. */
-    this.foregroundLayer = this.map.createStaticLayer("foreground", this.backgroundTiles);
+    /* Create foreground layer. We need to create this layer _after_
+     * we add the dude sprite so that the dude is hidden by this
+     * layer. */
+    this.anims.create({
+      key: "lava",
+      frames: this.anims.generateFrameNumbers("lava"),
+      frameRate: 1,
+      repeat: -1
+    });
 
-    /* Check whether the dude is in lava. */
-    this.physics.add.collider(this.dude, this.foregroundLayer);
-    this.foregroundLayer.setTileIndexCallback(37, this.dudeInLava, this);
+    this.foregroundLayer = this.map.createDynamicLayer("foreground", this.lavaTiles);
+    this.lavaTiles = this.physics.add.staticGroup();
+    this.foregroundLayer.forEachTile(tile => {
+      if ([44, 45].includes(tile.index)) {
+        const x = tile.getCenterX();
+        const y = tile.getCenterY();
+        const lava = this.lavaTiles.create(x, y, "lava");
+        lava.anims.play("lava");
+        this.foregroundLayer.removeTileAt(tile.x, tile.y);
+      }
+    });
 
     /* Create the hearts. */
     this.hearts = this.map.createFromObjects("hearts", 43, { key: "heart" });
@@ -338,9 +357,16 @@ class PlayLevel extends Phaser.Scene {
     this.heartPoints = 0;
     this.healthPoints = 100;
     this.scene.launch("StatusDisplay");
+
+    gameData.gameOver = false;
   }
 
   update(time, delta) {
+    if (this.controls.back.isDown) {
+      this.scene.stop("StatusDisplay");
+      this.scene.start("SelectLevel");
+    }
+
     if (this.controls.right.isDown) {
       this.dude.setFlipX(false);
       this.dude.setVelocityX(100);
@@ -367,9 +393,16 @@ class PlayLevel extends Phaser.Scene {
       this.dude.anims.play("jump");
     }
 
-    if (this.controls.back.isDown) {
-      this.scene.stop("StatusDisplay");
-      this.scene.start("SelectLevel");
+    if (this.physics.world.overlap(this.dude, this.lavaTiles)) {
+      console.log("The dude in lava");
+      this.healthPoints -= 0.1;
+      if (this.healthPoints <= 0) {
+        gameData.gameOver = true;
+        this.scene.stop("StatusDisplay");
+        this.scene.start("GameOver");
+      } else {
+        this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
+      }
     }
   }
 
@@ -380,12 +413,6 @@ class PlayLevel extends Phaser.Scene {
       this.healthPoints = 100;
     }
     this.heartSoundEffect.play();
-    this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
-  }
-
-  dudeInLava(dude, tile) {
-    console.log("The dude in lava");
-    this.healthPoints -= 1;
     this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
   }
 
@@ -417,6 +444,26 @@ class StatusDisplay extends Phaser.Scene {
   }
 }
 
+class GameOver extends Phaser.Scene {
+  constructor() {
+    super("GameOver");
+  }
+
+  create() {
+    this.gameOver = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "gameOver");
+    this.gameOver.setScale(0.2);
+    this.controls = this.input.keyboard.addKeys({
+      "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
+    });
+  }
+
+  update(time, delta) {
+    if (this.controls.back.isDown) {
+      this.scene.start("SelectLevel");
+    }
+  }
+}
+
 window.onload = function() {
   const config = {
     type: Phaser.AUTO,
@@ -439,7 +486,8 @@ window.onload = function() {
       Credits,
       SelectLevel,
       PlayLevel,
-      StatusDisplay
+      StatusDisplay,
+      GameOver
     ],
     audio: {
       disableWebAudio: true
