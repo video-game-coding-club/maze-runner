@@ -362,6 +362,11 @@ class PlayLevel extends Phaser.Scene {
   }
 
   update(time, delta) {
+    if (this.controls.back.isDown) {
+      this.scene.stop("StatusDisplay");
+      this.scene.start("SelectLevel");
+    }
+
     if (this.controls.right.isDown) {
       this.dude.setFlipX(false);
       this.dude.setVelocityX(100);
@@ -388,15 +393,12 @@ class PlayLevel extends Phaser.Scene {
       this.dude.anims.play("jump");
     }
 
-    if (this.controls.back.isDown) {
-      this.scene.stop("StatusDisplay");
-      this.scene.start("SelectLevel");
-    }
-
     if (this.physics.world.overlap(this.dude, this.lavaTiles)) {
       console.log("The dude in lava");
       this.healthPoints -= 0.1;
       if (this.healthPoints <= 0) {
+        gameData.gameOver = true;
+        this.scene.stop("StatusDisplay");
         this.scene.start("GameOver");
       } else {
         this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
@@ -450,6 +452,15 @@ class GameOver extends Phaser.Scene {
   create() {
     this.gameOver = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "gameOver");
     this.gameOver.setScale(0.2);
+    this.controls = this.input.keyboard.addKeys({
+      "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
+    });
+  }
+
+  update(time, delta) {
+    if (this.controls.back.isDown) {
+      this.scene.start("SelectLevel");
+    }
   }
 }
 
