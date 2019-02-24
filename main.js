@@ -80,6 +80,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("energyEmpty", "assets/emergy_bar_empty.png");
     this.load.image("energyFull", "assets/emergy_bar_full.png");
     this.load.image("explosion", "assets/explosion.png");
+    this.load.image("healthStatus", "assets/health_status.png");
     this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("splash", "assets/splash_screen.png");
     this.load.image("tiles", "assets/tiles.png");
@@ -307,7 +308,7 @@ class PlayLevel extends Phaser.Scene {
     this.foregroundLayer.setTileIndexCallback(37, this.dudeInLava, this);
 
     /* Create the hearts. */
-    this.hearts = this.map.createFromObjects("hearts", 37, { key: "heart" });
+    this.hearts = this.map.createFromObjects("hearts", 43, { key: "heart" });
     this.hearts.forEach( h => {
       this.physics.add.existing(h);
       h.anims.play("glimmer");
@@ -374,9 +375,12 @@ class PlayLevel extends Phaser.Scene {
 
   collectHearts(dude, heart) {
     heart.destroy();
-    this.heartPoints += 10;
+    this.healthPoints += 20;
+    if (this.healthPoints > 100) {
+      this.healthPoints = 100;
+    }
     this.heartSoundEffect.play();
-    this.scene.get("StatusDisplay").setHeartPoints(this.heartPoints);
+    this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
   }
 
   dudeInLava(dude, tile) {
@@ -404,24 +408,12 @@ class StatusDisplay extends Phaser.Scene {
   }
 
   create() {
-    this.statusHeart = this.add.sprite(120, 30, "heartIcon");
-    this.statusHeart.setScale(1.8);
-    this.statusText = this.add.text(145, 16, '0',
-                                    { fontSize: '32px', fill: '#ffffff' });
-
-    // health status - to be replaced with icons
-    this.healthText = this.add.text(10, 50, 'health',
-                                   { fontSize: '32px', fill: '#ffffff' });
-    this.healthStatusText = this.add.text(145, 50, '100',
-                                   { fontSize: '32px', fill: '#ffffff' });
-  }
-
-  setHeartPoints(heartPoints) {
-    this.statusText.setText(heartPoints);
+    this.healthStatus = this.add.sprite(100, 30, "healthStatus");
+    this.healthStatus.setScale(1.8);
   }
 
   setHealthPoints(healthPoints) {
-    this.healthStatusText.setText(healthPoints);
+    this.healthStatus.setCrop(0, 0, this.healthStatus.width * healthPoints / 100, this.healthStatus.height);
   }
 }
 
