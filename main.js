@@ -315,7 +315,7 @@ class PlayLevel extends Phaser.Scene {
     this.foregroundLayer = this.map.createDynamicLayer("foreground", this.lavaTiles);
     this.lavaTiles = this.physics.add.staticGroup();
     this.foregroundLayer.forEachTile(tile => {
-      if (tile.index in [44, 45]) {
+      if ([44, 45].includes(tile.index)) {
         const x = tile.getCenterX();
         const y = tile.getCenterY();
         const lava = this.lavaTiles.create(x, y, "lava");
