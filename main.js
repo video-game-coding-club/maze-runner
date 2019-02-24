@@ -375,7 +375,10 @@ class PlayLevel extends Phaser.Scene {
 
   collectHearts(dude, heart) {
     heart.destroy();
-    this.heartPoints += 10;
+    this.healthPoints += 20;
+    if (this.healthPoints > 100) {
+      this.healthPoints = 100;
+    }
     this.heartSoundEffect.play();
     this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
   }
