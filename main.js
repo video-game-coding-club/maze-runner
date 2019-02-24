@@ -1,5 +1,6 @@
 var gameData = {
-  level: -1
+  level: -1,
+  gameOver: false
 };
 
 class SplashScreen extends Phaser.Scene {
@@ -356,6 +357,8 @@ class PlayLevel extends Phaser.Scene {
     this.heartPoints = 0;
     this.healthPoints = 100;
     this.scene.launch("StatusDisplay");
+
+    gameData.gameOver = false;
   }
 
   update(time, delta) {
