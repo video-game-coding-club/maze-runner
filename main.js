@@ -308,7 +308,7 @@ class PlayLevel extends Phaser.Scene {
     this.foregroundLayer.setTileIndexCallback(37, this.dudeInLava, this);
 
     /* Create the hearts. */
-    this.hearts = this.map.createFromObjects("hearts", 37, { key: "heart" });
+    this.hearts = this.map.createFromObjects("hearts", 43, { key: "heart" });
     this.hearts.forEach( h => {
       this.physics.add.existing(h);
       h.anims.play("glimmer");
