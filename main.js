@@ -291,6 +291,19 @@ class PlayLevel extends Phaser.Scene {
       frameRate: 5,
       repeat: -1
     });
+/* Create torches. */
+    this.anims.create({
+      key: "flicker",
+      frames: this.anims.generateFrameNumbers("torch"),
+      frameRate: 4,
+      repeat: -1
+    });
+
+    this.torches = this.map.createFromObjects("objects", 46, { key: "torch" });
+    this.torches.forEach( t => {
+      this.physics.add.existing(t);
+      t.anims.play("flicker");
+    });
 
     /* Add the dude. */
     this.dude = this.physics.add.sprite(10, 10, "dude");
@@ -336,19 +349,6 @@ class PlayLevel extends Phaser.Scene {
     });
     this.physics.add.overlap(this.dude, this.hearts, this.collectHearts, null, this);
 
-    /* Create torches. */
-    this.anims.create({
-      key: "flicker",
-      frames: this.anims.generateFrameNumbers("torch"),
-      frameRate: 4,
-      repeat: -1
-    });
-
-    this.torches = this.map.createFromObjects("objects", 46, { key: "torch" });
-    this.torches.forEach( t => {
-      this.physics.add.existing(t);
-      t.anims.play("flicker");
-    });
 
     this.controls = this.input.keyboard.addKeys({
       "up": Phaser.Input.Keyboard.KeyCodes.UP,
