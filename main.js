@@ -359,9 +359,15 @@ class PlayLevel extends Phaser.Scene {
     this.scene.launch("StatusDisplay");
 
     gameData.gameOver = false;
+    gameData.levelComplete = false;
   }
 
   update(time, delta) {
+    if (gameData.levelComplete) {
+      this.dude.anims.play("stand");
+      return;
+    }
+
     if (this.controls.back.isDown) {
       this.scene.stop("StatusDisplay");
       this.scene.start("SelectLevel");
@@ -417,7 +423,13 @@ class PlayLevel extends Phaser.Scene {
   }
 
   dudeIsLeaving(dude, tile) {
+    if (gameData.levelComplete) {
+      return;
+    }
+
+    gameData.levelComplete = true;
     console.log("The dude is leaving");
+    this.physics.pause();
     this.cameras.main.fade(1000, 0, 0, 0, false, this.dudeIsOut);
   }
 
