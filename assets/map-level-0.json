@@ -14,7 +14,7 @@
          "y":0
         }, 
         {
-         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 6, 5, 3, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 5, 5, 0, 19, 0, 0, 0, 0, 5, 5, 3, 5, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 1, 6, 6, 6, 6, 1, 6, 6, 1, 6, 6, 6, 6, 6, 6, 6, 0],
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 45, 6, 0, 0, 0, 0, 0, 0, 0, 0, 6, 5, 3, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 3, 5, 5, 0, 19, 0, 0, 0, 0, 5, 5, 3, 5, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 1, 6, 6, 6, 6, 1, 6, 6, 1, 6, 6, 6, 6, 6, 6, 6, 0],
          "height":10,
          "id":10,
          "name":"game",
@@ -40,7 +40,7 @@
         {
          "draworder":"topdown",
          "id":16,
-         "name":"hearts",
+         "name":"objects",
          "objects":[
                 {
                  "gid":43,
@@ -101,6 +101,42 @@
                  "width":18,
                  "x":258,
                  "y":252
+                }, 
+                {
+                 "gid":46,
+                 "height":32,
+                 "id":13,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":39.5,
+                 "y":68.5
+                }, 
+                {
+                 "gid":46,
+                 "height":32,
+                 "id":14,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":105.5,
+                 "y":63.5
+                }, 
+                {
+                 "gid":46,
+                 "height":32,
+                 "id":15,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":100.5,
+                 "y":193
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -109,7 +145,7 @@
          "y":0
         }],
  "nextlayerid":18,
- "nextobjectid":13,
+ "nextobjectid":16,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.2",
@@ -502,6 +538,19 @@
                         }]
                 }],
          "tilewidth":32
+        }, 
+        {
+         "columns":9,
+         "firstgid":46,
+         "image":"animated_torch_small.png",
+         "imageheight":32,
+         "imagewidth":144,
+         "margin":0,
+         "name":"torch",
+         "spacing":0,
+         "tilecount":9,
+         "tileheight":32,
+         "tilewidth":16
         }],
  "tilewidth":32,
  "type":"map",
