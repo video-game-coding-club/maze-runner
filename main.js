@@ -84,6 +84,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("gameOver", "assets/game_over.png");
     this.load.image("healthStatus", "assets/health_status.png");
     this.load.image("heartIcon", "assets/heart_green_frame.png");
+    this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("splash", "assets/splash_screen.png");
     this.load.image("tiles", "assets/tiles.png");
     this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32});
@@ -436,7 +437,7 @@ class PlayLevel extends Phaser.Scene {
   dudeIsOut(camera, progress) {
     if (progress === 1) {
       this.scene.stop("StatusDisplay");
-      this.scene.start("SelectLevel");
+      this.scene.start("LevelComplete");
     }
   }
 }
@@ -453,6 +454,26 @@ class StatusDisplay extends Phaser.Scene {
 
   setHealthPoints(healthPoints) {
     this.healthStatus.setCrop(0, 0, this.healthStatus.width * healthPoints / 100, this.healthStatus.height);
+  }
+}
+
+class LevelComplete extends Phaser.Scene {
+  constructor() {
+    super("LevelComplete");
+  }
+
+  create() {
+    this.levelComplete = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "levelComplete");
+    this.levelComplete.setScale(0.8);
+    this.controls = this.input.keyboard.addKeys({
+      "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
+    });
+  }
+
+  update(time, delta) {
+    if (this.controls.back.isDown) {
+      this.scene.start("SelectLevel");
+    }
   }
 }
 
@@ -499,7 +520,8 @@ window.onload = function() {
       SelectLevel,
       PlayLevel,
       StatusDisplay,
-      GameOver
+      GameOver,
+      LevelComplete
     ],
     audio: {
       disableWebAudio: true
