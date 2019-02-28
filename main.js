@@ -87,9 +87,10 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("splash", "assets/splash_screen.png");
     this.load.image("tiles", "assets/tiles.png");
-    this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32});
-    this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 10, frameHeight: 10});
-    this.load.spritesheet("lava", "assets/lava.png", { frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32 });
+    this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 10, frameHeight: 10 });
+    this.load.spritesheet("lava", "assets/lava.png", { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet("torch", "assets/animated_torch_small.png", { frameWidth: 16, frameHeight: 32 });
     this.load.tilemapTiledJSON("map_0", "assets/map-level-0.json");
     this.load.tilemapTiledJSON("map_1", "assets/map-level-1.json");
     this.load.tilemapTiledJSON("map_2", "assets/map-level-2.json");
@@ -328,12 +329,26 @@ class PlayLevel extends Phaser.Scene {
     });
 
     /* Create the hearts. */
-    this.hearts = this.map.createFromObjects("hearts", 43, { key: "heart" });
+    this.hearts = this.map.createFromObjects("objects", 43, { key: "heart" });
     this.hearts.forEach( h => {
       this.physics.add.existing(h);
       h.anims.play("glimmer");
     });
     this.physics.add.overlap(this.dude, this.hearts, this.collectHearts, null, this);
+
+    /* Create torches. */
+    this.anims.create({
+      key: "flicker",
+      frames: this.anims.generateFrameNumbers("torch"),
+      frameRate: 4,
+      repeat: -1
+    });
+
+    this.torches = this.map.createFromObjects("objects", 46, { key: "torch" });
+    this.torches.forEach( t => {
+      this.physics.add.existing(t);
+      t.anims.play("flicker");
+    });
 
     this.controls = this.input.keyboard.addKeys({
       "up": Phaser.Input.Keyboard.KeyCodes.UP,
