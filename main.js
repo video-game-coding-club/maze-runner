@@ -291,7 +291,8 @@ class PlayLevel extends Phaser.Scene {
       frameRate: 5,
       repeat: -1
     });
-/* Create torches. */
+
+    /* Create torches. */
     this.anims.create({
       key: "flicker",
       frames: this.anims.generateFrameNumbers("torch"),
@@ -349,7 +350,7 @@ class PlayLevel extends Phaser.Scene {
     });
     this.physics.add.overlap(this.dude, this.hearts, this.collectHearts, null, this);
 
-
+    /* Add keyboard controls. */
     this.controls = this.input.keyboard.addKeys({
       "up": Phaser.Input.Keyboard.KeyCodes.UP,
       "left": Phaser.Input.Keyboard.KeyCodes.LEFT,
