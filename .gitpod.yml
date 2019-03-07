@@ -1,0 +1,7 @@
+---
+
+ports:
+  - port: 8000
+
+tasks:
+  - command: python -m http.server 8000
