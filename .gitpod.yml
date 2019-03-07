@@ -5,4 +5,4 @@ ports:
 
 tasks:
   - command: python -m http.server 8000
-  - command: /bin/bash
+  - command: /bin/bash -l
