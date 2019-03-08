@@ -300,7 +300,7 @@ class PlayLevel extends Phaser.Scene {
       repeat: -1
     });
 
-    this.torches = this.map.createFromObjects("objects", 46, { key: "torch" });
+    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
     this.torches.forEach( t => {
       this.physics.add.existing(t);
       t.anims.play("flicker");
@@ -343,7 +343,7 @@ class PlayLevel extends Phaser.Scene {
     });
 
     /* Create the hearts. */
-    this.hearts = this.map.createFromObjects("objects", 43, { key: "heart" });
+    this.hearts = this.map.createFromObjects("objects", "heart", { key: "heart" });
     this.hearts.forEach( h => {
       this.physics.add.existing(h);
       h.anims.play("glimmer");
