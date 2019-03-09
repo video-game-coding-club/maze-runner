@@ -46,7 +46,7 @@
                  "gid":40,
                  "height":47,
                  "id":23,
-                 "name":"",
+                 "name":"torch",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -58,13 +58,13 @@
                  "gid":41,
                  "height":26,
                  "id":24,
-                 "name":"",
+                 "name":"dude",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":24,
-                 "x":87.5,
-                 "y":115.5
+                 "x":85.5,
+                 "y":117
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -127,6 +127,11 @@
                  "id":0,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -135,6 +140,11 @@
                 {
                  "id":1,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -145,6 +155,11 @@
                  "id":2,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -153,6 +168,11 @@
                 {
                  "id":3,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -163,6 +183,11 @@
                  "id":4,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -171,6 +196,11 @@
                 {
                  "id":5,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -181,6 +211,11 @@
                  "id":6,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -189,6 +224,11 @@
                 {
                  "id":7,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -199,6 +239,11 @@
                  "id":8,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -207,6 +252,11 @@
                 {
                  "id":9,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -217,6 +267,11 @@
                  "id":10,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -225,6 +280,11 @@
                 {
                  "id":11,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -235,6 +295,11 @@
                  "id":12,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -243,6 +308,11 @@
                 {
                  "id":13,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -253,6 +323,11 @@
                  "id":14,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -261,6 +336,11 @@
                 {
                  "id":15,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -271,6 +351,11 @@
                  "id":16,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -279,6 +364,11 @@
                 {
                  "id":17,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -289,6 +379,11 @@
                  "id":18,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -297,6 +392,11 @@
                 {
                  "id":19,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -307,6 +407,11 @@
                  "id":20,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -315,6 +420,11 @@
                 {
                  "id":21,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -325,6 +435,11 @@
                  "id":22,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -333,6 +448,11 @@
                 {
                  "id":23,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":false
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -343,6 +463,11 @@
                  "id":24,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -351,6 +476,11 @@
                 {
                  "id":25,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -361,6 +491,11 @@
                  "id":26,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -369,6 +504,11 @@
                 {
                  "id":27,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -379,6 +519,11 @@
                  "id":28,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -387,6 +532,11 @@
                 {
                  "id":29,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -397,6 +547,11 @@
                  "id":30,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -405,6 +560,11 @@
                 {
                  "id":31,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -415,6 +575,11 @@
                  "id":32,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -423,6 +588,11 @@
                 {
                  "id":33,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
@@ -433,6 +603,11 @@
                  "id":34,
                  "properties":[
                         {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"type",
                          "type":"string",
                          "value":"rock"
@@ -441,6 +616,11 @@
                 {
                  "id":35,
                  "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"type",
                          "type":"string",
