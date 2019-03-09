@@ -1,0 +1,11 @@
+---
+
+language: node_js
+
+addons:
+  apt:
+    packages:
+      - tiled
+
+script:
+  - /bin/true
