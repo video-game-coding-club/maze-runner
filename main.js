@@ -264,7 +264,12 @@ class PlayLevel extends Phaser.Scene {
     this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
 
     /* Create the game layer. */
-    this.gameLayer = this.map.createStaticLayer("game", this.backgroundTiles);
+    this.gameLayer = this.map.createDynamicLayer("game", this.backgroundTiles);
+
+    /* Create foreground layer. We need to create this layer _after_
+     * we add the dude sprite so that the dude is hidden by this
+     * layer. */
+    this.foregroundLayer = this.map.createStaticLayer("foreground", this.lavaTiles);
 
     /* Create Dude animations. */
     this.anims.create({
@@ -321,9 +326,6 @@ class PlayLevel extends Phaser.Scene {
     /* Check whether the Dude is leaving. */
     this.gameLayer.setTileIndexCallback(19, this.dudeIsLeaving, this);
 
-    /* Create foreground layer. We need to create this layer _after_
-     * we add the dude sprite so that the dude is hidden by this
-     * layer. */
     this.anims.create({
       key: "lava",
       frames: this.anims.generateFrameNumbers("lava"),
@@ -331,15 +333,15 @@ class PlayLevel extends Phaser.Scene {
       repeat: -1
     });
 
-    this.foregroundLayer = this.map.createDynamicLayer("foreground", this.lavaTiles);
+    /* Create the lava. */
     this.lavaTiles = this.physics.add.staticGroup();
-    this.foregroundLayer.forEachTile(tile => {
+    this.gameLayer.forEachTile(tile => {
       if (tile.properties.type === "lava") {
         const x = tile.getCenterX();
         const y = tile.getCenterY();
         const lava = this.lavaTiles.create(x, y, "lava");
         lava.anims.play("lava");
-        this.foregroundLayer.removeTileAt(tile.x, tile.y);
+        this.gameLayer.removeTileAt(tile.x, tile.y);
       }
     });
 
