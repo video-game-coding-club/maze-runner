@@ -307,7 +307,9 @@ class PlayLevel extends Phaser.Scene {
     });
 
     /* Add the dude. */
-    let dudeObject = this.map.findObject("objects", o => { return o.name === "dude"; });
+    let dudeObject = this.map.findObject("objects", o => {
+      return o.name === "dude";
+    });
     this.dude = this.physics.add.sprite(dudeObject.x, dudeObject.y, "dude");
     this.dude.setBounce(0.2);
     this.dude.setGravityY(300);

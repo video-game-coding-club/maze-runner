@@ -626,36 +626,21 @@
                  "image":"heart_green_frame.png",
                  "imageheight":18,
                  "imagewidth":18,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"heart"
-                        }]
+                 "type":"heart"
                 }, 
                 {
                  "id":1,
                  "image":"torch_object.png",
                  "imageheight":47,
                  "imagewidth":16,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"torch"
-                        }]
+                 "type":"torch"
                 }, 
                 {
                  "id":2,
                  "image":"dude_object.png",
                  "imageheight":26,
                  "imagewidth":24,
-                 "properties":[
-                        {
-                         "name":"type",
-                         "type":"string",
-                         "value":"spawn"
-                        }]
+                 "type":"dude"
                 }],
          "tilewidth":24
         }],
