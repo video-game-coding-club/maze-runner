@@ -320,9 +320,6 @@ class PlayLevel extends Phaser.Scene {
     /* Create tileset for background. */
     this.backgroundTiles = this.map.addTilesetImage("tiles");
 
-    /* Add lava tiles. */
-    this.lavaTiles = this.map.addTilesetImage("lava");
-
     /* Create background layer. */
     this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
 
