@@ -321,20 +321,6 @@ class PlayLevel extends Phaser.Scene {
 
     this.createAnimations();
 
-    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
-    this.torches.forEach( t => {
-      this.physics.add.existing(t);
-      t.anims.play("flicker");
-    });
-
-    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
-    if (this.torches) {
-      this.torches.forEach( t => {
-        this.physics.add.existing(t);
-        t.anims.play("flicker");
-      });
-    }
-
     /* Add the dude. */
     let dudeObject = this.map.findObject("objects", o => {
       return o.name === "dude";
@@ -394,6 +380,16 @@ class PlayLevel extends Phaser.Scene {
       });
     }
     this.physics.add.overlap(this.dude, this.gems, this.collectGems, null, this);
+
+    /* Create the torches. */
+    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
+    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
+    if (this.torches) {
+      this.torches.forEach( t => {
+        this.physics.add.existing(t);
+        t.anims.play("flicker");
+      });
+    }
 
     /* Add keyboard controls. */
     this.controls = this.input.keyboard.addKeys({
