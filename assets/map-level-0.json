@@ -836,7 +836,7 @@
                 }, 
                 {
                  "id":3,
-                 "image":"jewel green_object.png",
+                 "image":"jewel_green_object.png",
                  "imageheight":16,
                  "imagewidth":16,
                  "type":"gems"

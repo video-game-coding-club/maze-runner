@@ -11,6 +11,6 @@
   <image width="24" height="26" source="dude_object.png"/>
  </tile>
  <tile id="3" type="gems">
-  <image width="16" height="16" source="jewel green_object.png"/>
+  <image width="16" height="16" source="jewel_green_object.png"/>
  </tile>
 </tileset>
