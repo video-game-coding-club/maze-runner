@@ -364,9 +364,7 @@ class PlayLevel extends Phaser.Scene {
     if (this.lavaTiles > 0) {
       this.gameLayer.forEachTile(tile => {
         if (tile.properties.type === "lava") {
-          const x = tile.getCenterX();
-          const y = tile.getCenterY();
-          const lava = this.lavaTiles.create(x, y, "lava");
+          const lava = this.lavaTiles.create(tile.getCenterX(), tile.getCenterY(), "lava");
           lava.anims.play("lava");
           this.gameLayer.removeTileAt(tile.x, tile.y);
         }
