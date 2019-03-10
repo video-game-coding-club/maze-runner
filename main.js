@@ -511,7 +511,7 @@ class PlayLevel extends Phaser.Scene {
 
   collectGems(dude, gem) {
     gem.destroy();
-    gameData.gemPoints += 20;
+    gameData.gemPoints += 1;
   }
 
   dudeIsLeaving(dude, exit) {
