@@ -86,10 +86,10 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("splash", "assets/splash_screen.png");
-    this.load.image("tiles", "assets/tiles.png");
     this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32 });
     this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 10, frameHeight: 10 });
     this.load.spritesheet("lava", "assets/lava.png", { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet("tiles", "assets/tiles.png", { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet("torch", "assets/animated_torch_small.png", { frameWidth: 16, frameHeight: 32 });
     this.load.spritesheet("gems", "assets/jewel_green_animation.png", { frameWidth: 16, frameHeight: 16 });
     this.load.tilemapTiledJSON("map_0", "assets/map-level-0.json");
@@ -295,6 +295,16 @@ class PlayLevel extends Phaser.Scene {
       frameRate: 1,
       repeat: -1
     });
+
+    /* Create the door states. */
+    this.anims.create({
+      key: "exit_closed",
+      frames: [ { key: "tiles", frame: 18 } ]
+    });
+    this.anims.create({
+      key: "exit_open",
+      frames: [ { key: "tiles", frame: 19 } ]
+    });
   }
 
   create() {
@@ -349,9 +359,6 @@ class PlayLevel extends Phaser.Scene {
     this.gameLayer.setCollisionByProperty({ collides: true });
     this.physics.add.collider(this.dude, this.gameLayer);
 
-    /* Check whether the Dude is leaving. */
-    this.gameLayer.setTileIndexCallback(19, this.dudeIsLeaving, this);
-
     /* Create the lava. */
     this.lavaTiles = this.physics.add.staticGroup();
     if (this.lavaTiles > 0) {
@@ -365,6 +372,16 @@ class PlayLevel extends Phaser.Scene {
         }
       });
     }
+
+    /* Find exits. */
+    this.exitTiles = this.physics.add.staticGroup();
+    this.gameLayer.forEachTile(tile => {
+      if (tile.properties.type === "exit") {
+        const exit = this.exitTiles.create(tile.getCenterX(), tile.getCenterY(), "tiles");
+        exit.anims.play("exit_closed");
+        this.gameLayer.removeTileAt(tile.x, tile.y);
+      }
+    });
 
     /* Create the hearts. */
     this.hearts = this.map.createFromObjects("objects", "heart", { key: "heart" });
@@ -482,6 +499,12 @@ class PlayLevel extends Phaser.Scene {
     } else {
       this.fellInLava = null;
     }
+
+    /* Check whether the Dude is leaving. */
+    this.exitTiles.getChildren().forEach(exit => {
+      if (this.physics.world.overlap(this.dude, exit)) {
+        this.dudeIsLeaving(this.dude, exit);
+      }});
   }
 
   collectHearts(dude, heart) {
@@ -499,13 +522,14 @@ class PlayLevel extends Phaser.Scene {
     //this.GemPoints += 20;
   }
 
-  dudeIsLeaving(dude, tile) {
+  dudeIsLeaving(dude, exit) {
     if (gameData.levelComplete) {
       return;
     }
 
     gameData.levelComplete = true;
     console.log("The dude is leaving");
+    exit.anims.play("exit_open");
     this.physics.pause();
     this.cameras.main.fade(1000, 0, 0, 0, false, this.dudeIsOut);
   }
