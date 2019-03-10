@@ -553,7 +553,7 @@ class StatusDisplay extends Phaser.Scene {
   }
 
   setGemPoints() {
-    let newGem = this.add.sprite(36 + this.gems.length * 36, 70, "gems");
+    let newGem = this.add.sprite(36 + this.gems.length * 32, 70, "gems");
     newGem.setScale(1.8);
     this.gems.push(newGem);
   }
