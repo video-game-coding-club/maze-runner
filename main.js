@@ -399,9 +399,9 @@ class PlayLevel extends Phaser.Scene {
     /* Create the torches. */
     this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
     if (this.torches) {
-      this.torches.forEach( t => {
-        this.physics.add.existing(t);
-        t.anims.play("flicker");
+      this.torches.forEach(torch => {
+        this.physics.add.existing(torch);
+        torch.anims.play("flicker");
       });
     }
 
