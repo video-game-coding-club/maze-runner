@@ -428,7 +428,6 @@ class PlayLevel extends Phaser.Scene {
     this.heartSoundEffect = this.sound.add("coin");
 
     /* Launch the status display. */
-    this.heartPoints = 0;
     this.scene.launch("StatusDisplay");
 
     gameData.gameOver = false;
