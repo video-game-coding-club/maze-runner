@@ -51,8 +51,8 @@
                  "type":"",
                  "visible":true,
                  "width":24,
-                 "x":310.5,
-                 "y":56
+                 "x":321.166666666667,
+                 "y":59
                 }, 
                 {
                  "gid":44,
@@ -99,8 +99,8 @@
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":359,
-                 "y":44
+                 "x":362.666666666667,
+                 "y":55
                 }, 
                 {
                  "gid":44,
@@ -233,6 +233,30 @@
                  "width":18,
                  "x":453.5,
                  "y":126
+                }, 
+                {
+                 "gid":46,
+                 "height":16,
+                 "id":17,
+                 "name":"gems",
+                 "rotation":0,
+                 "type":"gems",
+                 "visible":true,
+                 "width":16,
+                 "x":423.666666666667,
+                 "y":24
+                }, 
+                {
+                 "gid":46,
+                 "height":16,
+                 "id":18,
+                 "name":"gems",
+                 "rotation":0,
+                 "type":"gems",
+                 "visible":true,
+                 "width":16,
+                 "x":260.333333333333,
+                 "y":122.666666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -241,7 +265,7 @@
          "y":0
         }],
  "nextlayerid":21,
- "nextobjectid":17,
+ "nextobjectid":19,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.2",
@@ -786,7 +810,7 @@
          "margin":0,
          "name":"objects",
          "spacing":0,
-         "tilecount":3,
+         "tilecount":4,
          "tileheight":47,
          "tiles":[
                 {
@@ -809,6 +833,13 @@
                  "imageheight":26,
                  "imagewidth":24,
                  "type":"dude"
+                }, 
+                {
+                 "id":3,
+                 "image":"jewel green_object.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "type":"gems"
                 }],
          "tilewidth":24
         }],

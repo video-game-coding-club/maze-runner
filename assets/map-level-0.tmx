@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="21" nextobjectid="17">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="21" nextobjectid="19">
  <tileset firstgid="1" source="tiles.tsx"/>
  <tileset firstgid="43" source="objects.tsx"/>
  <layer id="18" name="background" width="20" height="10" opacity="0.5">
@@ -45,11 +45,11 @@
 </data>
  </layer>
  <objectgroup id="16" name="objects">
-  <object id="16" name="dude" gid="45" x="310.5" y="56" width="24" height="26"/>
+  <object id="16" name="dude" gid="45" x="321.167" y="59" width="24" height="26"/>
   <object id="1" name="torch" gid="44" x="39" y="48.5" width="16" height="32"/>
   <object id="2" name="torch" gid="44" x="137" y="46.5" width="16" height="32"/>
   <object id="3" name="torch" gid="44" x="42" y="174.5" width="16" height="32"/>
-  <object id="4" name="torch" gid="44" x="359" y="44" width="16" height="32"/>
+  <object id="4" name="torch" gid="44" x="362.667" y="55" width="16" height="32"/>
   <object id="5" name="torch" gid="44" x="506.5" y="265" width="16" height="32"/>
   <object id="6" name="torch" gid="44" x="297" y="236.5" width="16" height="32"/>
   <object id="7" name="heart" gid="43" x="167" y="58" width="18" height="18"/>
@@ -61,5 +61,7 @@
   <object id="13" name="heart" gid="43" x="548" y="188.5" width="18" height="18"/>
   <object id="14" name="heart" gid="43" x="551.5" y="56.5" width="18" height="18"/>
   <object id="15" name="heart" gid="43" x="453.5" y="126" width="18" height="18"/>
+  <object id="17" name="gems" type="gems" gid="46" x="423.667" y="24" width="16" height="16"/>
+  <object id="18" name="gems" type="gems" gid="46" x="260.333" y="122.667" width="16" height="16"/>
  </objectgroup>
 </map>

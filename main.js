@@ -91,6 +91,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 10, frameHeight: 10 });
     this.load.spritesheet("lava", "assets/lava.png", { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet("torch", "assets/animated_torch_small.png", { frameWidth: 16, frameHeight: 32 });
+    this.load.spritesheet("gems", "assets/jewel_green_animation.png", { frameWidth: 16, frameHeight: 16 });
     this.load.tilemapTiledJSON("map_0", "assets/map-level-0.json");
     this.load.tilemapTiledJSON("map_1", "assets/map-level-1.json");
     this.load.tilemapTiledJSON("map_2", "assets/map-level-2.json");
@@ -300,6 +301,14 @@ class PlayLevel extends Phaser.Scene {
       repeat: -1
     });
 
+    /* Create gems (green). */
+    this.anims.create({
+      key: "gem_glimmer",
+      frames: this.anims.generateFrameNumbers("gems"),
+      frameRate: 5,
+      repeat: -1
+    });
+
     this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
     this.torches.forEach( t => {
       this.physics.add.existing(t);
@@ -354,6 +363,14 @@ class PlayLevel extends Phaser.Scene {
       h.anims.play("glimmer");
     });
     this.physics.add.overlap(this.dude, this.hearts, this.collectHearts, null, this);
+
+    /* Create the gems. */
+    this.gems = this.map.createFromObjects("objects", "gems", { key: "gems" });
+    this.gems.forEach( h => {
+      this.physics.add.existing(h);
+      h.anims.play("gem_glimmer");
+    });
+    this.physics.add.overlap(this.dude, this.gems, this.collectGems, null, this);
 
     /* Add keyboard controls. */
     this.controls = this.input.keyboard.addKeys({
@@ -453,6 +470,11 @@ class PlayLevel extends Phaser.Scene {
     }
     this.heartSoundEffect.play();
     this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
+  }
+
+  collectGems(dude, gems) {
+    gems.destroy();
+    //this.GemPoints += 20;
   }
 
   dudeIsLeaving(dude, tile) {
