@@ -301,16 +301,22 @@ class PlayLevel extends Phaser.Scene {
     });
 
     this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
-    this.torches.forEach( t => {
-      this.physics.add.existing(t);
-      t.anims.play("flicker");
-    });
+    if (this.torches) {
+      this.torches.forEach( t => {
+        this.physics.add.existing(t);
+        t.anims.play("flicker");
+      });
+    }
 
     /* Add the dude. */
     let dudeObject = this.map.findObject("objects", o => {
       return o.name === "dude";
     });
-    this.dude = this.physics.add.sprite(dudeObject.x, dudeObject.y, "dude");
+    let dudePosition = { x: 10, y: 10 };
+    if (dudeObject) {
+      dudePosition = { x: dudeObject.x, y: dudeObject.y };
+    }
+    this.dude = this.physics.add.sprite(dudePosition.x, dudePosition.y, "dude");
     this.dude.setBounce(0.2);
     this.dude.setGravityY(300);
     this.dude.setCollideWorldBounds(true);
@@ -337,22 +343,26 @@ class PlayLevel extends Phaser.Scene {
 
     /* Create the lava. */
     this.lavaTiles = this.physics.add.staticGroup();
-    this.gameLayer.forEachTile(tile => {
-      if (tile.properties.type === "lava") {
-        const x = tile.getCenterX();
-        const y = tile.getCenterY();
-        const lava = this.lavaTiles.create(x, y, "lava");
-        lava.anims.play("lava");
-        this.gameLayer.removeTileAt(tile.x, tile.y);
-      }
-    });
+    if (this.lavaTiles > 0) {
+      this.gameLayer.forEachTile(tile => {
+        if (tile.properties.type === "lava") {
+          const x = tile.getCenterX();
+          const y = tile.getCenterY();
+          const lava = this.lavaTiles.create(x, y, "lava");
+          lava.anims.play("lava");
+          this.gameLayer.removeTileAt(tile.x, tile.y);
+        }
+      });
+    }
 
     /* Create the hearts. */
     this.hearts = this.map.createFromObjects("objects", "heart", { key: "heart" });
-    this.hearts.forEach( h => {
-      this.physics.add.existing(h);
-      h.anims.play("glimmer");
-    });
+    if (this.hearts) {
+      this.hearts.forEach( h => {
+        this.physics.add.existing(h);
+        h.anims.play("glimmer");
+      });
+    }
     this.physics.add.overlap(this.dude, this.hearts, this.collectHearts, null, this);
 
     /* Add keyboard controls. */
