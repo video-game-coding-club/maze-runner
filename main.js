@@ -358,15 +358,13 @@ class PlayLevel extends Phaser.Scene {
 
     /* Create the lava. */
     this.lavaTiles = this.physics.add.staticGroup();
-    if (this.lavaTiles > 0) {
-      this.gameLayer.forEachTile(tile => {
-        if (tile.properties.type === "lava") {
-          const lava = this.lavaTiles.create(tile.getCenterX(), tile.getCenterY(), "lava");
-          lava.anims.play("lava");
-          this.gameLayer.removeTileAt(tile.x, tile.y);
-        }
-      });
-    }
+    this.gameLayer.forEachTile(tile => {
+      if (tile.properties.type === "lava") {
+        const lava = this.lavaTiles.create(tile.getCenterX(), tile.getCenterY(), "lava");
+        lava.anims.play("lava");
+        this.gameLayer.removeTileAt(tile.x, tile.y);
+      }
+    });
 
     /* Find exits. */
     this.exitTiles = this.physics.add.staticGroup();
