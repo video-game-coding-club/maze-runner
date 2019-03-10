@@ -378,11 +378,13 @@ class PlayLevel extends Phaser.Scene {
 
     /* Create the hearts. */
     this.hearts = this.map.createFromObjects("objects", "heart", { key: "heart" });
-    this.hearts.forEach(heart => {
-      this.physics.add.existing(heart);
-      heart.anims.play("glimmer");
-    });
-    this.physics.add.overlap(this.dude, this.hearts, this.collectGems, null, this);
+    if (this.hearts) {
+      this.hearts.forEach(heart => {
+        this.physics.add.existing(heart);
+        heart.anims.play("glimmer");
+      });
+    }
+    this.physics.add.overlap(this.dude, this.hearts, this.collectHearts, null, this);
 
     /* Create the gems. */
     this.gems = this.map.createFromObjects("objects", "gems", { key: "gems" });
