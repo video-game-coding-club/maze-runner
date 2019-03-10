@@ -1,210 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="22">
- <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" tilecount="36" columns="6">
-  <image source="tiles.png" width="192" height="192"/>
-  <tile id="0">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="1">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="2">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="3">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="4">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="5">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="6">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="7">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="8">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="9">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="10">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="11">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="12">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="13">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="14">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="15">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="16">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="17">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="18">
-   <properties>
-    <property name="collides" type="bool" value="false"/>
-    <property name="exit" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="19">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="20">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="21">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="22">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="23">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="24">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="25">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="26">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="27">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="28">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="29">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="30">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="31">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="32">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="33">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="34">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
-  <tile id="35">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="37" name="heart" tilewidth="18" tileheight="18" tilecount="1" columns="1">
-  <image source="heart_green_frame.png" width="18" height="18"/>
- </tileset>
- <tileset firstgid="38" name="lava" tilewidth="32" tileheight="32" tilecount="2" columns="2">
-  <image source="lava.png" width="64" height="32"/>
-  <tile id="0">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-    <property name="type" value="lava"/>
-   </properties>
-  </tile>
-  <tile id="1">
-   <properties>
-    <property name="collides" type="bool" value="true"/>
-    <property name="type" value="lava"/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="40" name="torch" tilewidth="16" tileheight="32" tilecount="9" columns="9">
-  <image source="animated_torch_small.png" width="144" height="32"/>
- </tileset>
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="42">
+ <tileset firstgid="1" source="tiles.tsx"/>
+ <tileset firstgid="43" source="objects.tsx"/>
  <layer id="9" name="background" width="40" height="20" opacity="0.5">
   <data encoding="csv">
 7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
@@ -234,22 +31,22 @@
 0,0,0,1,34,35,34,35,34,35,34,35,34,35,34,34,35,34,34,34,34,34,34,34,34,34,34,34,34,34,34,30,7,7,7,7,7,7,7,15,
 0,0,0,1,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,0,7,2,0,0,0,0,0,0,0,0,0,0,0,0,15,
 0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,7,2,0,31,0,27,31,0,31,27,0,0,0,0,15,
-0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,2,0,2,0,27,0,0,27,0,0,14,0,0,15,
-9,0,9,9,1,0,0,0,13,0,0,13,13,0,13,13,0,2,2,2,0,2,0,0,2,0,2,0,31,0,27,31,0,31,0,14,0,0,0,15,
+0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,37,2,0,2,0,27,0,0,27,0,0,14,0,0,15,
+9,0,9,9,1,0,37,37,13,37,37,13,13,0,13,13,0,2,2,2,0,2,37,37,2,37,2,0,31,0,27,31,0,31,0,14,0,0,0,15,
 7,0,7,7,7,0,27,4,5,6,6,6,6,0,6,6,0,3,25,2,0,2,2,2,2,2,2,0,2,0,27,0,0,25,0,0,14,0,0,15,
 7,0,7,7,0,0,4,5,6,6,6,6,6,0,6,0,0,31,0,25,0,2,0,0,0,0,2,0,31,0,27,0,31,25,14,0,0,14,0,15,
-7,0,7,7,0,4,5,6,6,6,6,6,6,0,6,0,6,0,0,0,0,2,2,0,0,2,2,0,2,0,27,0,0,31,0,14,0,0,0,0,
-7,0,7,27,0,5,6,6,6,6,6,6,6,0,6,0,6,31,0,0,0,0,0,0,0,0,0,0,31,25,31,31,0,25,0,0,0,0,0,0,
+7,0,7,7,0,4,5,6,6,6,6,6,6,0,6,0,6,0,0,0,0,2,2,0,0,2,2,0,2,37,27,0,0,31,0,14,0,0,0,0,
+7,0,7,27,0,5,6,6,6,6,6,6,6,0,6,0,6,31,0,0,0,0,0,0,0,0,0,0,31,25,31,31,0,25,37,37,37,37,37,37,
 7,0,7,25,0,0,0,0,0,0,0,6,6,0,6,0,6,0,0,25,0,2,2,2,2,2,2,0,31,25,27,0,0,31,13,16,13,13,16,13,
 25,0,25,25,6,6,6,6,6,6,0,6,6,0,6,0,31,31,0,0,0,0,0,0,0,0,0,0,31,25,27,31,0,14,16,16,12,16,12,13,
-6,0,6,6,6,6,6,6,6,6,0,6,6,0,6,0,6,31,0,31,31,0,0,0,0,0,0,31,28,26,29,0,0,0,0,0,0,0,0,7,
-6,0,6,6,6,6,6,6,6,6,0,6,6,0,6,0,6,6,6,6,6,1,6,6,6,6,6,6,2,14,2,31,17,0,0,17,0,0,0,17,
+6,0,6,6,6,6,6,6,6,6,0,6,6,0,6,0,6,31,37,31,31,37,37,37,37,37,37,31,28,26,29,0,0,0,0,0,0,0,0,7,
+6,0,6,6,6,6,6,6,6,6,0,6,6,0,6,0,6,6,6,6,6,1,6,6,6,6,6,6,2,14,2,31,17,37,37,17,37,0,0,17,
 6,0,6,6,6,6,6,6,6,6,0,6,6,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,14,14,14,14,0,14,
 6,0,0,0,0,0,0,0,0,0,0,6,6,0,0,6,1,1,1,6,6,6,6,1,1,1,1,1,1,1,1,1,0,6,6,6,6,6,0,6,
-6,0,0,0,0,0,0,0,0,0,37,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,0,19,6,0,6,
-6,1,0,0,1,0,0,1,0,0,1,1,1,6,0,0,0,0,37,0,0,0,6,37,0,0,37,6,0,0,0,0,37,6,6,0,6,6,0,6,
-6,0,0,0,0,0,0,0,0,0,0,6,1,0,6,0,0,6,6,0,0,0,6,6,0,0,6,6,0,0,6,6,6,6,6,0,6,6,0,6,
-6,6,6,6,6,6,6,6,6,6,6,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,37,6,
+6,0,0,0,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,0,19,6,0,6,
+6,1,0,0,1,0,0,1,0,0,1,1,1,6,0,0,0,0,0,0,0,0,6,0,0,0,0,6,0,0,0,0,0,6,6,0,6,6,0,6,
+6,37,37,37,37,37,37,37,37,37,37,6,1,37,6,37,37,6,6,37,37,37,6,6,37,37,6,6,37,37,6,6,6,6,6,0,6,6,0,6,
+6,6,6,6,6,6,6,6,6,6,6,6,6,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,6,0,0,0,0,6,
 6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6
 </data>
  </layer>
@@ -259,37 +56,43 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,38,38,0,38,38,0,0,0,0,0,0,0,0,0,0,0,38,38,0,38,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,38,0,0,0,38,38,0,0,0,0,38,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,38,0,0,0,0,0,0,0,0,0,0,0,0,0,0,38,38,38,38,38,38,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,38,0,0,38,38,38,38,38,38,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,38,38,38,38,38,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,38,38,38,38,38,38,38,38,38,38,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
  <objectgroup id="5" name="objects">
-  <object id="8" name="torch" gid="40" x="186" y="112" width="16" height="32"/>
-  <object id="9" name="heart" gid="37" x="253.333" y="105" width="18" height="18"/>
-  <object id="10" name="torch" gid="40" x="344.333" y="113" width="16" height="32"/>
-  <object id="11" name="heart" gid="37" x="581.333" y="223.333" width="18" height="18"/>
-  <object id="12" name="heart" gid="37" x="936.333" y="215.667" width="18" height="18"/>
-  <object id="13" name="heart" gid="37" x="1127.67" y="219" width="18" height="18"/>
-  <object id="14" name="torch" gid="40" x="520.667" y="108" width="16" height="32"/>
-  <object id="15" name="torch" gid="40" x="735.333" y="110.667" width="16" height="32"/>
-  <object id="16" name="heart" gid="37" x="773.667" y="58.3333" width="18" height="18"/>
-  <object id="18" name="torch" gid="40" x="1192" y="188.5" width="16" height="32"/>
-  <object id="19" name="torch" gid="40" x="1003" y="384.5" width="16" height="32"/>
-  <object id="20" name="heart" gid="37" x="808" y="215" width="18" height="18"/>
-  <object id="21" name="heart" gid="37" x="750" y="345" width="18" height="18"/>
+  <object id="22" name="dude" gid="45" x="66.6667" y="124.333" width="24" height="26"/>
+  <object id="24" name="heart" gid="43" x="230.333" y="507.667" width="18" height="18"/>
+  <object id="25" name="heart" gid="43" x="323" y="507" width="18" height="18"/>
+  <object id="26" name="heart" gid="43" x="774.333" y="58.3333" width="18" height="18"/>
+  <object id="27" name="heart" gid="43" x="749" y="341" width="18" height="18"/>
+  <object id="28" name="heart" gid="43" x="807.667" y="223.667" width="18" height="18"/>
+  <object id="29" name="heart" gid="43" x="567.667" y="539.667" width="18" height="18"/>
+  <object id="30" name="heart" gid="43" x="741.667" y="539.667" width="18" height="18"/>
+  <object id="31" name="heart" gid="43" x="832.333" y="538.333" width="18" height="18"/>
+  <object id="32" name="heart" gid="43" x="1019.67" y="537.667" width="18" height="18"/>
+  <object id="33" name="heart" gid="43" x="1215.67" y="601.667" width="18" height="18"/>
+  <object id="34" name="heart" gid="43" x="1126.33" y="219.667" width="18" height="18"/>
+  <object id="35" name="heart" gid="43" x="936.333" y="219.667" width="18" height="18"/>
+  <object id="36" name="torch" gid="44" x="186.667" y="119" width="16" height="47"/>
+  <object id="37" name="torch" gid="44" x="346.667" y="129.833" width="16" height="47"/>
+  <object id="38" name="torch" gid="44" x="521.333" y="120.5" width="16" height="47"/>
+  <object id="39" name="torch" gid="44" x="728.667" y="120.5" width="16" height="47"/>
+  <object id="40" name="torch" gid="44" x="1004" y="389.167" width="16" height="47"/>
+  <object id="41" name="torch" gid="44" x="1196" y="199.833" width="16" height="47"/>
  </objectgroup>
 </map>
