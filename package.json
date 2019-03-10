@@ -1,0 +1,12 @@
+{
+  "name": "maze-runner",
+  "version": "0.1.0",
+  "description": "A project of the Mountain Elementary Video-Game-Coding Club",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/video-game-coding-club/maze-runner.git"
+  },
+  "scripts": {
+    "build": "webpack"
+  }
+}
