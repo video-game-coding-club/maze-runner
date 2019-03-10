@@ -376,10 +376,12 @@ class PlayLevel extends Phaser.Scene {
 
     /* Create the gems. */
     this.gems = this.map.createFromObjects("objects", "gems", { key: "gems" });
-    this.gems.forEach( h => {
-      this.physics.add.existing(h);
-      h.anims.play("gem_glimmer");
-    });
+    if (this.gems) {
+      this.gems.forEach( h => {
+        this.physics.add.existing(h);
+        h.anims.play("gem_glimmer");
+      });
+    }
     this.physics.add.overlap(this.dude, this.gems, this.collectGems, null, this);
 
     /* Add keyboard controls. */
