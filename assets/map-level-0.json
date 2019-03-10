@@ -51,7 +51,7 @@
                  "type":"",
                  "visible":true,
                  "width":24,
-                 "x":321.166666666667,
+                 "x":321.167,
                  "y":59
                 }, 
                 {
@@ -99,7 +99,7 @@
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":362.666666666667,
+                 "x":362.667,
                  "y":55
                 }, 
                 {
@@ -243,7 +243,7 @@
                  "type":"gems",
                  "visible":true,
                  "width":16,
-                 "x":423.666666666667,
+                 "x":423.667,
                  "y":24
                 }, 
                 {
@@ -255,8 +255,8 @@
                  "type":"gems",
                  "visible":true,
                  "width":16,
-                 "x":260.333333333333,
-                 "y":122.666666666667
+                 "x":260.333,
+                 "y":122.667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -541,12 +541,12 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }, 
                         {
                          "name":"type",
                          "type":"string",
-                         "value":"rock"
+                         "value":"exit"
                         }]
                 }, 
                 {
@@ -555,12 +555,12 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }, 
                         {
                          "name":"type",
                          "type":"string",
-                         "value":"rock"
+                         "value":"exit"
                         }]
                 }, 
                 {
