@@ -1,6 +1,8 @@
 var gameData = {
   level: -1,
-  gameOver: false
+  gameOver: false,
+  healthPoints: 100,
+  gemPoints: 0
 };
 
 class SplashScreen extends Phaser.Scene {
@@ -427,7 +429,6 @@ class PlayLevel extends Phaser.Scene {
 
     /* Launch the status display. */
     this.heartPoints = 0;
-    this.healthPoints = 100;
     this.scene.launch("StatusDisplay");
 
     gameData.gameOver = false;
@@ -475,20 +476,20 @@ class PlayLevel extends Phaser.Scene {
       console.log("The dude in lava");
       if (this.fellInLava === undefined || this.fellInLava === null) {
         this.fellInLava = time;
-        this.healthPoints -= 20;
+        gameData.healthPoints -= 20;
       } else {
         if (time - this.fellInLava > 2000) {
-          this.healthPoints -= 20;
+          gameData.healthPoints -= 20;
           this.fellInLava = time;
         }
       }
 
-      if (this.healthPoints <= 0) {
+      if (gameData.healthPoints <= 0) {
         gameData.gameOver = true;
         this.scene.stop("StatusDisplay");
         this.scene.start("GameOver");
       } else {
-        this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
+        this.scene.get("StatusDisplay").setHealthPoints(gameData.healthPoints);
       }
     } else {
       this.fellInLava = null;
@@ -503,17 +504,17 @@ class PlayLevel extends Phaser.Scene {
 
   collectHearts(dude, heart) {
     heart.destroy();
-    this.healthPoints += 20;
-    if (this.healthPoints > 100) {
-      this.healthPoints = 100;
+    gameData.healthPoints += 20;
+    if (gameData.healthPoints > 100) {
+      gameData.healthPoints = 100;
     }
     this.heartSoundEffect.play();
-    this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
+    this.scene.get("StatusDisplay").setHealthPoints(gameData.healthPoints);
   }
 
-  collectGems(dude, gems) {
-    gems.destroy();
-    //this.GemPoints += 20;
+  collectGems(dude, gem) {
+    gem.destroy();
+    gameData.gemPoints += 20;
   }
 
   dudeIsLeaving(dude, exit) {
