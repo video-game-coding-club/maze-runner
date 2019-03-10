@@ -423,7 +423,16 @@ class PlayLevel extends Phaser.Scene {
 
     if (this.physics.world.overlap(this.dude, this.lavaTiles)) {
       console.log("The dude in lava");
-      this.healthPoints -= 0.1;
+      if (this.fellInLava === undefined || this.fellInLava === null) {
+        this.fellInLava = time;
+        this.healthPoints -= 20;
+      } else {
+        if (time - this.fellInLava > 2000) {
+          this.healthPoints -= 20;
+          this.fellInLava = time;
+        }
+      }
+
       if (this.healthPoints <= 0) {
         gameData.gameOver = true;
         this.scene.stop("StatusDisplay");
@@ -431,6 +440,8 @@ class PlayLevel extends Phaser.Scene {
       } else {
         this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
       }
+    } else {
+      this.fellInLava = null;
     }
   }
 
