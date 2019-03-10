@@ -111,14 +111,14 @@
  </tile>
  <tile id="18">
   <properties>
-   <property name="collides" type="bool" value="true"/>
-   <property name="type" value="rock"/>
+   <property name="collides" type="bool" value="false"/>
+   <property name="type" value="exit"/>
   </properties>
  </tile>
  <tile id="19">
   <properties>
-   <property name="collides" type="bool" value="true"/>
-   <property name="type" value="rock"/>
+   <property name="collides" type="bool" value="false"/>
+   <property name="type" value="exit"/>
   </properties>
  </tile>
  <tile id="20">

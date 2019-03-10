@@ -409,12 +409,12 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }, 
                         {
                          "name":"type",
                          "type":"string",
-                         "value":"rock"
+                         "value":"exit"
                         }]
                 }, 
                 {
@@ -423,12 +423,12 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }, 
                         {
                          "name":"type",
                          "type":"string",
-                         "value":"rock"
+                         "value":"exit"
                         }]
                 }, 
                 {
@@ -678,7 +678,7 @@
          "margin":0,
          "name":"objects",
          "spacing":0,
-         "tilecount":3,
+         "tilecount":4,
          "tileheight":47,
          "tiles":[
                 {
@@ -701,6 +701,13 @@
                  "imageheight":26,
                  "imagewidth":24,
                  "type":"dude"
+                }, 
+                {
+                 "id":3,
+                 "image":"jewel green_object.png",
+                 "imageheight":16,
+                 "imagewidth":16,
+                 "type":"gems"
                 }],
          "tilewidth":24
         }],

@@ -1,6 +1,8 @@
 var gameData = {
   level: -1,
-  gameOver: false
+  gameOver: false,
+  healthPoints: 100,
+  gemPoints: 0
 };
 
 class SplashScreen extends Phaser.Scene {
@@ -86,10 +88,10 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("splash", "assets/splash_screen.png");
-    this.load.image("tiles", "assets/tiles.png");
     this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32 });
     this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 10, frameHeight: 10 });
     this.load.spritesheet("lava", "assets/lava.png", { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet("tiles", "assets/tiles.png", { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet("torch", "assets/animated_torch_small.png", { frameWidth: 16, frameHeight: 32 });
     this.load.spritesheet("gems", "assets/jewel_green_animation.png", { frameWidth: 16, frameHeight: 16 });
     this.load.tilemapTiledJSON("map_0", "assets/map-level-0.json");
@@ -245,28 +247,7 @@ class PlayLevel extends Phaser.Scene {
     super("PlayLevel");
   }
 
-  create() {
-    /* Create the map. */
-    this.map = this.make.tilemap({
-      key: "map_" + gameData.level,
-      tileWidth: 32,
-      tileHeight: 32
-    });
-    /* Resize world to fit the level. */
-    this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-
-    /* Create tileset for background. */
-    this.backgroundTiles = this.map.addTilesetImage("tiles");
-
-    /* Add lava tiles. */
-    this.lavaTiles = this.map.addTilesetImage("lava");
-
-    /* Create background layer. */
-    this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
-
-    /* Create the game layer. */
-    this.gameLayer = this.map.createDynamicLayer("game", this.backgroundTiles);
-
+  createAnimations() {
     /* Create Dude animations. */
     this.anims.create({
       key: "stand",
@@ -309,15 +290,52 @@ class PlayLevel extends Phaser.Scene {
       repeat: -1
     });
 
-    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
-    if (this.torches) {
-      this.torches.forEach( t => {
-        this.physics.add.existing(t);
-        t.anims.play("flicker");
-      });
-    }
+    /* Create lava animation. */
+    this.anims.create({
+      key: "lava",
+      frames: this.anims.generateFrameNumbers("lava"),
+      frameRate: 1,
+      repeat: -1
+    });
 
-    /* Add the dude. */
+    /* Create the door states. */
+    this.anims.create({
+      key: "exit_closed",
+      frames: [ { key: "tiles", frame: 18 } ]
+    });
+    this.anims.create({
+      key: "exit_open",
+      frames: [ { key: "tiles", frame: 19 } ]
+    });
+  }
+
+  create() {
+    /* Create the map. */
+    this.map = this.make.tilemap({
+      key: "map_" + gameData.level,
+      tileWidth: 32,
+      tileHeight: 32
+    });
+    /* Resize world to fit the level. */
+    this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+
+    /* Create tileset for background. */
+    this.backgroundTiles = this.map.addTilesetImage("tiles");
+
+    /* Create background layer. */
+    this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
+
+    /* Create the game layer. */
+    this.gameLayer = this.map.createDynamicLayer("game", this.backgroundTiles);
+
+    this.createAnimations();
+
+    /* Add the dude.
+     *
+     * I tried to use `createFromObjects()` here and then
+     * `this.physics.add.existing()` but that didn't quite work. We
+     * should revisit this issue at some later time.
+     */
     let dudeObject = this.map.findObject("objects", o => {
       return o.name === "dude";
     });
@@ -340,36 +358,32 @@ class PlayLevel extends Phaser.Scene {
     this.gameLayer.setCollisionByProperty({ collides: true });
     this.physics.add.collider(this.dude, this.gameLayer);
 
-    /* Check whether the Dude is leaving. */
-    this.gameLayer.setTileIndexCallback(19, this.dudeIsLeaving, this);
-
-    this.anims.create({
-      key: "lava",
-      frames: this.anims.generateFrameNumbers("lava"),
-      frameRate: 1,
-      repeat: -1
-    });
-
     /* Create the lava. */
     this.lavaTiles = this.physics.add.staticGroup();
-    if (this.lavaTiles > 0) {
-      this.gameLayer.forEachTile(tile => {
-        if (tile.properties.type === "lava") {
-          const x = tile.getCenterX();
-          const y = tile.getCenterY();
-          const lava = this.lavaTiles.create(x, y, "lava");
-          lava.anims.play("lava");
-          this.gameLayer.removeTileAt(tile.x, tile.y);
-        }
-      });
-    }
+    this.gameLayer.forEachTile(tile => {
+      if (tile.properties.type === "lava") {
+        const lava = this.lavaTiles.create(tile.getCenterX(), tile.getCenterY(), "lava");
+        lava.anims.play("lava");
+        this.gameLayer.removeTileAt(tile.x, tile.y);
+      }
+    });
+
+    /* Find exits. */
+    this.exitTiles = this.physics.add.staticGroup();
+    this.gameLayer.forEachTile(tile => {
+      if (tile.properties.type === "exit") {
+        const exit = this.exitTiles.create(tile.getCenterX(), tile.getCenterY(), "tiles");
+        exit.anims.play("exit_closed");
+        this.gameLayer.removeTileAt(tile.x, tile.y);
+      }
+    });
 
     /* Create the hearts. */
     this.hearts = this.map.createFromObjects("objects", "heart", { key: "heart" });
     if (this.hearts) {
-      this.hearts.forEach( h => {
-        this.physics.add.existing(h);
-        h.anims.play("glimmer");
+      this.hearts.forEach(heart => {
+        this.physics.add.existing(heart);
+        heart.anims.play("glimmer");
       });
     }
     this.physics.add.overlap(this.dude, this.hearts, this.collectHearts, null, this);
@@ -377,12 +391,21 @@ class PlayLevel extends Phaser.Scene {
     /* Create the gems. */
     this.gems = this.map.createFromObjects("objects", "gems", { key: "gems" });
     if (this.gems) {
-      this.gems.forEach( h => {
-        this.physics.add.existing(h);
-        h.anims.play("gem_glimmer");
+      this.gems.forEach(gem => {
+        this.physics.add.existing(gem);
+        gem.anims.play("gem_glimmer");
       });
     }
     this.physics.add.overlap(this.dude, this.gems, this.collectGems, null, this);
+
+    /* Create the torches. */
+    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
+    if (this.torches) {
+      this.torches.forEach(torch => {
+        this.physics.add.existing(torch);
+        torch.anims.play("flicker");
+      });
+    }
 
     /* Add keyboard controls. */
     this.controls = this.input.keyboard.addKeys({
@@ -405,8 +428,6 @@ class PlayLevel extends Phaser.Scene {
     this.heartSoundEffect = this.sound.add("coin");
 
     /* Launch the status display. */
-    this.heartPoints = 0;
-    this.healthPoints = 100;
     this.scene.launch("StatusDisplay");
 
     gameData.gameOver = false;
@@ -454,48 +475,54 @@ class PlayLevel extends Phaser.Scene {
       console.log("The dude in lava");
       if (this.fellInLava === undefined || this.fellInLava === null) {
         this.fellInLava = time;
-        this.healthPoints -= 20;
+        gameData.healthPoints -= 20;
       } else {
         if (time - this.fellInLava > 2000) {
-          this.healthPoints -= 20;
+          gameData.healthPoints -= 20;
           this.fellInLava = time;
         }
       }
 
-      if (this.healthPoints <= 0) {
+      if (gameData.healthPoints <= 0) {
         gameData.gameOver = true;
         this.scene.stop("StatusDisplay");
         this.scene.start("GameOver");
       } else {
-        this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
+        this.scene.get("StatusDisplay").setHealthPoints();
       }
     } else {
       this.fellInLava = null;
     }
+
+    /* Check whether the Dude is leaving. */
+    this.exitTiles.getChildren().forEach(exit => {
+      if (this.physics.world.overlap(this.dude, exit)) {
+        this.dudeIsLeaving(this.dude, exit);
+      }});
   }
 
   collectHearts(dude, heart) {
     heart.destroy();
-    this.healthPoints += 20;
-    if (this.healthPoints > 100) {
-      this.healthPoints = 100;
-    }
+    gameData.healthPoints += 20;
+    gameData.healthPoints = Math.min(100, gameData.healthPoints);
     this.heartSoundEffect.play();
-    this.scene.get("StatusDisplay").setHealthPoints(this.healthPoints);
+    this.scene.get("StatusDisplay").setHealthPoints();
   }
 
-  collectGems(dude, gems) {
-    gems.destroy();
-    //this.GemPoints += 20;
+  collectGems(dude, gem) {
+    gem.destroy();
+    gameData.gemPoints += 1;
+    this.scene.get("StatusDisplay").setGemPoints();
   }
 
-  dudeIsLeaving(dude, tile) {
+  dudeIsLeaving(dude, exit) {
     if (gameData.levelComplete) {
       return;
     }
 
     gameData.levelComplete = true;
     console.log("The dude is leaving");
+    exit.anims.play("exit_open");
     this.physics.pause();
     this.cameras.main.fade(1000, 0, 0, 0, false, this.dudeIsOut);
   }
@@ -516,10 +543,19 @@ class StatusDisplay extends Phaser.Scene {
   create() {
     this.healthStatus = this.add.sprite(100, 30, "healthStatus");
     this.healthStatus.setScale(1.8);
+    this.gems = [];
   }
 
-  setHealthPoints(healthPoints) {
-    this.healthStatus.setCrop(0, 0, this.healthStatus.width * healthPoints / 100, this.healthStatus.height);
+  setHealthPoints() {
+    this.healthStatus.setCrop(0, 0,
+                              this.healthStatus.width * gameData.healthPoints / 100,
+                              this.healthStatus.height);
+  }
+
+  setGemPoints() {
+    let newGem = this.add.sprite(36 + this.gems.length * 36, 70, "gems");
+    newGem.setScale(1.8);
+    this.gems.push(newGem);
   }
 }
 
