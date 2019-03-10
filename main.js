@@ -321,7 +321,12 @@ class PlayLevel extends Phaser.Scene {
 
     this.createAnimations();
 
-    /* Add the dude. */
+    /* Add the dude.
+     *
+     * I tried to use `createFromObjects()` here and then
+     * `this.physics.add.existing()` but that didn't quite work. We
+     * should revisit this issue at some later time.
+     */
     let dudeObject = this.map.findObject("objects", o => {
       return o.name === "dude";
     });
