@@ -245,28 +245,7 @@ class PlayLevel extends Phaser.Scene {
     super("PlayLevel");
   }
 
-  create() {
-    /* Create the map. */
-    this.map = this.make.tilemap({
-      key: "map_" + gameData.level,
-      tileWidth: 32,
-      tileHeight: 32
-    });
-    /* Resize world to fit the level. */
-    this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-
-    /* Create tileset for background. */
-    this.backgroundTiles = this.map.addTilesetImage("tiles");
-
-    /* Add lava tiles. */
-    this.lavaTiles = this.map.addTilesetImage("lava");
-
-    /* Create background layer. */
-    this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
-
-    /* Create the game layer. */
-    this.gameLayer = this.map.createDynamicLayer("game", this.backgroundTiles);
-
+  createAnimations() {
     /* Create Dude animations. */
     this.anims.create({
       key: "stand",
@@ -309,6 +288,45 @@ class PlayLevel extends Phaser.Scene {
       repeat: -1
     });
 
+    /* Create lava animation. */
+    this.anims.create({
+      key: "lava",
+      frames: this.anims.generateFrameNumbers("lava"),
+      frameRate: 1,
+      repeat: -1
+    });
+  }
+
+  create() {
+    /* Create the map. */
+    this.map = this.make.tilemap({
+      key: "map_" + gameData.level,
+      tileWidth: 32,
+      tileHeight: 32
+    });
+    /* Resize world to fit the level. */
+    this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+
+    /* Create tileset for background. */
+    this.backgroundTiles = this.map.addTilesetImage("tiles");
+
+    /* Add lava tiles. */
+    this.lavaTiles = this.map.addTilesetImage("lava");
+
+    /* Create background layer. */
+    this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
+
+    /* Create the game layer. */
+    this.gameLayer = this.map.createDynamicLayer("game", this.backgroundTiles);
+
+    this.createAnimations();
+
+    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
+    this.torches.forEach( t => {
+      this.physics.add.existing(t);
+      t.anims.play("flicker");
+    });
+
     this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
     if (this.torches) {
       this.torches.forEach( t => {
@@ -342,13 +360,6 @@ class PlayLevel extends Phaser.Scene {
 
     /* Check whether the Dude is leaving. */
     this.gameLayer.setTileIndexCallback(19, this.dudeIsLeaving, this);
-
-    this.anims.create({
-      key: "lava",
-      frames: this.anims.generateFrameNumbers("lava"),
-      frameRate: 1,
-      repeat: -1
-    });
 
     /* Create the lava. */
     this.lavaTiles = this.physics.add.staticGroup();
