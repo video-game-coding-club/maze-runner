@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "webpack",
-    "lint": "eslint --config .eslintrc.json \"**/*.js\""
+    "lint": "eslint --config .eslintrc.json \"main.js\""
   },
   "devDependencies": {
     "eslint": "^5.15.1",
