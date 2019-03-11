@@ -109,7 +109,7 @@ class SplashScreen extends Phaser.Scene {
     this.messageShown = false;
   }
 
-  update(time, delta) {
+  update(time) {
     if (time > 2000 && !this.messageShown) {
       let message = this.make.text({
         x: this.cameras.main.width / 2,
@@ -227,7 +227,7 @@ class SelectLevel extends Phaser.Scene {
     this.scene.start("PlayLevel");
   }
 
-  update(time, delta) {
+  update() {
     if (this.levelControls.zero.isDown) {
       this.playLevel(0);
     } else if (this.levelControls.one.isDown) {
@@ -434,7 +434,7 @@ class PlayLevel extends Phaser.Scene {
     gameData.levelComplete = false;
   }
 
-  update(time, delta) {
+  update(time) {
     if (gameData.levelComplete) {
       this.dude.anims.play("stand");
       return;
@@ -572,7 +572,7 @@ class LevelComplete extends Phaser.Scene {
     });
   }
 
-  update(time, delta) {
+  update() {
     if (this.controls.back.isDown) {
       this.scene.start("SelectLevel");
     }
@@ -592,7 +592,7 @@ class GameOver extends Phaser.Scene {
     });
   }
 
-  update(time, delta) {
+  update() {
     if (this.controls.back.isDown) {
       this.scene.start("SelectLevel");
     }
