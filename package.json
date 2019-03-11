@@ -11,6 +11,8 @@
     "lint": "eslint --config .eslintrc.json \"**/*.js\""
   },
   "devDependencies": {
-    "eslint": "^5.15.1"
+    "eslint": "^5.15.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
   }
 }
