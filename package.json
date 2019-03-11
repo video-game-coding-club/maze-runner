@@ -7,6 +7,10 @@
     "url": "https://github.com/video-game-coding-club/maze-runner.git"
   },
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "lint": "eslint --config .eslintrc.json \"**/*.js\""
+  },
+  "devDependencies": {
+    "eslint": "^5.15.1"
   }
 }

@@ -8,4 +8,6 @@ addons:
       - tiled
 
 script:
-  - /bin/true
+  - npm install
+  - # npm run lint
+  - # npm run build
