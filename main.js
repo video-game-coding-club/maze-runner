@@ -52,7 +52,7 @@ class SplashScreen extends Phaser.Scene {
     assetText.setOrigin(0.5, 0.5);
 
     this.load.on('progress', function (value) {
-      console.log(value);
+      console.warn(value);
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
       progressBar.fillRect(250, 280, 300 * value, 30);
@@ -60,12 +60,12 @@ class SplashScreen extends Phaser.Scene {
     });
 
     this.load.on('fileprogress', function (file) {
-      console.log(file.src);
+      console.warn(file.src);
       assetText.setText('Loading asset: ' + file.key);
     });
 
     this.load.on('complete', function () {
-      console.log('complete');
+      console.warn('complete');
       progressBar.destroy();
       progressBox.destroy();
       loadingText.destroy();
@@ -472,7 +472,7 @@ class PlayLevel extends Phaser.Scene {
     }
 
     if (this.physics.world.overlap(this.dude, this.lavaTiles)) {
-      console.log("The dude in lava");
+      console.warn("The dude in lava");
       if (this.fellInLava === undefined || this.fellInLava === null) {
         this.fellInLava = time;
         gameData.healthPoints -= 20;
@@ -521,7 +521,7 @@ class PlayLevel extends Phaser.Scene {
     }
 
     gameData.levelComplete = true;
-    console.log("The dude is leaving");
+    console.warn("The dude is leaving");
     exit.anims.play("exit_open");
     this.physics.pause();
     this.cameras.main.fade(1000, 0, 0, 0, false, this.dudeIsOut);
