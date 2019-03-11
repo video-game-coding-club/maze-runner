@@ -8,7 +8,7 @@ var gameData = {
 class SplashScreen extends Phaser.Scene {
   constructor() {
     super("SplashScreen");
-  };
+  }
 
   progressBar() {
     let progressBar = this.add.graphics();
@@ -102,7 +102,7 @@ class SplashScreen extends Phaser.Scene {
   }
 
   create() {
-    let splash = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "splash");
+    this.add.sprite(this.scale.width / 2, this.scale.height / 2, "splash");
     this.input.keyboard.on("keydown", () => {
       this.scene.start("SelectLevel");
     });
