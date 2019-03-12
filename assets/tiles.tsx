@@ -222,4 +222,9 @@
    <property name="type" value="lava"/>
   </properties>
  </tile>
+ <tile id="37">
+  <properties>
+   <property name="type" value="ladder"/>
+  </properties>
+ </tile>
 </tileset>
