@@ -586,8 +586,8 @@ class GameOver extends Phaser.Scene {
   }
 
   create() {
-    this.gameOver = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "gameOver");
-    this.gameOver.setScale(0.2);
+    let gameOver = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "gameOver");
+    gameOver.setScale(0.2);
     this.controls = this.input.keyboard.addKeys({
       "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
     });
