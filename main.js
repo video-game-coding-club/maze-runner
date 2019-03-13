@@ -88,7 +88,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("splash", "assets/splash_screen.png");
-    this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32 });
+    this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 28, frameHeight: 51 });
     this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 11, frameHeight: 10 });
     this.load.spritesheet("lava", "assets/lava.png", { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet("tiles", "assets/tiles.png", { frameWidth: 32, frameHeight: 32 });
@@ -252,7 +252,7 @@ class PlayLevel extends Phaser.Scene {
     /* Create Dude animations. */
     this.anims.create({
       key: "stand",
-      frames: [ { key: "dude", frame: 2 } ]
+      frames: [ { key: "dude", frame: 0 } ]
     });
 
     this.anims.create({
@@ -262,8 +262,8 @@ class PlayLevel extends Phaser.Scene {
 
     this.anims.create({
       key: 'walk',
-      frames: this.anims.generateFrameNumbers("dude", { start: 1, end: 2 }),
-      frameRate: 10,
+      frames: this.anims.generateFrameNumbers("dude", { start: 0, end: 8 }),
+      frameRate: 18,
       repeat: -1
     });
 
