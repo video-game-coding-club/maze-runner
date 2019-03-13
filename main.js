@@ -321,13 +321,13 @@ class PlayLevel extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
     /* Create tileset for background. */
-    this.backgroundTiles = this.map.addTilesetImage("tiles");
+    let backgroundTiles = this.map.addTilesetImage("tiles");
 
     /* Create background layer. */
-    this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
+    this.backgroundLayer = this.map.createStaticLayer("background", backgroundTiles);
 
     /* Create the game layer. */
-    this.gameLayer = this.map.createDynamicLayer("game", this.backgroundTiles);
+    this.gameLayer = this.map.createDynamicLayer("game", backgroundTiles);
 
     this.createAnimations();
 
@@ -352,7 +352,7 @@ class PlayLevel extends Phaser.Scene {
     /* Create foreground layer. We need to create this layer _after_
      * we add the dude sprite so that the dude is hidden by this
      * layer. */
-    this.foregroundLayer = this.map.createStaticLayer("foreground", this.backgroundTiles);
+    this.foregroundLayer = this.map.createStaticLayer("foreground", backgroundTiles);
 
     /* This will watch the player and layer every frame to check for
        collisions. */
