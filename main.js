@@ -327,7 +327,7 @@ class PlayLevel extends Phaser.Scene {
     this.map.createStaticLayer("background", backgroundTiles);
 
     /* Create the game layer. */
-    this.gameLayer = this.map.createDynamicLayer("game", backgroundTiles);
+    let gameLayer = this.map.createDynamicLayer("game", backgroundTiles);
 
     this.createAnimations();
 
@@ -356,26 +356,26 @@ class PlayLevel extends Phaser.Scene {
 
     /* This will watch the player and layer every frame to check for
        collisions. */
-    this.gameLayer.setCollisionByProperty({ collides: true });
-    this.physics.add.collider(this.dude, this.gameLayer);
+    gameLayer.setCollisionByProperty({ collides: true });
+    this.physics.add.collider(this.dude, gameLayer);
 
     /* Create the lava. */
     this.lavaTiles = this.physics.add.staticGroup();
-    this.gameLayer.forEachTile(tile => {
+    gameLayer.forEachTile(tile => {
       if (tile.properties.type === "lava") {
         const lava = this.lavaTiles.create(tile.getCenterX(), tile.getCenterY(), "lava");
         lava.anims.play("lava");
-        this.gameLayer.removeTileAt(tile.x, tile.y);
+        gameLayer.removeTileAt(tile.x, tile.y);
       }
     });
 
     /* Find exits. */
     this.exitTiles = this.physics.add.staticGroup();
-    this.gameLayer.forEachTile(tile => {
+    gameLayer.forEachTile(tile => {
       if (tile.properties.type === "exit") {
         const exit = this.exitTiles.create(tile.getCenterX(), tile.getCenterY(), "tiles");
         exit.anims.play("exit_closed");
-        this.gameLayer.removeTileAt(tile.x, tile.y);
+        gameLayer.removeTileAt(tile.x, tile.y);
       }
     });
 
