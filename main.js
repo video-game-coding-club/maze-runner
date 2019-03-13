@@ -190,22 +190,22 @@ class SelectLevel extends Phaser.Scene {
   }
 
   create() {
-    this.button = [];
-    this.buttonText = [];
+    let button = [];
+    let buttonText = [];
     for (let i = 0; i < 5; i++) {
-      this.button[i] = this.add.sprite(150, 60 + i * 80, "button");
-      this.button[i].setScale(0.3, 0.15);
-      this.buttonText[i] = this.add.text(80, 40 + i * 80, 'Level ' + i,
-                                         {
-                                           fontSize: '32px',
-                                           fill: '#ffffff',
-                                           stroke: "#202020",
-                                           strokeThickness: 3,
-                                           shadowOffsetX: 5,
-                                           shadowOffsetY: 5,
-                                           shadowBlur: 2,
-                                           shadowColor: "#101010"
-                                         });
+      button[i] = this.add.sprite(150, 60 + i * 80, "button");
+      button[i].setScale(0.3, 0.15);
+      buttonText[i] = this.add.text(80, 40 + i * 80, 'Level ' + i,
+                                    {
+                                      fontSize: '32px',
+                                      fill: '#ffffff',
+                                      stroke: "#202020",
+                                      strokeThickness: 3,
+                                      shadowOffsetX: 5,
+                                      shadowOffsetY: 5,
+                                      shadowBlur: 2,
+                                      shadowColor: "#101010"
+                                    });
     }
     this.levelControls = this.input.keyboard.addKeys({
       "zero": Phaser.Input.Keyboard.KeyCodes.ZERO,
@@ -214,9 +214,10 @@ class SelectLevel extends Phaser.Scene {
       "three": Phaser.Input.Keyboard.KeyCodes.THREE,
       "four": Phaser.Input.Keyboard.KeyCodes.FOUR
     });
+
     this.sound.stopAll();
-    this.background_music = this.sound.add("title_music", { loop: true });
-    this.background_music.play();
+    let background_music = this.sound.add("title_music", { loop: true });
+    background_music.play();
 
     this.scene.launch("Credits");
   }
