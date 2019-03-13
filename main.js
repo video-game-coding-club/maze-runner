@@ -324,7 +324,7 @@ class PlayLevel extends Phaser.Scene {
     let backgroundTiles = this.map.addTilesetImage("tiles");
 
     /* Create background layer. */
-    this.backgroundLayer = this.map.createStaticLayer("background", backgroundTiles);
+    this.map.createStaticLayer("background", backgroundTiles);
 
     /* Create the game layer. */
     this.gameLayer = this.map.createDynamicLayer("game", backgroundTiles);
