@@ -351,7 +351,7 @@ class PlayLevel extends Phaser.Scene {
     /* Create foreground layer. We need to create this layer _after_
      * we add the dude sprite so that the dude is hidden by this
      * layer. */
-    this.foregroundLayer = this.map.createStaticLayer("foreground", this.lavaTiles);
+    this.foregroundLayer = this.map.createStaticLayer("foreground", this.backgroundTiles);
 
     /* This will watch the player and layer every frame to check for
        collisions. */
