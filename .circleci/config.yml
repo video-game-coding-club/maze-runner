@@ -11,12 +11,10 @@ jobs:
       - run:
           name: Install tiled
           command: |
-            id
-            env | sort
             sudo apt-get install tiled
             npm install
       - run:
           name: Fake test
           command: |
-            npm run lint
+            # npm run lint
             # npm run build
