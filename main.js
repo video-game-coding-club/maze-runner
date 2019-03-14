@@ -348,6 +348,7 @@ class PlayLevel extends Phaser.Scene {
     this.dude.setBounce(0.2);
     this.dude.setGravityY(300);
     this.dude.setCollideWorldBounds(true);
+    this.dude.setScale(0.6);
 
     /* Create foreground layer. We need to create this layer _after_
      * we add the dude sprite so that the dude is hidden by this
