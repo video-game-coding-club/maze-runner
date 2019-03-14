@@ -8,7 +8,7 @@ var gameData = {
 class SplashScreen extends Phaser.Scene {
   constructor() {
     super("SplashScreen");
-  };
+  }
 
   progressBar() {
     let progressBar = this.add.graphics();
@@ -52,7 +52,7 @@ class SplashScreen extends Phaser.Scene {
     assetText.setOrigin(0.5, 0.5);
 
     this.load.on('progress', function (value) {
-      console.log(value);
+      console.warn(value);
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
       progressBar.fillRect(250, 280, 300 * value, 30);
@@ -60,12 +60,12 @@ class SplashScreen extends Phaser.Scene {
     });
 
     this.load.on('fileprogress', function (file) {
-      console.log(file.src);
+      console.warn(file.src);
       assetText.setText('Loading asset: ' + file.key);
     });
 
     this.load.on('complete', function () {
-      console.log('complete');
+      console.warn('complete');
       progressBar.destroy();
       progressBox.destroy();
       loadingText.destroy();
@@ -102,14 +102,14 @@ class SplashScreen extends Phaser.Scene {
   }
 
   create() {
-    let splash = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "splash");
+    this.add.sprite(this.scale.width / 2, this.scale.height / 2, "splash");
     this.input.keyboard.on("keydown", () => {
       this.scene.start("SelectLevel");
     });
     this.messageShown = false;
   }
 
-  update(time, delta) {
+  update(time) {
     if (time > 2000 && !this.messageShown) {
       let message = this.make.text({
         x: this.cameras.main.width / 2,
@@ -227,7 +227,7 @@ class SelectLevel extends Phaser.Scene {
     this.scene.start("PlayLevel");
   }
 
-  update(time, delta) {
+  update() {
     if (this.levelControls.zero.isDown) {
       this.playLevel(0);
     } else if (this.levelControls.one.isDown) {
@@ -434,7 +434,7 @@ class PlayLevel extends Phaser.Scene {
     gameData.levelComplete = false;
   }
 
-  update(time, delta) {
+  update(time) {
     if (gameData.levelComplete) {
       this.dude.anims.play("stand");
       return;
@@ -472,7 +472,7 @@ class PlayLevel extends Phaser.Scene {
     }
 
     if (this.physics.world.overlap(this.dude, this.lavaTiles)) {
-      console.log("The dude in lava");
+      console.warn("The dude in lava");
       if (this.fellInLava === undefined || this.fellInLava === null) {
         this.fellInLava = time;
         gameData.healthPoints -= 20;
@@ -521,7 +521,7 @@ class PlayLevel extends Phaser.Scene {
     }
 
     gameData.levelComplete = true;
-    console.log("The dude is leaving");
+    console.warn("The dude is leaving");
     exit.anims.play("exit_open");
     this.physics.pause();
     this.cameras.main.fade(1000, 0, 0, 0, false, this.dudeIsOut);
@@ -572,7 +572,7 @@ class LevelComplete extends Phaser.Scene {
     });
   }
 
-  update(time, delta) {
+  update() {
     if (this.controls.back.isDown) {
       this.scene.start("SelectLevel");
     }
@@ -592,7 +592,7 @@ class GameOver extends Phaser.Scene {
     });
   }
 
-  update(time, delta) {
+  update() {
     if (this.controls.back.isDown) {
       this.scene.start("SelectLevel");
     }

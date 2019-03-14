@@ -7,6 +7,14 @@ jobs:
     docker:
       - image: circleci/node
     steps:
+      - checkout
+      - run:
+          name: Install tiled
+          command: |
+            sudo apt-get install tiled
+            npm install
       - run:
           name: Fake test
-          command: /bin/true
+          command: |
+            # npm run lint
+            # npm run build
