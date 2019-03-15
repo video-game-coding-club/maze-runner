@@ -190,22 +190,22 @@ class SelectLevel extends Phaser.Scene {
   }
 
   create() {
-    this.button = [];
-    this.buttonText = [];
+    let button = [];
+    let buttonText = [];
     for (let i = 0; i < 5; i++) {
-      this.button[i] = this.add.sprite(150, 60 + i * 80, "button");
-      this.button[i].setScale(0.3, 0.15);
-      this.buttonText[i] = this.add.text(80, 40 + i * 80, 'Level ' + i,
-                                         {
-                                           fontSize: '32px',
-                                           fill: '#ffffff',
-                                           stroke: "#202020",
-                                           strokeThickness: 3,
-                                           shadowOffsetX: 5,
-                                           shadowOffsetY: 5,
-                                           shadowBlur: 2,
-                                           shadowColor: "#101010"
-                                         });
+      button[i] = this.add.sprite(150, 60 + i * 80, "button");
+      button[i].setScale(0.3, 0.15);
+      buttonText[i] = this.add.text(80, 40 + i * 80, 'Level ' + i,
+                                    {
+                                      fontSize: '32px',
+                                      fill: '#ffffff',
+                                      stroke: "#202020",
+                                      strokeThickness: 3,
+                                      shadowOffsetX: 5,
+                                      shadowOffsetY: 5,
+                                      shadowBlur: 2,
+                                      shadowColor: "#101010"
+                                    });
     }
     this.levelControls = this.input.keyboard.addKeys({
       "zero": Phaser.Input.Keyboard.KeyCodes.ZERO,
@@ -214,9 +214,10 @@ class SelectLevel extends Phaser.Scene {
       "three": Phaser.Input.Keyboard.KeyCodes.THREE,
       "four": Phaser.Input.Keyboard.KeyCodes.FOUR
     });
+
     this.sound.stopAll();
-    this.background_music = this.sound.add("title_music", { loop: true });
-    this.background_music.play();
+    let background_music = this.sound.add("title_music", { loop: true });
+    background_music.play();
 
     this.scene.launch("Credits");
   }
@@ -320,13 +321,13 @@ class PlayLevel extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
     /* Create tileset for background. */
-    this.backgroundTiles = this.map.addTilesetImage("tiles");
+    let backgroundTiles = this.map.addTilesetImage("tiles");
 
     /* Create background layer. */
-    this.backgroundLayer = this.map.createStaticLayer("background", this.backgroundTiles);
+    this.map.createStaticLayer("background", backgroundTiles);
 
     /* Create the game layer. */
-    this.gameLayer = this.map.createDynamicLayer("game", this.backgroundTiles);
+    let gameLayer = this.map.createDynamicLayer("game", backgroundTiles);
 
     this.createAnimations();
 
@@ -351,42 +352,42 @@ class PlayLevel extends Phaser.Scene {
     /* Create foreground layer. We need to create this layer _after_
      * we add the dude sprite so that the dude is hidden by this
      * layer. */
-    this.foregroundLayer = this.map.createStaticLayer("foreground", this.backgroundTiles);
+    this.map.createStaticLayer("foreground", backgroundTiles);
 
     /* This will watch the player and layer every frame to check for
        collisions. */
-    this.gameLayer.setCollisionByProperty({ collides: true });
-    this.physics.add.collider(this.dude, this.gameLayer);
+    gameLayer.setCollisionByProperty({ collides: true });
+    this.physics.add.collider(this.dude, gameLayer);
 
     /* Create the lava. */
     this.lavaTiles = this.physics.add.staticGroup();
-    this.gameLayer.forEachTile(tile => {
+    gameLayer.forEachTile(tile => {
       if (tile.properties.type === "lava") {
         const lava = this.lavaTiles.create(tile.getCenterX(), tile.getCenterY(), "lava");
         lava.anims.play("lava");
-        this.gameLayer.removeTileAt(tile.x, tile.y);
+        gameLayer.removeTileAt(tile.x, tile.y);
       }
     });
 
     /* Find exits. */
     this.exitTiles = this.physics.add.staticGroup();
-    this.gameLayer.forEachTile(tile => {
+    gameLayer.forEachTile(tile => {
       if (tile.properties.type === "exit") {
         const exit = this.exitTiles.create(tile.getCenterX(), tile.getCenterY(), "tiles");
         exit.anims.play("exit_closed");
-        this.gameLayer.removeTileAt(tile.x, tile.y);
+        gameLayer.removeTileAt(tile.x, tile.y);
       }
     });
 
     /* Create the hearts. */
-    this.hearts = this.map.createFromObjects("objects", "heart", { key: "heart" });
-    if (this.hearts) {
-      this.hearts.forEach(heart => {
+    let hearts = this.map.createFromObjects("objects", "heart", { key: "heart" });
+    if (hearts) {
+      hearts.forEach(heart => {
         this.physics.add.existing(heart);
         heart.anims.play("glimmer");
       });
     }
-    this.physics.add.overlap(this.dude, this.hearts, this.collectHearts, null, this);
+    this.physics.add.overlap(this.dude, hearts, this.collectHearts, null, this);
 
     /* Create the gems. */
     this.gems = this.map.createFromObjects("objects", "gems", { key: "gems" });
@@ -585,8 +586,8 @@ class GameOver extends Phaser.Scene {
   }
 
   create() {
-    this.gameOver = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "gameOver");
-    this.gameOver.setScale(0.2);
+    let gameOver = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "gameOver");
+    gameOver.setScale(0.2);
     this.controls = this.input.keyboard.addKeys({
       "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
     });
