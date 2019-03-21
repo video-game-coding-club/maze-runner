@@ -88,7 +88,9 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("splash", "assets/splash_screen.png");
-    this.load.spritesheet("dude", "assets/dude.png", { frameWidth: 24, frameHeight: 32 });
+    this.load.spritesheet("dude_idle", "assets/boy_ninja_idle.png", { frameWidth: 34, frameHeight: 64 });
+    this.load.spritesheet("dude_run", "assets/boy_ninja_run.png", { frameWidth: 51, frameHeight: 64 });
+    this.load.spritesheet("dude_jump", "assets/boy_ninja_jump.png", { frameWidth: 48, frameHeight: 64 });
     this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 11, frameHeight: 10 });
     this.load.spritesheet("lava", "assets/lava.png", { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet("tiles", "assets/tiles.png", { frameWidth: 32, frameHeight: 32 });
@@ -251,19 +253,23 @@ class PlayLevel extends Phaser.Scene {
   createAnimations() {
     /* Create Dude animations. */
     this.anims.create({
-      key: "stand",
-      frames: [ { key: "dude", frame: 2 } ]
+      key: "dude_idle",
+      frames: this.anims.generateFrameNumbers("dude_idle"),
+      frameRate: 20,
+      repeat: -1
     });
 
     this.anims.create({
-      key: "jump",
-      frames: [ { key: "dude", frame: 0 } ]
+      key: 'dude_run',
+      frames: this.anims.generateFrameNumbers("dude_run"),
+      frameRate: 20,
+      repeat: -1
     });
 
     this.anims.create({
-      key: 'walk',
-      frames: this.anims.generateFrameNumbers("dude", { start: 1, end: 2 }),
-      frameRate: 10,
+      key: "dude_jump",
+      frames: [ { key: "dude_jump", frame: 0 } ],
+      frameRate: 20,
       repeat: -1
     });
 
@@ -344,10 +350,12 @@ class PlayLevel extends Phaser.Scene {
     if (dudeObject) {
       dudePosition = { x: dudeObject.x, y: dudeObject.y };
     }
-    this.dude = this.physics.add.sprite(dudePosition.x, dudePosition.y, "dude");
+    this.dude = this.physics.add.sprite(dudePosition.x, dudePosition.y, "dude_idle");
     this.dude.setBounce(0.2);
     this.dude.setGravityY(300);
     this.dude.setCollideWorldBounds(true);
+    this.dude.anims.play("dude_idle");
+    this.dude.setScale(0.5);
 
     /* Create foreground layer. We need to create this layer _after_
      * we add the dude sprite so that the dude is hidden by this
@@ -437,7 +445,7 @@ class PlayLevel extends Phaser.Scene {
 
   update(time) {
     if (gameData.levelComplete) {
-      this.dude.anims.play("stand");
+      this.dude.anims.play("dude_idle");
       return;
     }
 
@@ -449,15 +457,15 @@ class PlayLevel extends Phaser.Scene {
     if (this.controls.right.isDown) {
       this.dude.setFlipX(false);
       this.dude.setVelocityX(100);
-      this.dude.anims.play("walk", true);
+      this.dude.anims.play("dude_run", true);
     } else if (this.controls.left.isDown) {
       this.dude.setFlipX(true);
       this.dude.setVelocityX(-100);
-      this.dude.anims.play("walk", true);
+      this.dude.anims.play("dude_run", true);
     } else {
       /* Stop any previous movement. */
       this.dude.setVelocityX(0);
-      this.dude.anims.play("stand");
+      this.dude.anims.play("dude_idle");
     }
 
     if (this.controls.up.isDown) {
@@ -469,7 +477,7 @@ class PlayLevel extends Phaser.Scene {
     }
 
     if (!(this.dude.body.onFloor() || this.dude.body.onWall())) {
-      this.dude.anims.play("jump");
+      this.dude.anims.play("dude_jump");
     }
 
     if (this.physics.world.overlap(this.dude, this.lavaTiles)) {

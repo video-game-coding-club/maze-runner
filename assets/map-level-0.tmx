@@ -45,7 +45,7 @@
 </data>
  </layer>
  <objectgroup id="16" name="objects">
-  <object id="16" name="dude" gid="45" x="321.167" y="59" width="24" height="26"/>
+  <object id="16" name="dude" gid="45" x="305.667" y="41.5" width="24" height="26"/>
   <object id="1" name="torch" gid="44" x="39" y="48.5" width="16" height="32"/>
   <object id="2" name="torch" gid="44" x="137" y="46.5" width="16" height="32"/>
   <object id="3" name="torch" gid="44" x="42" y="174.5" width="16" height="32"/>
