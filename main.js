@@ -90,6 +90,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("splash", "assets/splash_screen.png");
     this.load.spritesheet("dude_idle", "assets/boy_ninja_idle.png", { frameWidth: 34, frameHeight: 64 });
     this.load.spritesheet("dude_run", "assets/boy_ninja_run.png", { frameWidth: 51, frameHeight: 64 });
+    this.load.spritesheet("dude_jump", "assets/boy_ninja_jump.png", { frameWidth: 48, frameHeight: 64 });
     this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 11, frameHeight: 10 });
     this.load.spritesheet("lava", "assets/lava.png", { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet("tiles", "assets/tiles.png", { frameWidth: 32, frameHeight: 32 });
@@ -266,9 +267,8 @@ class PlayLevel extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "jump",
-      //frames: [ { key: "dude", frame: 0 } ]
-      frames: this.anims.generateFrameNumbers("dude_jump", { start: 0, end: 9 }),
+      key: "dude_jump",
+      frames: [ { key: "dude_jump", frame: 0 } ],
       frameRate: 20,
       repeat: -1
     });
@@ -477,7 +477,7 @@ class PlayLevel extends Phaser.Scene {
     }
 
     if (!(this.dude.body.onFloor() || this.dude.body.onWall())) {
-      this.dude.anims.play("jump");
+      this.dude.anims.play("dude_jump");
     }
 
     if (this.physics.world.overlap(this.dude, this.lavaTiles)) {
