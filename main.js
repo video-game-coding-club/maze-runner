@@ -89,7 +89,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("splash", "assets/splash_screen.png");
     this.load.spritesheet("dude_idle", "assets/boy_ninja_idle.png", { frameWidth: 34, frameHeight: 64 });
-    this.load.spritesheet("dude_jump", "assets/dude_jump.png", { frameWidth: 362, frameHeight: 483 });
+    this.load.spritesheet("dude_run", "assets/boy_ninja_run.png", { frameWidth: 51, frameHeight: 64 });
     this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 11, frameHeight: 10 });
     this.load.spritesheet("lava", "assets/lava.png", { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet("tiles", "assets/tiles.png", { frameWidth: 32, frameHeight: 32 });
@@ -254,7 +254,14 @@ class PlayLevel extends Phaser.Scene {
     this.anims.create({
       key: "dude_idle",
       frames: this.anims.generateFrameNumbers("dude_idle"),
-      frameRate: 5,
+      frameRate: 20,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'dude_run',
+      frames: this.anims.generateFrameNumbers("dude_run"),
+      frameRate: 20,
       repeat: -1
     });
 
@@ -262,13 +269,6 @@ class PlayLevel extends Phaser.Scene {
       key: "jump",
       //frames: [ { key: "dude", frame: 0 } ]
       frames: this.anims.generateFrameNumbers("dude_jump", { start: 0, end: 9 }),
-      frameRate: 20,
-      repeat: -1
-    });
-
-    this.anims.create({
-      key: 'walk',
-      frames: this.anims.generateFrameNumbers("dude_run", { start: 0, end: 9 }),
       frameRate: 20,
       repeat: -1
     });
@@ -457,11 +457,11 @@ class PlayLevel extends Phaser.Scene {
     if (this.controls.right.isDown) {
       this.dude.setFlipX(false);
       this.dude.setVelocityX(100);
-      this.dude.anims.play("walk", true);
+      this.dude.anims.play("dude_run", true);
     } else if (this.controls.left.isDown) {
       this.dude.setFlipX(true);
       this.dude.setVelocityX(-100);
-      this.dude.anims.play("walk", true);
+      this.dude.anims.play("dude_run", true);
     } else {
       /* Stop any previous movement. */
       this.dude.setVelocityX(0);
