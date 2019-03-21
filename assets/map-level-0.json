@@ -51,8 +51,8 @@
                  "type":"",
                  "visible":true,
                  "width":24,
-                 "x":321.167,
-                 "y":59
+                 "x":305.667,
+                 "y":41.5
                 }, 
                 {
                  "gid":44,
@@ -794,6 +794,15 @@
                          "name":"type",
                          "type":"string",
                          "value":"lava"
+                        }]
+                }, 
+                {
+                 "id":37,
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"ladder"
                         }]
                 }],
          "tilewidth":32

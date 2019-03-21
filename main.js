@@ -88,8 +88,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("splash", "assets/splash_screen.png");
-    this.load.spritesheet("dude_run", "assets/dude_run.png", { frameWidth: 363, frameHeight: 458 });
-    this.load.spritesheet("dude_idle", "assets/dude_idle.png", { frameWidth: 232, frameHeight: 439 });
+    this.load.spritesheet("dude_idle", "assets/boy_ninja_idle.png", { frameWidth: 34, frameHeight: 64 });
     this.load.spritesheet("dude_jump", "assets/dude_jump.png", { frameWidth: 362, frameHeight: 483 });
     this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 11, frameHeight: 10 });
     this.load.spritesheet("lava", "assets/lava.png", { frameWidth: 32, frameHeight: 32 });
@@ -253,9 +252,8 @@ class PlayLevel extends Phaser.Scene {
   createAnimations() {
     /* Create Dude animations. */
     this.anims.create({
-      key: "stand",
-      //frames: [ { key: "dude", frame: 0 } ]
-      frames: this.anims.generateFrameNumbers("dude_idle", { start: 0, end: 9 }),
+      key: "dude_idle",
+      frames: this.anims.generateFrameNumbers("dude_idle"),
       frameRate: 5,
       repeat: -1
     });
@@ -356,7 +354,8 @@ class PlayLevel extends Phaser.Scene {
     this.dude.setBounce(0.2);
     this.dude.setGravityY(300);
     this.dude.setCollideWorldBounds(true);
-    this.dude.setScale(0.07);
+    this.dude.anims.play("dude_idle");
+    this.dude.setScale(0.5);
 
     /* Create foreground layer. We need to create this layer _after_
      * we add the dude sprite so that the dude is hidden by this
@@ -446,7 +445,7 @@ class PlayLevel extends Phaser.Scene {
 
   update(time) {
     if (gameData.levelComplete) {
-      this.dude.anims.play("stand");
+      this.dude.anims.play("dude_idle");
       return;
     }
 
@@ -466,7 +465,7 @@ class PlayLevel extends Phaser.Scene {
     } else {
       /* Stop any previous movement. */
       this.dude.setVelocityX(0);
-      this.dude.anims.play("stand");
+      this.dude.anims.play("dude_idle");
     }
 
     if (this.controls.up.isDown) {
