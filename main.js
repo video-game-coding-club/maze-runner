@@ -365,6 +365,7 @@ class PlayLevel extends Phaser.Scene {
     /* This will watch the player and layer every frame to check for
        collisions. */
     gameLayer.setCollisionByProperty({ collides: true });
+    this.physics.add.collider(this.dude, gameLayer, this.dudeHitTheFloor);
     this.physics.add.collider(this.dude, gameLayer);
 
     /* Create the lava. */
@@ -523,6 +524,13 @@ class PlayLevel extends Phaser.Scene {
   collectGems(dude, gem) {
     gem.destroy();
     gameData.gemPoints += 1;
+  }
+
+  dudeHitTheFloor(dude, floorTile) {
+    if (dude.body.onFloor() && Math.abs(dude.body.velocity.y) > 40) {
+      console.warn("high velocity impact (" + dude.body.velocity.y + ")");
+      gameData.healthPoints -= (Math.abs(dude.body.velocity.y) - 40) * 1.5;
+    }
   }
 
   dudeIsLeaving(dude, exit) {
