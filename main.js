@@ -492,13 +492,6 @@ class PlayLevel extends Phaser.Scene {
         }
       }
 
-      if (gameData.healthPoints <= 0) {
-        gameData.gameOver = true;
-        this.scene.stop("StatusDisplay");
-        this.scene.start("GameOver");
-      } else {
-        this.scene.get("StatusDisplay").setHealthPoints();
-      }
     } else {
       this.fellInLava = null;
     }
@@ -508,6 +501,16 @@ class PlayLevel extends Phaser.Scene {
       if (this.physics.world.overlap(this.dude, exit)) {
         this.dudeIsLeaving(this.dude, exit);
       }});
+
+    /* Update health points display. */
+    if (gameData.healthPoints <= 0) {
+      gameData.gameOver = true;
+      this.scene.stop("StatusDisplay");
+      this.scene.start("GameOver");
+    } else {
+      this.scene.get("StatusDisplay").setHealthPoints();
+    }
+    //this.scene.get("StatusDisplay").setGemPoints();
   }
 
   collectHearts(dude, heart) {
@@ -515,7 +518,6 @@ class PlayLevel extends Phaser.Scene {
     gameData.healthPoints += 20;
     gameData.healthPoints = Math.min(100, gameData.healthPoints);
     this.heartSoundEffect.play();
-    this.scene.get("StatusDisplay").setHealthPoints();
   }
 
   collectGems(dude, gem) {
