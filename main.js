@@ -335,7 +335,6 @@ class PlayLevel extends Phaser.Scene {
     /* Create the game layer. */
     let gameLayer = this.map.createDynamicLayer("game", backgroundTiles);
 
-    /* Create the animations. */
     this.createAnimations();
 
     /* Add the dude.
