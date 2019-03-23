@@ -510,7 +510,7 @@ class PlayLevel extends Phaser.Scene {
     } else {
       this.scene.get("StatusDisplay").setHealthPoints();
     }
-    //this.scene.get("StatusDisplay").setGemPoints();
+    this.scene.get("StatusDisplay").setGemPoints();
   }
 
   collectHearts(dude, heart) {
@@ -523,7 +523,6 @@ class PlayLevel extends Phaser.Scene {
   collectGems(dude, gem) {
     gem.destroy();
     gameData.gemPoints += 1;
-    this.scene.get("StatusDisplay").setGemPoints();
   }
 
   dudeIsLeaving(dude, exit) {
@@ -564,9 +563,11 @@ class StatusDisplay extends Phaser.Scene {
   }
 
   setGemPoints() {
-    let newGem = this.add.sprite(36 + this.gems.length * 32, 70, "gems");
-    newGem.setScale(1.8);
-    this.gems.push(newGem);
+    if (gameData.gemPoints > this.gems.length) {
+      let newGem = this.add.sprite(36 + this.gems.length * 32, 70, "gems");
+      newGem.setScale(1.8);
+      this.gems.push(newGem);
+    }
   }
 }
 
