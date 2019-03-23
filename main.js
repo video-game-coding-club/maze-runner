@@ -316,6 +316,20 @@ class PlayLevel extends Phaser.Scene {
     });
   }
 
+  createLooseTiles(backgroundTiles) {
+    let looseLayer = this.map.createStaticLayer("loose", backgroundTiles);
+    this.looseTiles = this.physics.add.group();
+    looseLayer.forEachTile(tile => {
+      if (tile.properties.type === "rock") {
+        const newTile = this.physics.add.sprite(tile.getCenterX(), tile.getCenterY(), "tiles", tile.index - 1);
+        this.looseTiles.add(newTile);
+        newTile.setImmovable(true);
+        newTile.setCollideWorldBounds(true);
+      }
+    });
+    looseLayer.destroy();
+  }
+
   create() {
     /* Create the map. */
     this.map = this.make.tilemap({
@@ -376,6 +390,10 @@ class PlayLevel extends Phaser.Scene {
     /* Check for impact so that the dude can walk on the gameLayer
      * tiles. */
     this.physics.add.collider(this.dude, gameLayer);
+
+    /* Create the loose tiles. */
+    this.createLooseTiles(backgroundTiles);
+    this.physics.add.collider(this.dude, this.looseTiles);
 
     /* Create the lava. */
     this.lavaTiles = this.physics.add.staticGroup();
