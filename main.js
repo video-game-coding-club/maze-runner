@@ -466,6 +466,7 @@ class PlayLevel extends Phaser.Scene {
      * from the gameLayer already before we check for impact. */
     this.physics.add.collider(this.dude, gameLayer, this.dudeHitTheFloor);
     this.physics.add.collider(this.dude, gameLayer);
+    this.physics.add.overlap(this.dude, this.looseTiles, this.overlapLooseTiles);
     this.physics.add.collider(this.dude, this.looseTiles);
     this.physics.add.overlap(this.dude, hearts, this.collectHearts, null, this);
     this.physics.add.overlap(this.dude, this.gems, this.collectGems, null, this);
@@ -487,7 +488,6 @@ class PlayLevel extends Phaser.Scene {
     this.sound.stopAll();
     this.background_music = this.sound.add("background_music", { loop: true });
     this.background_music.play();
-
     this.heartSoundEffect = this.sound.add("coin");
 
     /* Launch the status display. */
@@ -523,17 +523,24 @@ class PlayLevel extends Phaser.Scene {
     }
 
     if (this.controls.up.isDown) {
+      /* Climb or jump. */
       if (this.dude.body.onFloor()) {
         this.dude.setVelocityY(-130);
-      } else if (this.dude.body.onWall()) {
+      } else if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
         this.dude.setVelocityY(-50);
       }
     }
 
-    if (!(this.dude.body.onFloor() || this.dude.body.onWall())) {
+    /* When the dude is in the air, play the 'jump' animation. */
+    if (!(this.dude.body.onFloor() || this.dude.body.onWall() || this.dude.body.onWallOfLooseTile)) {
       this.dude.anims.play("dude_jump");
     }
 
+    /* Check whether we should loosen the loose tiles. */
+    if (this.dude.onFloorOfLooseTile) {
+    }
+
+    /* Check whether the dude fell into lava. */
     if (this.physics.world.overlap(this.dude, this.lavaTiles)) {
       console.warn("The dude in lava");
       if (this.fellInLava === undefined || this.fellInLava === null) {
@@ -564,7 +571,18 @@ class PlayLevel extends Phaser.Scene {
     } else {
       this.scene.get("StatusDisplay").setHealthPoints();
     }
-    this.scene.get("StatusDisplay").setGemPoints();
+
+    /* Reset dude overlap. */
+    this.dude.body.onWallOfLooseTile = false;
+    this.dude.body.onFloorOfLooseTile = false;
+  }
+
+  overlapLooseTiles(dude, looseTile) {
+    if (dude.body.overlapX > 0) {
+      dude.body.onWallOfLooseTile = true;
+    } else if (dude.body.overlapY > 0) {
+      dude.body.onFloorOfLooseTile = true;
+    }
   }
 
   collectHearts(dude, heart) {
