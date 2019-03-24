@@ -377,22 +377,21 @@ class PlayLevel extends Phaser.Scene {
      * layer. */
     this.map.createStaticLayer("foreground", backgroundTiles);
 
+    /* Create the loose tiles. */
+    this.createLooseTiles(backgroundTiles);
+
     /* Turn on collision detection for the gameLayer. */
     gameLayer.setCollisionByProperty({ collides: true });
 
-    /* Check whether the dude jumped from really high. Note that the
-     * order of colliders matters. We need to add this one first so
-     * that we can check for on the tiles. If we add it after the
+    /* Create the colliders.
+     *
+     * Also check whether the dude jumped from really high. Note that
+     * the order of colliders matters. We need to add this one first
+     * so that we can check for on the tiles. If we add it after the
      * normal game physics collider, the dude will have been separated
      * from the gameLayer already before we check for impact. */
     this.physics.add.collider(this.dude, gameLayer, this.dudeHitTheFloor);
-
-    /* Check for impact so that the dude can walk on the gameLayer
-     * tiles. */
     this.physics.add.collider(this.dude, gameLayer);
-
-    /* Create the loose tiles. */
-    this.createLooseTiles(backgroundTiles);
     this.physics.add.collider(this.dude, this.looseTiles);
 
     /* Create the lava. */
