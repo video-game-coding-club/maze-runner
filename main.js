@@ -421,6 +421,30 @@ class PlayLevel extends Phaser.Scene {
     /* Create the lava. */
     this.createLavaTiles(gameLayer);
 
+    /* Find exits. */
+    this.createExits(gameLayer);
+
+    /* Create the hearts. */
+    let hearts = this.createHearts();
+
+    /* Create the gems. */
+    this.gems = this.map.createFromObjects("objects", "gems", { key: "gems" });
+    if (this.gems) {
+      this.gems.forEach(gem => {
+        this.physics.add.existing(gem);
+        gem.anims.play("gem_glimmer");
+      });
+    }
+
+    /* Create the torches. */
+    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
+    if (this.torches) {
+      this.torches.forEach(torch => {
+        this.physics.add.existing(torch);
+        torch.anims.play("flicker");
+      });
+    }
+
     /* Turn on collision detection for the gameLayer. */
     gameLayer.setCollisionByProperty({ collides: true });
 
@@ -434,32 +458,8 @@ class PlayLevel extends Phaser.Scene {
     this.physics.add.collider(this.dude, gameLayer, this.dudeHitTheFloor);
     this.physics.add.collider(this.dude, gameLayer);
     this.physics.add.collider(this.dude, this.looseTiles);
-
-    /* Find exits. */
-    this.createExits(gameLayer);
-
-    /* Create the hearts. */
-    let hearts = this.createHearts();
     this.physics.add.overlap(this.dude, hearts, this.collectHearts, null, this);
-
-    /* Create the gems. */
-    this.gems = this.map.createFromObjects("objects", "gems", { key: "gems" });
-    if (this.gems) {
-      this.gems.forEach(gem => {
-        this.physics.add.existing(gem);
-        gem.anims.play("gem_glimmer");
-      });
-    }
     this.physics.add.overlap(this.dude, this.gems, this.collectGems, null, this);
-
-    /* Create the torches. */
-    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
-    if (this.torches) {
-      this.torches.forEach(torch => {
-        this.physics.add.existing(torch);
-        torch.anims.play("flicker");
-      });
-    }
 
     /* Add keyboard controls. */
     this.controls = this.input.keyboard.addKeys({
