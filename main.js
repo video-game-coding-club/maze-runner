@@ -427,6 +427,10 @@ class PlayLevel extends Phaser.Scene {
     /* Create the animations. */
     this.createAnimations();
 
+    /* Create the torches. We create the torches before we create the
+     * dude so that the dude appears in front of the torches. */
+    this.createTorches();
+
     /* Create and place the dude. */
     this.createDude();
 
@@ -449,9 +453,6 @@ class PlayLevel extends Phaser.Scene {
 
     /* Create the gems. */
     this.createGems();
-
-    /* Create the torches. */
-    this.createTorches();
 
     /* Turn on collision detection for the gameLayer. */
     gameLayer.setCollisionByProperty({ collides: true });
