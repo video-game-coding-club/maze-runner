@@ -330,6 +330,17 @@ class PlayLevel extends Phaser.Scene {
     looseLayer.destroy();
   }
 
+  createLavaTiles(gameLayer) {
+    this.lavaTiles = this.physics.add.staticGroup();
+    gameLayer.forEachTile(tile => {
+      if (tile.properties.type === "lava") {
+        const lava = this.lavaTiles.create(tile.getCenterX(), tile.getCenterY(), "lava");
+        lava.anims.play("lava");
+        gameLayer.removeTileAt(tile.x, tile.y);
+      }
+    });
+  }
+
   create() {
     /* Create the map. */
     this.map = this.make.tilemap({
@@ -395,14 +406,7 @@ class PlayLevel extends Phaser.Scene {
     this.physics.add.collider(this.dude, this.looseTiles);
 
     /* Create the lava. */
-    this.lavaTiles = this.physics.add.staticGroup();
-    gameLayer.forEachTile(tile => {
-      if (tile.properties.type === "lava") {
-        const lava = this.lavaTiles.create(tile.getCenterX(), tile.getCenterY(), "lava");
-        lava.anims.play("lava");
-        gameLayer.removeTileAt(tile.x, tile.y);
-      }
-    });
+    this.createLavaTiles(gameLayer);
 
     /* Find exits. */
     this.exitTiles = this.physics.add.staticGroup();
