@@ -316,6 +316,28 @@ class PlayLevel extends Phaser.Scene {
     });
   }
 
+  createDude() {
+    /* Add the dude.
+     *
+     * I tried to use `createFromObjects()` here and then
+     * `this.physics.add.existing()` but that didn't quite work. We
+     * should revisit this issue at some later time.
+     */
+    let dudeObject = this.map.findObject("objects", o => {
+      return o.name === "dude";
+    });
+    let dudePosition = { x: 10, y: 10 };
+    if (dudeObject) {
+      dudePosition = { x: dudeObject.x, y: dudeObject.y };
+    }
+    this.dude = this.physics.add.sprite(dudePosition.x, dudePosition.y, "dude_idle");
+    this.dude.setBounce(0.2);
+    this.dude.setGravityY(300);
+    this.dude.setCollideWorldBounds(true);
+    this.dude.anims.play("dude_idle");
+    this.dude.setScale(0.5);
+  }
+
   createLooseTiles(backgroundTiles) {
     let looseLayer = this.map.createStaticLayer("loose", backgroundTiles);
     this.looseTiles = this.physics.add.group();
@@ -363,25 +385,8 @@ class PlayLevel extends Phaser.Scene {
     /* Create the animations. */
     this.createAnimations();
 
-    /* Add the dude.
-     *
-     * I tried to use `createFromObjects()` here and then
-     * `this.physics.add.existing()` but that didn't quite work. We
-     * should revisit this issue at some later time.
-     */
-    let dudeObject = this.map.findObject("objects", o => {
-      return o.name === "dude";
-    });
-    let dudePosition = { x: 10, y: 10 };
-    if (dudeObject) {
-      dudePosition = { x: dudeObject.x, y: dudeObject.y };
-    }
-    this.dude = this.physics.add.sprite(dudePosition.x, dudePosition.y, "dude_idle");
-    this.dude.setBounce(0.2);
-    this.dude.setGravityY(300);
-    this.dude.setCollideWorldBounds(true);
-    this.dude.anims.play("dude_idle");
-    this.dude.setScale(0.5);
+    /* Create and place the dude. */
+    this.createDude();
 
     /* Create foreground layer. We need to create this layer _after_
      * we add the dude sprite so that the dude is hidden by this
