@@ -385,6 +385,16 @@ class PlayLevel extends Phaser.Scene {
     return hearts;
   }
 
+  createGems() {
+    this.gems = this.map.createFromObjects("objects", "gems", { key: "gems" });
+    if (this.gems) {
+      this.gems.forEach(gem => {
+        this.physics.add.existing(gem);
+        gem.anims.play("gem_glimmer");
+      });
+    }
+  }
+
   create() {
     /* Create the map. */
     this.map = this.make.tilemap({
@@ -428,13 +438,7 @@ class PlayLevel extends Phaser.Scene {
     let hearts = this.createHearts();
 
     /* Create the gems. */
-    this.gems = this.map.createFromObjects("objects", "gems", { key: "gems" });
-    if (this.gems) {
-      this.gems.forEach(gem => {
-        this.physics.add.existing(gem);
-        gem.anims.play("gem_glimmer");
-      });
-    }
+    this.createGems();
 
     /* Create the torches. */
     this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
