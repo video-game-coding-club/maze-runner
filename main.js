@@ -395,6 +395,16 @@ class PlayLevel extends Phaser.Scene {
     }
   }
 
+  createTorches() {
+    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
+    if (this.torches) {
+      this.torches.forEach(torch => {
+        this.physics.add.existing(torch);
+        torch.anims.play("flicker");
+      });
+    }
+  }
+
   create() {
     /* Create the map. */
     this.map = this.make.tilemap({
@@ -441,13 +451,7 @@ class PlayLevel extends Phaser.Scene {
     this.createGems();
 
     /* Create the torches. */
-    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
-    if (this.torches) {
-      this.torches.forEach(torch => {
-        this.physics.add.existing(torch);
-        torch.anims.play("flicker");
-      });
-    }
+    this.createTorches();
 
     /* Turn on collision detection for the gameLayer. */
     gameLayer.setCollisionByProperty({ collides: true });
