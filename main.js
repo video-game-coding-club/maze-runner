@@ -391,6 +391,9 @@ class PlayLevel extends Phaser.Scene {
     /* Create the loose tiles. */
     this.createLooseTiles(backgroundTiles);
 
+    /* Create the lava. */
+    this.createLavaTiles(gameLayer);
+
     /* Turn on collision detection for the gameLayer. */
     gameLayer.setCollisionByProperty({ collides: true });
 
@@ -404,9 +407,6 @@ class PlayLevel extends Phaser.Scene {
     this.physics.add.collider(this.dude, gameLayer, this.dudeHitTheFloor);
     this.physics.add.collider(this.dude, gameLayer);
     this.physics.add.collider(this.dude, this.looseTiles);
-
-    /* Create the lava. */
-    this.createLavaTiles(gameLayer);
 
     /* Find exits. */
     this.exitTiles = this.physics.add.staticGroup();
