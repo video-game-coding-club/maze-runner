@@ -363,6 +363,17 @@ class PlayLevel extends Phaser.Scene {
     });
   }
 
+  createExits(gameLayer) {
+    this.exitTiles = this.physics.add.staticGroup();
+    gameLayer.forEachTile(tile => {
+      if (tile.properties.type === "exit") {
+        const exit = this.exitTiles.create(tile.getCenterX(), tile.getCenterY(), "tiles");
+        exit.anims.play("exit_closed");
+        gameLayer.removeTileAt(tile.x, tile.y);
+      }
+    });
+  }
+
   createHearts() {
     let hearts = this.map.createFromObjects("objects", "heart", { key: "heart" });
     if (hearts) {
@@ -425,14 +436,7 @@ class PlayLevel extends Phaser.Scene {
     this.physics.add.collider(this.dude, this.looseTiles);
 
     /* Find exits. */
-    this.exitTiles = this.physics.add.staticGroup();
-    gameLayer.forEachTile(tile => {
-      if (tile.properties.type === "exit") {
-        const exit = this.exitTiles.create(tile.getCenterX(), tile.getCenterY(), "tiles");
-        exit.anims.play("exit_closed");
-        gameLayer.removeTileAt(tile.x, tile.y);
-      }
-    });
+    this.createExits(gameLayer);
 
     /* Create the hearts. */
     let hearts = this.createHearts();
