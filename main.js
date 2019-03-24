@@ -363,6 +363,17 @@ class PlayLevel extends Phaser.Scene {
     });
   }
 
+  createHearts() {
+    let hearts = this.map.createFromObjects("objects", "heart", { key: "heart" });
+    if (hearts) {
+      hearts.forEach(heart => {
+        this.physics.add.existing(heart);
+        heart.anims.play("glimmer");
+      });
+    }
+    return hearts;
+  }
+
   create() {
     /* Create the map. */
     this.map = this.make.tilemap({
@@ -424,13 +435,7 @@ class PlayLevel extends Phaser.Scene {
     });
 
     /* Create the hearts. */
-    let hearts = this.map.createFromObjects("objects", "heart", { key: "heart" });
-    if (hearts) {
-      hearts.forEach(heart => {
-        this.physics.add.existing(heart);
-        heart.anims.play("glimmer");
-      });
-    }
+    let hearts = this.createHearts();
     this.physics.add.overlap(this.dude, hearts, this.collectHearts, null, this);
 
     /* Create the gems. */
