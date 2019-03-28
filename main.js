@@ -536,10 +536,6 @@ class PlayLevel extends Phaser.Scene {
       this.dude.anims.play("dude_jump");
     }
 
-    /* Check whether we should loosen the loose tiles. */
-    if (this.dude.onFloorOfLooseTile) {
-    }
-
     /* Check whether the dude fell into lava. */
     if (this.physics.world.overlap(this.dude, this.lavaTiles)) {
       console.warn("The dude in lava");
@@ -580,8 +576,12 @@ class PlayLevel extends Phaser.Scene {
   overlapLooseTiles(dude, looseTile) {
     if (dude.body.overlapX > 0) {
       dude.body.onWallOfLooseTile = true;
-    } else if (dude.body.overlapY > 0) {
-      dude.body.onFloorOfLooseTile = true;
+    } else if (dude.body.overlapY > 0 && looseTile.state != "triggered") {
+      looseTile.state = "triggered";
+      this.time.addEvent({
+        delay: 500,
+        callback: () => { looseTile.setGravityY(500); }
+      });
     }
   }
 
