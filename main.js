@@ -226,6 +226,9 @@ class SelectLevel extends Phaser.Scene {
 
   playLevel(level) {
     gameData.level = level;
+    gameData.gameOver = false;
+    gameData.healthPoints = 100;
+    gameData.gemPoints = 0;
     this.scene.stop("Credits");
     this.scene.start("PlayLevel");
   }
