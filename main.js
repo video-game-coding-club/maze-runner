@@ -226,6 +226,9 @@ class SelectLevel extends Phaser.Scene {
 
   playLevel(level) {
     gameData.level = level;
+    gameData.gameOver = false;
+    gameData.healthPoints = 100;
+    gameData.gemPoints = 0;
     this.scene.stop("Credits");
     this.scene.start("PlayLevel");
   }
@@ -316,27 +319,7 @@ class PlayLevel extends Phaser.Scene {
     });
   }
 
-  create() {
-    /* Create the map. */
-    this.map = this.make.tilemap({
-      key: "map_" + gameData.level,
-      tileWidth: 32,
-      tileHeight: 32
-    });
-    /* Resize world to fit the level. */
-    this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-
-    /* Create tileset for background. */
-    let backgroundTiles = this.map.addTilesetImage("tiles");
-
-    /* Create background layer. */
-    this.map.createStaticLayer("background", backgroundTiles);
-
-    /* Create the game layer. */
-    let gameLayer = this.map.createDynamicLayer("game", backgroundTiles);
-
-    this.createAnimations();
-
+  createDude() {
     /* Add the dude.
      *
      * I tried to use `createFromObjects()` here and then
@@ -356,27 +339,23 @@ class PlayLevel extends Phaser.Scene {
     this.dude.setCollideWorldBounds(true);
     this.dude.anims.play("dude_idle");
     this.dude.setScale(0.5);
+  }
 
-    /* Create foreground layer. We need to create this layer _after_
-     * we add the dude sprite so that the dude is hidden by this
-     * layer. */
-    this.map.createStaticLayer("foreground", backgroundTiles);
+  createLooseTiles(backgroundTiles) {
+    let looseLayer = this.map.createStaticLayer("loose", backgroundTiles);
+    this.looseTiles = this.physics.add.group();
+    looseLayer.forEachTile(tile => {
+      if (tile.properties.type === "rock") {
+        const newTile = this.physics.add.sprite(tile.getCenterX(), tile.getCenterY(), "tiles", tile.index - 1);
+        this.looseTiles.add(newTile);
+        newTile.setImmovable(true);
+        newTile.setCollideWorldBounds(true);
+      }
+    });
+    looseLayer.destroy();
+  }
 
-    /* Turn on collision detection for the gameLayer. */
-    gameLayer.setCollisionByProperty({ collides: true });
-
-    /* Check whether the dude jumped from really high. Note that the
-     * order of colliders matters. We need to add this one first so
-     * that we can check for on the tiles. If we add it after the
-     * normal game physics collider, the dude will have been separated
-     * from the gameLayer already before we check for impact. */
-    this.physics.add.collider(this.dude, gameLayer, this.dudeHitTheFloor);
-
-    /* Check for impact so that the dude can walk on the gameLayer
-     * tiles. */
-    this.physics.add.collider(this.dude, gameLayer);
-
-    /* Create the lava. */
+  createLavaTiles(gameLayer) {
     this.lavaTiles = this.physics.add.staticGroup();
     gameLayer.forEachTile(tile => {
       if (tile.properties.type === "lava") {
@@ -385,8 +364,9 @@ class PlayLevel extends Phaser.Scene {
         gameLayer.removeTileAt(tile.x, tile.y);
       }
     });
+  }
 
-    /* Find exits. */
+  createExits(gameLayer) {
     this.exitTiles = this.physics.add.staticGroup();
     gameLayer.forEachTile(tile => {
       if (tile.properties.type === "exit") {
@@ -395,8 +375,9 @@ class PlayLevel extends Phaser.Scene {
         gameLayer.removeTileAt(tile.x, tile.y);
       }
     });
+  }
 
-    /* Create the hearts. */
+  createHearts() {
     let hearts = this.map.createFromObjects("objects", "heart", { key: "heart" });
     if (hearts) {
       hearts.forEach(heart => {
@@ -404,9 +385,10 @@ class PlayLevel extends Phaser.Scene {
         heart.anims.play("glimmer");
       });
     }
-    this.physics.add.overlap(this.dude, hearts, this.collectHearts, null, this);
+    return hearts;
+  }
 
-    /* Create the gems. */
+  createGems() {
     this.gems = this.map.createFromObjects("objects", "gems", { key: "gems" });
     if (this.gems) {
       this.gems.forEach(gem => {
@@ -414,9 +396,9 @@ class PlayLevel extends Phaser.Scene {
         gem.anims.play("gem_glimmer");
       });
     }
-    this.physics.add.overlap(this.dude, this.gems, this.collectGems, null, this);
+  }
 
-    /* Create the torches. */
+  createTorches() {
     this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
     if (this.torches) {
       this.torches.forEach(torch => {
@@ -424,6 +406,73 @@ class PlayLevel extends Phaser.Scene {
         torch.anims.play("flicker");
       });
     }
+  }
+
+  create() {
+    /* Create the map. */
+    this.map = this.make.tilemap({
+      key: "map_" + gameData.level,
+      tileWidth: 32,
+      tileHeight: 32
+    });
+    /* Resize world to fit the level. */
+    this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+
+    /* Create tileset for background. */
+    let backgroundTiles = this.map.addTilesetImage("tiles");
+
+    /* Create background layer. */
+    this.map.createStaticLayer("background", backgroundTiles);
+
+    /* Create the game layer. */
+    let gameLayer = this.map.createDynamicLayer("game", backgroundTiles);
+
+    /* Create the animations. */
+    this.createAnimations();
+
+    /* Create the torches. We create the torches before we create the
+     * dude so that the dude appears in front of the torches. */
+    this.createTorches();
+
+    /* Create and place the dude. */
+    this.createDude();
+
+    /* Create foreground layer. We need to create this layer _after_
+     * we add the dude sprite so that the dude is hidden by this
+     * layer. */
+    this.map.createStaticLayer("foreground", backgroundTiles);
+
+    /* Create the loose tiles. */
+    this.createLooseTiles(backgroundTiles);
+
+    /* Create the lava. */
+    this.createLavaTiles(gameLayer);
+
+    /* Find exits. */
+    this.createExits(gameLayer);
+
+    /* Create the hearts. */
+    let hearts = this.createHearts();
+
+    /* Create the gems. */
+    this.createGems();
+
+    /* Turn on collision detection for the gameLayer. */
+    gameLayer.setCollisionByProperty({ collides: true });
+
+    /* Create the colliders.
+     *
+     * Also check whether the dude jumped from really high. Note that
+     * the order of colliders matters. We need to add this one first
+     * so that we can check for on the tiles. If we add it after the
+     * normal game physics collider, the dude will have been separated
+     * from the gameLayer already before we check for impact. */
+    this.physics.add.collider(this.dude, gameLayer, this.dudeHitTheFloor);
+    this.physics.add.collider(this.dude, gameLayer);
+    this.physics.add.overlap(this.dude, this.looseTiles, this.overlapLooseTiles, null, this);
+    this.physics.add.collider(this.dude, this.looseTiles);
+    this.physics.add.overlap(this.dude, hearts, this.collectHearts, null, this);
+    this.physics.add.overlap(this.dude, this.gems, this.collectGems, null, this);
 
     /* Add keyboard controls. */
     this.controls = this.input.keyboard.addKeys({
@@ -442,7 +491,6 @@ class PlayLevel extends Phaser.Scene {
     this.sound.stopAll();
     this.background_music = this.sound.add("background_music", { loop: true });
     this.background_music.play();
-
     this.heartSoundEffect = this.sound.add("coin");
 
     /* Launch the status display. */
@@ -478,17 +526,20 @@ class PlayLevel extends Phaser.Scene {
     }
 
     if (this.controls.up.isDown) {
+      /* Climb or jump. */
       if (this.dude.body.onFloor()) {
         this.dude.setVelocityY(-130);
-      } else if (this.dude.body.onWall()) {
+      } else if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
         this.dude.setVelocityY(-50);
       }
     }
 
-    if (!(this.dude.body.onFloor() || this.dude.body.onWall())) {
+    /* When the dude is in the air, play the 'jump' animation. */
+    if (!(this.dude.body.onFloor() || this.dude.body.onWall() || this.dude.body.onWallOfLooseTile)) {
       this.dude.anims.play("dude_jump");
     }
 
+    /* Check whether the dude fell into lava. */
     if (this.physics.world.overlap(this.dude, this.lavaTiles)) {
       console.warn("The dude in lava");
       if (this.fellInLava === undefined || this.fellInLava === null) {
@@ -519,7 +570,22 @@ class PlayLevel extends Phaser.Scene {
     } else {
       this.scene.get("StatusDisplay").setHealthPoints();
     }
-    this.scene.get("StatusDisplay").setGemPoints();
+
+    /* Reset dude overlap. */
+    this.dude.body.onWallOfLooseTile = false;
+    this.dude.body.onFloorOfLooseTile = false;
+  }
+
+  overlapLooseTiles(dude, looseTile) {
+    if (dude.body.overlapX > 0) {
+      dude.body.onWallOfLooseTile = true;
+    } else if (dude.body.overlapY > 0 && looseTile.state != "triggered") {
+      looseTile.state = "triggered";
+      this.time.addEvent({
+        delay: 500,
+        callback: () => { looseTile.setGravityY(500); }
+      });
+    }
   }
 
   collectHearts(dude, heart) {
