@@ -466,7 +466,7 @@ class PlayLevel extends Phaser.Scene {
      * from the gameLayer already before we check for impact. */
     this.physics.add.collider(this.dude, gameLayer, this.dudeHitTheFloor);
     this.physics.add.collider(this.dude, gameLayer);
-    this.physics.add.overlap(this.dude, this.looseTiles, this.overlapLooseTiles);
+    this.physics.add.overlap(this.dude, this.looseTiles, this.overlapLooseTiles, null, this);
     this.physics.add.collider(this.dude, this.looseTiles);
     this.physics.add.overlap(this.dude, hearts, this.collectHearts, null, this);
     this.physics.add.overlap(this.dude, this.gems, this.collectGems, null, this);
