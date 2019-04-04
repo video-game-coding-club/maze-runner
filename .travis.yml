@@ -13,6 +13,9 @@ cache:
 install:
   - npm install
 
-script:
-  - # npm run lint
-  - # npm run build
+jobs:
+  include:
+    -stage: Lint
+    script:
+      - npm run lint || true
+      - # npm run build

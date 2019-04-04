@@ -28,13 +28,13 @@ rules:
   block-scoped-var: error
   block-spacing:
     - error
-    - never
+    - always
   brace-style: 'off'
   callback-return: error
   capitalized-comments:
     - error
     - always
-  class-methods-use-this: error
+  class-methods-use-this: warn
   comma-dangle: error
   comma-spacing:
     - error
