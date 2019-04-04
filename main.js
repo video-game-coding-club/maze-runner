@@ -592,6 +592,7 @@ class PlayLevel extends Phaser.Scene {
     } else {
       this.scene.get("StatusDisplay").setHealthPoints();
     }
+    this.scene.get("StatusDisplay").setGemPoints();
 
     /* Reset dude overlap. */
     this.dude.body.onWallOfLooseTile = false;
