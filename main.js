@@ -546,7 +546,7 @@ class PlayLevel extends Phaser.Scene {
 
     if (this.controls.up.isDown) {
       /* Climb or jump. */
-      if (this.dude.body.onFloor()) {
+      if (this.dude.body.onFloor() || this.dude.body.onFloorOfLooseTile) {
         /* Jump. */
         this.dude.setVelocityY(-130);
       } else if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
@@ -601,12 +601,15 @@ class PlayLevel extends Phaser.Scene {
   overlapLooseTiles(dude, looseTile) {
     if (dude.body.overlapX > 0) {
       dude.body.onWallOfLooseTile = true;
-    } else if (dude.body.overlapY > 0 && looseTile.state !== "triggered") {
-      looseTile.state = "triggered";
-      this.time.addEvent({
-        delay: 500,
-        callback: () => { looseTile.setGravityY(500); }
-      });
+    } else if (dude.body.overlapY > 0) {
+      dude.body.onFloorOfLooseTile = true;
+      if (looseTile.state !== "triggered") {
+        looseTile.state = "triggered";
+        this.time.addEvent({
+          delay: 500,
+          callback: () => { looseTile.setGravityY(500); }
+        });
+      }
     }
   }
 
