@@ -528,8 +528,10 @@ class PlayLevel extends Phaser.Scene {
     if (this.controls.up.isDown) {
       /* Climb or jump. */
       if (this.dude.body.onFloor()) {
+        /* Jump. */
         this.dude.setVelocityY(-130);
       } else if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
+        /* Climb. */
         this.dude.setVelocityY(-50);
       }
     }
