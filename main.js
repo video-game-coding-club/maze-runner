@@ -408,6 +408,44 @@ class PlayLevel extends Phaser.Scene {
     }
   }
 
+  createColliders(gameLayer, hearts) {
+    /* Create the colliders.
+     *
+     * Also check whether the dude jumped from really high. Note that
+     * the order of colliders matters. We need to add this one first
+     * so that we can check for on the tiles. If we add it after the
+     * normal game physics collider, the dude will have been separated
+     * from the gameLayer already before we check for impact. */
+    this.physics.add.collider(this.dude, gameLayer, this.dudeHitTheFloor);
+    this.physics.add.collider(this.dude, gameLayer);
+    this.physics.add.overlap(this.dude, this.looseTiles, this.overlapLooseTiles, null, this);
+    this.physics.add.collider(this.dude, this.looseTiles);
+    this.physics.add.overlap(this.dude, hearts, this.collectHearts, null, this);
+    this.physics.add.overlap(this.dude, this.gems, this.collectGems, null, this);
+  }
+
+  createControls() {
+    this.controls = this.input.keyboard.addKeys({
+      "up": Phaser.Input.Keyboard.KeyCodes.UP,
+      "left": Phaser.Input.Keyboard.KeyCodes.LEFT,
+      "right": Phaser.Input.Keyboard.KeyCodes.RIGHT,
+      "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
+    });
+  }
+
+  setupCamera() {
+    this.cameras.main.startFollow(this.dude);
+    this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+    this.cameras.main.setZoom(2);
+  }
+
+  setupSound() {
+    this.sound.stopAll();
+    this.background_music = this.sound.add("background_music", { loop: true });
+    this.background_music.play();
+    this.heartSoundEffect = this.sound.add("coin");
+  }
+
   create() {
     /* Create the map. */
     this.map = this.make.tilemap({
@@ -460,38 +498,17 @@ class PlayLevel extends Phaser.Scene {
     /* Turn on collision detection for the gameLayer. */
     gameLayer.setCollisionByProperty({ collides: true });
 
-    /* Create the colliders.
-     *
-     * Also check whether the dude jumped from really high. Note that
-     * the order of colliders matters. We need to add this one first
-     * so that we can check for on the tiles. If we add it after the
-     * normal game physics collider, the dude will have been separated
-     * from the gameLayer already before we check for impact. */
-    this.physics.add.collider(this.dude, gameLayer, this.dudeHitTheFloor);
-    this.physics.add.collider(this.dude, gameLayer);
-    this.physics.add.overlap(this.dude, this.looseTiles, this.overlapLooseTiles, null, this);
-    this.physics.add.collider(this.dude, this.looseTiles);
-    this.physics.add.overlap(this.dude, hearts, this.collectHearts, null, this);
-    this.physics.add.overlap(this.dude, this.gems, this.collectGems, null, this);
+    /* Create the colliders. */
+    this.createColliders(gameLayer, hearts);
 
     /* Add keyboard controls. */
-    this.controls = this.input.keyboard.addKeys({
-      "up": Phaser.Input.Keyboard.KeyCodes.UP,
-      "left": Phaser.Input.Keyboard.KeyCodes.LEFT,
-      "right": Phaser.Input.Keyboard.KeyCodes.RIGHT,
-      "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
-    });
+    this.createControls();
 
     /* Set up the camera. */
-    this.cameras.main.startFollow(this.dude);
-    this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-    this.cameras.main.setZoom(2);
+    this.setupCamera();
 
     /* Setup the sound. */
-    this.sound.stopAll();
-    this.background_music = this.sound.add("background_music", { loop: true });
-    this.background_music.play();
-    this.heartSoundEffect = this.sound.add("coin");
+    this.setupSound();
 
     /* Launch the status display. */
     this.scene.launch("StatusDisplay");
