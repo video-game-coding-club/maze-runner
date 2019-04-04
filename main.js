@@ -1,3 +1,5 @@
+/* global Phaser */
+
 var gameData = {
   level: -1,
   gameOver: false,
@@ -579,7 +581,8 @@ class PlayLevel extends Phaser.Scene {
     this.exitTiles.getChildren().forEach(exit => {
       if (this.physics.world.overlap(this.dude, exit)) {
         this.dudeIsLeaving(this.dude, exit);
-      }});
+      }
+    });
 
     /* Update health points display. */
     if (gameData.healthPoints <= 0) {
@@ -598,7 +601,7 @@ class PlayLevel extends Phaser.Scene {
   overlapLooseTiles(dude, looseTile) {
     if (dude.body.overlapX > 0) {
       dude.body.onWallOfLooseTile = true;
-    } else if (dude.body.overlapY > 0 && looseTile.state != "triggered") {
+    } else if (dude.body.overlapY > 0 && looseTile.state !== "triggered") {
       looseTile.state = "triggered";
       this.time.addEvent({
         delay: 500,
@@ -619,7 +622,7 @@ class PlayLevel extends Phaser.Scene {
     gameData.gemPoints += 1;
   }
 
-  dudeHitTheFloor(dude, floorTile) {
+  dudeHitTheFloor(dude) {
     if (dude.body.onFloor() && Math.abs(dude.body.velocity.y) > 40) {
       console.warn("high velocity impact (" + dude.body.velocity.y + ")");
       gameData.healthPoints -= (Math.abs(dude.body.velocity.y) - 40) * 1.5;
@@ -744,4 +747,5 @@ window.onload = function() {
   };
 
   const game = new Phaser.Game(config);
+  console.warn("Created new game " + game);
 };

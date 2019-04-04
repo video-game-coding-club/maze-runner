@@ -14,7 +14,7 @@ jobs:
             sudo apt-get install tiled
             npm install
       - run:
-          name: Fake test
+          name: Linter
           command: |
-            # npm run lint
+            npm run lint
             # npm run build
