@@ -1,10 +1,10 @@
 /* global Phaser */
 
-var gameData = {
+const gameData = {
   level: -1,
   gameOver: false,
   healthPoints: 100,
-  gemPoints: 0
+  gemPoints: 0,
 };
 
 class SplashScreen extends Phaser.Scene {
@@ -13,61 +13,61 @@ class SplashScreen extends Phaser.Scene {
   }
 
   progressBar() {
-    let progressBar = this.add.graphics();
-    let progressBox = this.add.graphics();
+    const progressBar = this.add.graphics();
+    const progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
     progressBox.fillRect(240, 270, 320, 50);
 
-    let width = this.cameras.main.width;
-    let height = this.cameras.main.height;
-    let loadingText = this.make.text({
+    const width = this.cameras.main.width;
+    const height = this.cameras.main.height;
+    const loadingText = this.make.text({
       x: width / 2,
       y: height / 2 - 50,
-      text: 'Loading...',
+      text: "Loading...",
       style: {
-        font: '20px monospace',
-        fill: '#ffffff'
-      }
+        font: "20px monospace",
+        fill: "#ffffff",
+      },
     });
     loadingText.setOrigin(0.5, 0.5);
 
-    let percentText = this.make.text({
+    const percentText = this.make.text({
       x: width / 2,
       y: height / 2 - 5,
-      text: '0%',
+      text: "0%",
       style: {
-        font: '18px monospace',
-        fill: '#ffffff'
-      }
+        font: "18px monospace",
+        fill: "#ffffff",
+      },
     });
     percentText.setOrigin(0.5, 0.5);
 
-    let assetText = this.make.text({
+    const assetText = this.make.text({
       x: width / 2,
       y: height / 2 + 50,
-      text: '',
+      text: "",
       style: {
-        font: '18px monospace',
-        fill: '#ffffff'
-      }
+        font: "18px monospace",
+        fill: "#ffffff",
+      },
     });
     assetText.setOrigin(0.5, 0.5);
 
-    this.load.on('progress', function (value) {
+    this.load.on("progress", function(value) {
       console.warn(value);
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
       progressBar.fillRect(250, 280, 300 * value, 30);
-      percentText.setText(parseInt(value * 100) + '%');
+      percentText.setText(parseInt(value * 100) + "%");
     });
 
-    this.load.on('fileprogress', function (file) {
+    this.load.on("fileprogress", function(file) {
       console.warn(file.src);
-      assetText.setText('Loading asset: ' + file.key);
+      assetText.setText("Loading asset: " + file.key);
     });
 
-    this.load.on('complete', function () {
-      console.warn('complete');
+    this.load.on("complete", function() {
+      console.warn("complete");
       progressBar.destroy();
       progressBox.destroy();
       loadingText.destroy();
@@ -90,14 +90,14 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("splash", "assets/splash_screen.png");
-    this.load.spritesheet("dude_idle", "assets/boy_ninja_idle.png", { frameWidth: 34, frameHeight: 64 });
-    this.load.spritesheet("dude_run", "assets/boy_ninja_run.png", { frameWidth: 51, frameHeight: 64 });
-    this.load.spritesheet("dude_jump", "assets/boy_ninja_jump.png", { frameWidth: 48, frameHeight: 64 });
-    this.load.spritesheet("heart", "assets/heart.png", { frameWidth: 11, frameHeight: 10 });
-    this.load.spritesheet("lava", "assets/lava.png", { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet("tiles", "assets/tiles.png", { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet("torch", "assets/animated_torch_small.png", { frameWidth: 16, frameHeight: 32 });
-    this.load.spritesheet("gems", "assets/jewel_green_animation.png", { frameWidth: 16, frameHeight: 16 });
+    this.load.spritesheet("dude_idle", "assets/boy_ninja_idle.png", {frameWidth: 34, frameHeight: 64});
+    this.load.spritesheet("dude_run", "assets/boy_ninja_run.png", {frameWidth: 51, frameHeight: 64});
+    this.load.spritesheet("dude_jump", "assets/boy_ninja_jump.png", {frameWidth: 48, frameHeight: 64});
+    this.load.spritesheet("heart", "assets/heart.png", {frameWidth: 11, frameHeight: 10});
+    this.load.spritesheet("lava", "assets/lava.png", {frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet("tiles", "assets/tiles.png", {frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet("torch", "assets/animated_torch_small.png", {frameWidth: 16, frameHeight: 32});
+    this.load.spritesheet("gems", "assets/jewel_green_animation.png", {frameWidth: 16, frameHeight: 16});
     this.load.tilemapTiledJSON("map_0", "assets/map-level-0.json");
     this.load.tilemapTiledJSON("map_1", "assets/map-level-1.json");
     this.load.tilemapTiledJSON("map_2", "assets/map-level-2.json");
@@ -115,14 +115,14 @@ class SplashScreen extends Phaser.Scene {
 
   update(time) {
     if (time > 2000 && !this.messageShown) {
-      let message = this.make.text({
+      const message = this.make.text({
         x: this.cameras.main.width / 2,
         y: 100,
         text: "Press any key to start the game",
         style: {
           font: "30px monospace",
-          fill: "#ffffff"
-        }
+          fill: "#ffffff",
+        },
       });
       message.setOrigin(0.5, 0.5);
       message.setStroke("#101010", 3);
@@ -138,22 +138,22 @@ class Credits extends Phaser.Scene {
   }
 
   create() {
-    let creditOffsetX = 340;
+    const creditOffsetX = 340;
     let creditOffsetY = 0;
-    let titleStyle = {
+    const titleStyle = {
       fontSize: "64px",
       fill: "#ffffff",
-      stroke: "#202020"
+      stroke: "#202020",
     };
-    let headerStyle = {
+    const headerStyle = {
       fontSize: "48px",
       fill: "#ffffff",
-      stroke: "#202020"
+      stroke: "#202020",
     };
-    let paragraphStyle = {
+    const paragraphStyle = {
       fontSize: "24px",
       fill: "#ffffff",
-      stroke: "#202020"
+      stroke: "#202020",
     };
     this.initialCameraOffset = -600;
     this.cameraOffset = 0;
@@ -194,34 +194,34 @@ class SelectLevel extends Phaser.Scene {
   }
 
   create() {
-    let button = [];
-    let buttonText = [];
+    const button = [];
+    const buttonText = [];
     for (let i = 0; i < 5; i++) {
       button[i] = this.add.sprite(150, 60 + i * 80, "button");
       button[i].setScale(0.3, 0.15);
-      buttonText[i] = this.add.text(80, 40 + i * 80, 'Level ' + i,
-                                    {
-                                      fontSize: '32px',
-                                      fill: '#ffffff',
-                                      stroke: "#202020",
-                                      strokeThickness: 3,
-                                      shadowOffsetX: 5,
-                                      shadowOffsetY: 5,
-                                      shadowBlur: 2,
-                                      shadowColor: "#101010"
-                                    });
+      buttonText[i] = this.add.text(80, 40 + i * 80, "Level " + i,
+          {
+            fontSize: "32px",
+            fill: "#ffffff",
+            stroke: "#202020",
+            strokeThickness: 3,
+            shadowOffsetX: 5,
+            shadowOffsetY: 5,
+            shadowBlur: 2,
+            shadowColor: "#101010",
+          });
     }
     this.levelControls = this.input.keyboard.addKeys({
       "zero": Phaser.Input.Keyboard.KeyCodes.ZERO,
       "one": Phaser.Input.Keyboard.KeyCodes.ONE,
       "two": Phaser.Input.Keyboard.KeyCodes.TWO,
       "three": Phaser.Input.Keyboard.KeyCodes.THREE,
-      "four": Phaser.Input.Keyboard.KeyCodes.FOUR
+      "four": Phaser.Input.Keyboard.KeyCodes.FOUR,
     });
 
     this.sound.stopAll();
-    let background_music = this.sound.add("title_music", { loop: true });
-    background_music.play();
+    const backgroundMusic = this.sound.add("title_music", {loop: true});
+    backgroundMusic.play();
 
     this.scene.launch("Credits");
   }
@@ -261,21 +261,21 @@ class PlayLevel extends Phaser.Scene {
       key: "dude_idle",
       frames: this.anims.generateFrameNumbers("dude_idle"),
       frameRate: 20,
-      repeat: -1
+      repeat: -1,
     });
 
     this.anims.create({
-      key: 'dude_run',
+      key: "dude_run",
       frames: this.anims.generateFrameNumbers("dude_run"),
       frameRate: 20,
-      repeat: -1
+      repeat: -1,
     });
 
     this.anims.create({
       key: "dude_jump",
-      frames: [ { key: "dude_jump", frame: 0 } ],
+      frames: [{key: "dude_jump", frame: 0}],
       frameRate: 20,
-      repeat: -1
+      repeat: -1,
     });
 
     /* Create the heart animation. */
@@ -283,7 +283,7 @@ class PlayLevel extends Phaser.Scene {
       key: "glimmer",
       frames: this.anims.generateFrameNumbers("heart"),
       frameRate: 5,
-      repeat: -1
+      repeat: -1,
     });
 
     /* Create torches. */
@@ -291,7 +291,7 @@ class PlayLevel extends Phaser.Scene {
       key: "flicker",
       frames: this.anims.generateFrameNumbers("torch"),
       frameRate: 4,
-      repeat: -1
+      repeat: -1,
     });
 
     /* Create gems (green). */
@@ -299,7 +299,7 @@ class PlayLevel extends Phaser.Scene {
       key: "gem_glimmer",
       frames: this.anims.generateFrameNumbers("gems"),
       frameRate: 5,
-      repeat: -1
+      repeat: -1,
     });
 
     /* Create lava animation. */
@@ -307,17 +307,17 @@ class PlayLevel extends Phaser.Scene {
       key: "lava",
       frames: this.anims.generateFrameNumbers("lava"),
       frameRate: 1,
-      repeat: -1
+      repeat: -1,
     });
 
     /* Create the door states. */
     this.anims.create({
       key: "exit_closed",
-      frames: [ { key: "tiles", frame: 18 } ]
+      frames: [{key: "tiles", frame: 18}],
     });
     this.anims.create({
       key: "exit_open",
-      frames: [ { key: "tiles", frame: 19 } ]
+      frames: [{key: "tiles", frame: 19}],
     });
   }
 
@@ -328,12 +328,12 @@ class PlayLevel extends Phaser.Scene {
      * `this.physics.add.existing()` but that didn't quite work. We
      * should revisit this issue at some later time.
      */
-    let dudeObject = this.map.findObject("objects", o => {
+    const dudeObject = this.map.findObject("objects", (o) => {
       return o.name === "dude";
     });
-    let dudePosition = { x: 10, y: 10 };
+    let dudePosition = {x: 10, y: 10};
     if (dudeObject) {
-      dudePosition = { x: dudeObject.x, y: dudeObject.y };
+      dudePosition = {x: dudeObject.x, y: dudeObject.y};
     }
     this.dude = this.physics.add.sprite(dudePosition.x, dudePosition.y, "dude_idle");
     this.dude.setBounce(0.2);
@@ -344,9 +344,9 @@ class PlayLevel extends Phaser.Scene {
   }
 
   createLooseTiles(backgroundTiles) {
-    let looseLayer = this.map.createStaticLayer("loose", backgroundTiles);
+    const looseLayer = this.map.createStaticLayer("loose", backgroundTiles);
     this.looseTiles = this.physics.add.group();
-    looseLayer.forEachTile(tile => {
+    looseLayer.forEachTile((tile) => {
       if (tile.properties.type === "rock") {
         const newTile = this.physics.add.sprite(tile.getCenterX(), tile.getCenterY(), "tiles", tile.index - 1);
         this.looseTiles.add(newTile);
@@ -359,7 +359,7 @@ class PlayLevel extends Phaser.Scene {
 
   createLavaTiles(gameLayer) {
     this.lavaTiles = this.physics.add.staticGroup();
-    gameLayer.forEachTile(tile => {
+    gameLayer.forEachTile((tile) => {
       if (tile.properties.type === "lava") {
         const lava = this.lavaTiles.create(tile.getCenterX(), tile.getCenterY(), "lava");
         lava.anims.play("lava");
@@ -370,7 +370,7 @@ class PlayLevel extends Phaser.Scene {
 
   createExits(gameLayer) {
     this.exitTiles = this.physics.add.staticGroup();
-    gameLayer.forEachTile(tile => {
+    gameLayer.forEachTile((tile) => {
       if (tile.properties.type === "exit") {
         const exit = this.exitTiles.create(tile.getCenterX(), tile.getCenterY(), "tiles");
         exit.anims.play("exit_closed");
@@ -380,9 +380,9 @@ class PlayLevel extends Phaser.Scene {
   }
 
   createHearts() {
-    let hearts = this.map.createFromObjects("objects", "heart", { key: "heart" });
+    const hearts = this.map.createFromObjects("objects", "heart", {key: "heart"});
     if (hearts) {
-      hearts.forEach(heart => {
+      hearts.forEach((heart) => {
         this.physics.add.existing(heart);
         heart.anims.play("glimmer");
       });
@@ -391,9 +391,9 @@ class PlayLevel extends Phaser.Scene {
   }
 
   createGems() {
-    this.gems = this.map.createFromObjects("objects", "gems", { key: "gems" });
+    this.gems = this.map.createFromObjects("objects", "gems", {key: "gems"});
     if (this.gems) {
-      this.gems.forEach(gem => {
+      this.gems.forEach((gem) => {
         this.physics.add.existing(gem);
         gem.anims.play("gem_glimmer");
       });
@@ -401,9 +401,9 @@ class PlayLevel extends Phaser.Scene {
   }
 
   createTorches() {
-    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
+    this.torches = this.map.createFromObjects("objects", "torch", {key: "torch"});
     if (this.torches) {
-      this.torches.forEach(torch => {
+      this.torches.forEach((torch) => {
         this.physics.add.existing(torch);
         torch.anims.play("flicker");
       });
@@ -431,7 +431,7 @@ class PlayLevel extends Phaser.Scene {
       "up": Phaser.Input.Keyboard.KeyCodes.UP,
       "left": Phaser.Input.Keyboard.KeyCodes.LEFT,
       "right": Phaser.Input.Keyboard.KeyCodes.RIGHT,
-      "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
+      "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE,
     });
   }
 
@@ -443,8 +443,8 @@ class PlayLevel extends Phaser.Scene {
 
   setupSound() {
     this.sound.stopAll();
-    this.background_music = this.sound.add("background_music", { loop: true });
-    this.background_music.play();
+    this.backgroundMusic = this.sound.add("background_music", {loop: true});
+    this.backgroundMusic.play();
     this.heartSoundEffect = this.sound.add("coin");
   }
 
@@ -453,19 +453,19 @@ class PlayLevel extends Phaser.Scene {
     this.map = this.make.tilemap({
       key: "map_" + gameData.level,
       tileWidth: 32,
-      tileHeight: 32
+      tileHeight: 32,
     });
     /* Resize world to fit the level. */
     this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
     /* Create tileset for background. */
-    let backgroundTiles = this.map.addTilesetImage("tiles");
+    const backgroundTiles = this.map.addTilesetImage("tiles");
 
     /* Create background layer. */
     this.map.createStaticLayer("background", backgroundTiles);
 
     /* Create the game layer. */
-    let gameLayer = this.map.createDynamicLayer("game", backgroundTiles);
+    const gameLayer = this.map.createDynamicLayer("game", backgroundTiles);
 
     /* Create the animations. */
     this.createAnimations();
@@ -492,13 +492,13 @@ class PlayLevel extends Phaser.Scene {
     this.createExits(gameLayer);
 
     /* Create the hearts. */
-    let hearts = this.createHearts();
+    const hearts = this.createHearts();
 
     /* Create the gems. */
     this.createGems();
 
     /* Turn on collision detection for the gameLayer. */
-    gameLayer.setCollisionByProperty({ collides: true });
+    gameLayer.setCollisionByProperty({collides: true});
 
     /* Create the colliders. */
     this.createColliders(gameLayer, hearts);
@@ -546,7 +546,7 @@ class PlayLevel extends Phaser.Scene {
 
     if (this.controls.up.isDown) {
       /* Climb or jump. */
-      if (this.dude.body.onFloor() || this.dude.body.onFloorOfLooseTile)  {
+      if (this.dude.body.onFloor() || this.dude.body.onFloorOfLooseTile) {
         /* Jump. */
         this.dude.setVelocityY(-130);
       } else if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
@@ -572,13 +572,12 @@ class PlayLevel extends Phaser.Scene {
           this.fellInLava = time;
         }
       }
-
     } else {
       this.fellInLava = null;
     }
 
     /* Check whether the Dude is leaving. */
-    this.exitTiles.getChildren().forEach(exit => {
+    this.exitTiles.getChildren().forEach((exit) => {
       if (this.physics.world.overlap(this.dude, exit)) {
         this.dudeIsLeaving(this.dude, exit);
       }
@@ -592,7 +591,7 @@ class PlayLevel extends Phaser.Scene {
     } else {
       this.scene.get("StatusDisplay").setHealthPoints();
     }
-      this.scene.get("StatusDisplay").setGemPoints();
+    this.scene.get("StatusDisplay").setGemPoints();
 
     /* Reset dude overlap. */
     this.dude.body.onWallOfLooseTile = false;
@@ -602,16 +601,18 @@ class PlayLevel extends Phaser.Scene {
   overlapLooseTiles(dude, looseTile) {
     if (dude.body.overlapX > 0) {
       dude.body.onWallOfLooseTile = true;
-        } else if (dude.body.overlapY > 0) {
+    } else if (dude.body.overlapY > 0) {
       dude.body.onFloorOfLooseTile = true;
       if (looseTile.state !== "triggered") {
-      looseTile.state = "triggered";
-      this.time.addEvent({
-        delay: 500,
-        callback: () => { looseTile.setGravityY(500); }
-      });
+        looseTile.state = "triggered";
+        this.time.addEvent({
+          delay: 500,
+          callback: () => {
+            looseTile.setGravityY(500);
+          },
+        });
       }
-  }
+    }
   }
 
   collectHearts(dude, heart) {
@@ -666,13 +667,13 @@ class StatusDisplay extends Phaser.Scene {
 
   setHealthPoints() {
     this.healthStatus.setCrop(0, 0,
-                              this.healthStatus.width * gameData.healthPoints / 100,
-                              this.healthStatus.height);
+        this.healthStatus.width * gameData.healthPoints / 100,
+        this.healthStatus.height);
   }
 
   setGemPoints() {
     if (gameData.gemPoints > this.gems.length) {
-      let newGem = this.add.sprite(36 + this.gems.length * 32, 70, "gems");
+      const newGem = this.add.sprite(36 + this.gems.length * 32, 70, "gems");
       newGem.setScale(1.8);
       this.gems.push(newGem);
     }
@@ -688,7 +689,7 @@ class LevelComplete extends Phaser.Scene {
     this.levelComplete = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "levelComplete");
     this.levelComplete.setScale(0.8);
     this.controls = this.input.keyboard.addKeys({
-      "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
+      "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE,
     });
   }
 
@@ -705,10 +706,10 @@ class GameOver extends Phaser.Scene {
   }
 
   create() {
-    let gameOver = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "gameOver");
+    const gameOver = this.add.sprite(this.scale.width / 2, this.scale.height / 2, "gameOver");
     gameOver.setScale(0.2);
     this.controls = this.input.keyboard.addKeys({
-      "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE
+      "back": Phaser.Input.Keyboard.KeyCodes.BACKSPACE,
     });
   }
 
@@ -725,16 +726,16 @@ window.onload = function() {
     width: 800,
     height: 600,
     scale: {
-      mode: Phaser.Scale.RESIZE
+      mode: Phaser.Scale.RESIZE,
     },
     physics: {
       default: "arcade",
       acrcade: {
         debug: true,
         gravity: {
-          y: 300
-        }
-      }
+          y: 300,
+        },
+      },
     },
     scene: [
       SplashScreen,
@@ -743,11 +744,11 @@ window.onload = function() {
       PlayLevel,
       StatusDisplay,
       GameOver,
-      LevelComplete
+      LevelComplete,
     ],
     audio: {
-      disableWebAudio: true
-    }
+      disableWebAudio: true,
+    },
   };
 
   const game = new Phaser.Game(config);
