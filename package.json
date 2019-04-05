@@ -8,10 +8,11 @@
   },
   "scripts": {
     "build": "webpack",
-    "lint": "eslint --config .eslintrc.yml main.js"
+    "lint": "eslint main.js"
   },
   "devDependencies": {
-    "eslint": "^5.15.1",
+    "eslint": "^5.16.0",
+    "eslint-config-google": "^0.12.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"
   }
