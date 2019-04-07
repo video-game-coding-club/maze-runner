@@ -91,13 +91,14 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("splash", "assets/splash_screen.png");
     this.load.spritesheet("dude_idle", "assets/boy_ninja_idle.png", {frameWidth: 34, frameHeight: 64});
-    this.load.spritesheet("dude_run", "assets/boy_ninja_run.png", {frameWidth: 51, frameHeight: 64});
     this.load.spritesheet("dude_jump", "assets/boy_ninja_jump.png", {frameWidth: 48, frameHeight: 64});
+    this.load.spritesheet("dude_run", "assets/boy_ninja_run.png", {frameWidth: 51, frameHeight: 64});
+    this.load.spritesheet("gems", "assets/jewel_green_animation.png", {frameWidth: 16, frameHeight: 16});
     this.load.spritesheet("heart", "assets/heart.png", {frameWidth: 11, frameHeight: 10});
     this.load.spritesheet("lava", "assets/lava.png", {frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet("ogre", "assets/ogre.png", {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("tiles", "assets/tiles.png", {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("torch", "assets/animated_torch_small.png", {frameWidth: 16, frameHeight: 32});
-    this.load.spritesheet("gems", "assets/jewel_green_animation.png", {frameWidth: 16, frameHeight: 16});
     this.load.tilemapTiledJSON("map_0", "assets/map-level-0.json");
     this.load.tilemapTiledJSON("map_1", "assets/map-level-1.json");
     this.load.tilemapTiledJSON("map_2", "assets/map-level-2.json");
