@@ -341,6 +341,18 @@
                  "width":16,
                  "x":487.5,
                  "y":249.5
+                }, 
+                {
+                 "gid":47,
+                 "height":32,
+                 "id":26,
+                 "name":"ogre",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":126.5,
+                 "y":574
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -349,7 +361,7 @@
          "y":0
         }],
  "nextlayerid":26,
- "nextobjectid":25,
+ "nextobjectid":27,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.2",
@@ -903,8 +915,8 @@
          "margin":0,
          "name":"objects",
          "spacing":0,
-         "tilecount":4,
-         "tileheight":47,
+         "tilecount":5,
+         "tileheight":64,
          "tiles":[
                 {
                  "id":0,
@@ -933,8 +945,15 @@
                  "imageheight":16,
                  "imagewidth":16,
                  "type":"gems"
+                }, 
+                {
+                 "id":4,
+                 "image":"ogre_symbol.png",
+                 "imageheight":32,
+                 "imagewidth":32,
+                 "type":"enemy"
                 }],
-         "tilewidth":24
+         "tilewidth":64
         }],
  "tilewidth":32,
  "type":"map",
