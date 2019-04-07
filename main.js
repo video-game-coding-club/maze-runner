@@ -599,9 +599,9 @@ class PlayLevel extends Phaser.Scene {
   }
 
   overlapLooseTiles(dude, looseTile) {
-    if (dude.body.overlapX > 0) {
+    if (Math.abs(dude.body.overlapX) > 0) {
       dude.body.onWallOfLooseTile = true;
-    } else if (dude.body.overlapY > 0) {
+    } else if (Math.abs(dude.body.overlapY) > 0) {
       dude.body.onFloorOfLooseTile = true;
       if (looseTile.state !== "triggered") {
         looseTile.state = "triggered";
