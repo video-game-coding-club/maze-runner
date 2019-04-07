@@ -90,6 +90,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("splash", "assets/splash_screen.png");
+    this.load.spritesheet("dude", "assets/war elf.png", {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("dude_idle", "assets/boy_ninja_idle.png", {frameWidth: 34, frameHeight: 64});
     this.load.spritesheet("dude_jump", "assets/boy_ninja_jump.png", {frameWidth: 48, frameHeight: 64});
     this.load.spritesheet("dude_run", "assets/boy_ninja_run.png", {frameWidth: 51, frameHeight: 64});
@@ -260,21 +261,21 @@ class PlayLevel extends Phaser.Scene {
     /* Create Dude animations. */
     this.anims.create({
       key: "dude_idle",
-      frames: this.anims.generateFrameNumbers("dude_idle"),
-      frameRate: 20,
+      frames: this.anims.generateFrameNumbers("dude", {start: 1, end: 1}),
+      frameRate: 5,
       repeat: -1,
     });
 
     this.anims.create({
       key: "dude_run",
-      frames: this.anims.generateFrameNumbers("dude_run"),
+      frames: this.anims.generateFrameNumbers("dude", {start: 1, end: 1}),
       frameRate: 20,
       repeat: -1,
     });
 
     this.anims.create({
       key: "dude_jump",
-      frames: [{key: "dude_jump", frame: 0}],
+      frames: [{key: "dude", frame: 0}],
       frameRate: 20,
       repeat: -1,
     });
@@ -282,7 +283,7 @@ class PlayLevel extends Phaser.Scene {
     /* Create Ogre animations. */
     this.anims.create({
       key: "ogre_idle",
-      frames: this.anims.generateFrameNumbers("ogre", {start: 7, end: 8}),
+      frames: this.anims.generateFrameNumbers("ogre", {start: 0, end: 1}),
       frameRate: 5,
       repeat: -1,
     });
@@ -342,14 +343,13 @@ class PlayLevel extends Phaser.Scene {
     });
     let dudePosition = {x: 10, y: 10};
     if (dudeObject) {
-      dudePosition = {x: dudeObject.x, y: dudeObject.y};
+      dudePosition = {x: dudeObject.x + dudeObject.width / 2, y: dudeObject.y - dudeObject.height / 2};
     }
-    this.dude = this.physics.add.sprite(dudePosition.x, dudePosition.y, "dude_idle");
+    this.dude = this.physics.add.sprite(dudePosition.x, dudePosition.y, "dude");
     this.dude.setBounce(0.2);
     this.dude.setGravityY(300);
     this.dude.setCollideWorldBounds(true);
     this.dude.anims.play("dude_idle");
-    this.dude.setScale(0.5);
   }
 
   createOgres() {
@@ -361,9 +361,9 @@ class PlayLevel extends Phaser.Scene {
       ogreObjects.forEach(ogre => {
         const newOgre = this.physics.add.sprite(ogre.x + ogre.width / 2,
                                                 ogre.y - ogre.height / 2,
-                                                "ogre", 6);
+                                                "ogre");
         this.ogres.add(newOgre);
-        //newOgre.anims.play("ogre_idle");
+        newOgre.anims.play("ogre_idle");
         newOgre.setGravityY(300);
         newOgre.setBounce(0.2);
       });
