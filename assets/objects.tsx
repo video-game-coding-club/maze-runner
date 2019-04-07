@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.2" name="objects" tilewidth="64" tileheight="64" tilecount="5" columns="0">
+<tileset version="1.2" tiledversion="1.2.2" name="objects" tilewidth="32" tileheight="47" tilecount="5" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0" type="heart">
   <image width="18" height="18" source="heart_green_frame.png"/>
@@ -13,7 +13,7 @@
  <tile id="3" type="gems">
   <image width="16" height="16" source="jewel_green_object.png"/>
  </tile>
- <tile id="4" type="enemy">
+ <tile id="5">
   <image width="32" height="32" source="ogre_symbol.png"/>
  </tile>
 </tileset>

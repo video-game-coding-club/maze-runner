@@ -279,6 +279,14 @@ class PlayLevel extends Phaser.Scene {
       repeat: -1,
     });
 
+    /* Create Ogre animations. */
+    this.anims.create({
+      key: "ogre_idle",
+      frames: this.anims.generateFrameNumbers("ogre", {start: 7, end: 8}),
+      frameRate: 5,
+      repeat: -1,
+    });
+
     /* Create the heart animation. */
     this.anims.create({
       key: "glimmer",
@@ -329,8 +337,8 @@ class PlayLevel extends Phaser.Scene {
      * `this.physics.add.existing()` but that didn't quite work. We
      * should revisit this issue at some later time.
      */
-    const dudeObject = this.map.findObject("objects", (o) => {
-      return o.name === "dude";
+    const dudeObject = this.map.findObject("objects", (object) => {
+      return object.name === "dude";
     });
     let dudePosition = {x: 10, y: 10};
     if (dudeObject) {
@@ -342,6 +350,24 @@ class PlayLevel extends Phaser.Scene {
     this.dude.setCollideWorldBounds(true);
     this.dude.anims.play("dude_idle");
     this.dude.setScale(0.5);
+  }
+
+  createOgres() {
+    const ogreObjects = this.map.filterObjects("objects", object => {
+      return object.name === "ogre";
+    });
+    this.ogres = this.physics.add.group();
+    if (ogreObjects) {
+      ogreObjects.forEach(ogre => {
+        const newOgre = this.physics.add.sprite(ogre.x + ogre.width / 2,
+                                                ogre.y - ogre.height / 2,
+                                                "ogre", 6);
+        this.ogres.add(newOgre);
+        //newOgre.anims.play("ogre_idle");
+        newOgre.setGravityY(300);
+        newOgre.setBounce(0.2);
+      });
+    }
   }
 
   createLooseTiles(backgroundTiles) {
@@ -421,6 +447,7 @@ class PlayLevel extends Phaser.Scene {
      * from the gameLayer already before we check for impact. */
     this.physics.add.collider(this.dude, gameLayer, this.dudeHitTheFloor);
     this.physics.add.collider(this.dude, gameLayer);
+    this.physics.add.collider(this.ogres, gameLayer);
     this.physics.add.overlap(this.dude, this.looseTiles, this.overlapLooseTiles, null, this);
     this.physics.add.collider(this.dude, this.looseTiles);
     this.physics.add.overlap(this.dude, hearts, this.collectHearts, null, this);
@@ -477,6 +504,9 @@ class PlayLevel extends Phaser.Scene {
 
     /* Create and place the dude. */
     this.createDude();
+
+    /* Create ogres. */
+    this.createOgres();
 
     /* Create foreground layer. We need to create this layer _after_
      * we add the dude sprite so that the dude is hidden by this
