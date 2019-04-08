@@ -90,14 +90,16 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("splash", "assets/splash_screen.png");
+    this.load.spritesheet("dude", "assets/war elf.png", {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("dude_idle", "assets/boy_ninja_idle.png", {frameWidth: 34, frameHeight: 64});
-    this.load.spritesheet("dude_run", "assets/boy_ninja_run.png", {frameWidth: 51, frameHeight: 64});
     this.load.spritesheet("dude_jump", "assets/boy_ninja_jump.png", {frameWidth: 48, frameHeight: 64});
+    this.load.spritesheet("dude_run", "assets/boy_ninja_run.png", {frameWidth: 51, frameHeight: 64});
+    this.load.spritesheet("gems", "assets/jewel_green_animation.png", {frameWidth: 16, frameHeight: 16});
     this.load.spritesheet("heart", "assets/heart.png", {frameWidth: 11, frameHeight: 10});
     this.load.spritesheet("lava", "assets/lava.png", {frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet("ogre", "assets/ogre.png", {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("tiles", "assets/tiles.png", {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("torch", "assets/animated_torch_small.png", {frameWidth: 16, frameHeight: 32});
-    this.load.spritesheet("gems", "assets/jewel_green_animation.png", {frameWidth: 16, frameHeight: 16});
     this.load.tilemapTiledJSON("map_0", "assets/map-level-0.json");
     this.load.tilemapTiledJSON("map_1", "assets/map-level-1.json");
     this.load.tilemapTiledJSON("map_2", "assets/map-level-2.json");
@@ -259,22 +261,30 @@ class PlayLevel extends Phaser.Scene {
     /* Create Dude animations. */
     this.anims.create({
       key: "dude_idle",
-      frames: this.anims.generateFrameNumbers("dude_idle"),
-      frameRate: 20,
+      frames: this.anims.generateFrameNumbers("dude", {start: 1, end: 1}),
+      frameRate: 5,
       repeat: -1,
     });
 
     this.anims.create({
       key: "dude_run",
-      frames: this.anims.generateFrameNumbers("dude_run"),
+      frames: this.anims.generateFrameNumbers("dude", {start: 1, end: 1}),
       frameRate: 20,
       repeat: -1,
     });
 
     this.anims.create({
       key: "dude_jump",
-      frames: [{key: "dude_jump", frame: 0}],
+      frames: [{key: "dude", frame: 0}],
       frameRate: 20,
+      repeat: -1,
+    });
+
+    /* Create Ogre animations. */
+    this.anims.create({
+      key: "ogre_idle",
+      frames: this.anims.generateFrameNumbers("ogre", {start: 0, end: 1}),
+      frameRate: 5,
       repeat: -1,
     });
 
@@ -328,19 +338,36 @@ class PlayLevel extends Phaser.Scene {
      * `this.physics.add.existing()` but that didn't quite work. We
      * should revisit this issue at some later time.
      */
-    const dudeObject = this.map.findObject("objects", (o) => {
-      return o.name === "dude";
+    const dudeObject = this.map.findObject("objects", (object) => {
+      return object.name === "dude";
     });
     let dudePosition = {x: 10, y: 10};
     if (dudeObject) {
-      dudePosition = {x: dudeObject.x, y: dudeObject.y};
+      dudePosition = {x: dudeObject.x + dudeObject.width / 2, y: dudeObject.y - dudeObject.height / 2};
     }
-    this.dude = this.physics.add.sprite(dudePosition.x, dudePosition.y, "dude_idle");
+    this.dude = this.physics.add.sprite(dudePosition.x, dudePosition.y, "dude");
     this.dude.setBounce(0.2);
     this.dude.setGravityY(300);
     this.dude.setCollideWorldBounds(true);
     this.dude.anims.play("dude_idle");
-    this.dude.setScale(0.5);
+  }
+
+  createOgres() {
+    const ogreObjects = this.map.filterObjects("objects", object => {
+      return object.name === "ogre";
+    });
+    this.ogres = this.physics.add.group();
+    if (ogreObjects) {
+      ogreObjects.forEach(ogre => {
+        const newOgre = this.physics.add.sprite(ogre.x + ogre.width / 2,
+                                                ogre.y - ogre.height / 2,
+                                                "ogre");
+        this.ogres.add(newOgre);
+        newOgre.anims.play("ogre_idle");
+        newOgre.setGravityY(300);
+        newOgre.setBounce(0.2);
+      });
+    }
   }
 
   createLooseTiles(backgroundTiles) {
@@ -420,6 +447,7 @@ class PlayLevel extends Phaser.Scene {
      * from the gameLayer already before we check for impact. */
     this.physics.add.collider(this.dude, gameLayer, this.dudeHitTheFloor);
     this.physics.add.collider(this.dude, gameLayer);
+    this.physics.add.collider(this.ogres, gameLayer);
     this.physics.add.overlap(this.dude, this.looseTiles, this.overlapLooseTiles, null, this);
     this.physics.add.collider(this.dude, this.looseTiles);
     this.physics.add.overlap(this.dude, hearts, this.collectHearts, null, this);
@@ -476,6 +504,9 @@ class PlayLevel extends Phaser.Scene {
 
     /* Create and place the dude. */
     this.createDude();
+
+    /* Create ogres. */
+    this.createOgres();
 
     /* Create foreground layer. We need to create this layer _after_
      * we add the dude sprite so that the dude is hidden by this
