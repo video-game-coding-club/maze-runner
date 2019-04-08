@@ -1,0 +1,12 @@
+{
+  "editor.tabSize": 2,
+  "git.decorations.colors": true,
+  "editor.autoIndent": true,
+  "editor.autoSave": "on",
+  "editor.dragAndDrop": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "search.lineNumbers": true,
+  "editor.renderWhitespace": "boundary"
+}
