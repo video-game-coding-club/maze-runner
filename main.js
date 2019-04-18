@@ -90,7 +90,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("splash", "assets/splash_screen.png");
-    this.load.spritesheet("dude", "assets/spritesheets/elf girl.png", {frameWidth: 64, frameHeight: 64});
+    this.load.spritesheet("dude", "assets/spritesheets/elf girl idle.png", {frameWidth: 64, frameHeight: 64});
     this.load.spritesheet("heart", "assets/spritesheets/heart.png", {frameWidth: 11, frameHeight: 10});
     this.load.spritesheet("lava", "assets/spritesheets/lava.png", {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("tiles", "assets/tiles.png", {frameWidth: 32, frameHeight: 32});
