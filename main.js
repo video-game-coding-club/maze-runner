@@ -333,7 +333,7 @@ class PlayLevel extends Phaser.Scene {
     if (dudeObject) {
       dudePosition = {x: dudeObject.x, y: dudeObject.y};
     }
-    this.dude = this.physics.add.sprite(dudePosition.x, dudePosition.y, "dude_idle");
+    this.dude = this.physics.add.sprite(dudePosition.x, dudePosition.y, "dude");
     this.dude.setBounce(0.2);
     this.dude.setGravityY(300);
     this.dude.setCollideWorldBounds(true);
