@@ -2,6 +2,7 @@
 
 const gameData = {
   level: -1,
+  levels: [true, false, false, false, false],
   gameOver: false,
   healthPoints: 100,
   gemPoints: 0,
@@ -89,6 +90,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("healthStatus", "assets/health_status.png");
     this.load.image("heartIcon", "assets/heart_green_frame.png");
     this.load.image("levelComplete", "assets/level_complete.png");
+    this.load.image("lock", "assets/lock-1.png");
     this.load.image("splash", "assets/splash_screen.png");
     this.load.spritesheet("dude", "assets/spritesheets/elf girl idle.png", {frameWidth: 64, frameHeight: 64});
     this.load.spritesheet("heart", "assets/spritesheets/heart.png", {frameWidth: 11, frameHeight: 10});
@@ -212,6 +214,9 @@ class SelectLevel extends Phaser.Scene {
             shadowBlur: 2,
             shadowColor: "#101010",
           });
+      if (!gameData.levels[i]) {
+        this.add.sprite(150, 60 + i * 80, "lock");
+      }
     }
     this.levelControls = this.input.keyboard.addKeys({
       "zero": Phaser.Input.Keyboard.KeyCodes.ZERO,
@@ -229,12 +234,14 @@ class SelectLevel extends Phaser.Scene {
   }
 
   playLevel(level) {
-    gameData.level = level;
-    gameData.gameOver = false;
-    gameData.healthPoints = 100;
-    gameData.gemPoints = 0;
-    this.scene.stop("Credits");
-    this.scene.start("PlayLevel");
+    if (gameData.levels[level]) {
+      gameData.level = level;
+      gameData.gameOver = false;
+      gameData.healthPoints = 100;
+      gameData.gemPoints = 0;
+      this.scene.stop("Credits");
+      this.scene.start("PlayLevel");
+    }
   }
 
   update() {
