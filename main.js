@@ -197,15 +197,9 @@ class SelectLevel extends Phaser.Scene {
     for (let i = 0; i < 5; i++) {
       button[i] = this.add.sprite(150, 60 + i * 80, "button");
       button[i].setScale(0.3, 0.15);
-      button[i].game = this;
       button[i].setInteractive().on("pointerdown",
           (pointer, localX, localY, event) => {
-            /* Note that `this` is the game object that was clicked
-             * on. Since we store a reference to the current scene in
-             * `this.game` we can refer to the `playLevel` method in
-             * the scene with `this.game.playLevel()`.
-             */
-            this.game.playLevel(i);
+            this.playLevel(i);
           });
       buttonText[i] = this.add.text(80, 40 + i * 80, "Level " + i,
           {
