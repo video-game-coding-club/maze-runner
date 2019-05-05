@@ -200,7 +200,7 @@ class SelectLevel extends Phaser.Scene {
             shadowColor: "#101010",
           });
       if (!gameData.levels[i]) {
-        this.add.sprite(150, 60 + i * 80, "lock");
+        this.add.sprite(140, 55 + i * 80, "lock");
       }
     }
     this.levelControls = this.input.keyboard.addKeys({
