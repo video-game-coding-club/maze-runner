@@ -107,28 +107,10 @@ class SplashScreen extends Phaser.Scene {
 
   create() {
     this.add.sprite(this.scale.width / 2, this.scale.height / 2, "splash");
-    this.input.keyboard.on("keydown", () => {
-      this.scene.start("SelectLevel");
-    });
-    this.messageShown = false;
   }
 
   update(time) {
-    if (time > 2000 && !this.messageShown) {
-      const message = this.make.text({
-        x: this.cameras.main.width / 2,
-        y: 100,
-        text: "Press any key to start the game",
-        style: {
-          font: "30px monospace",
-          fill: "#ffffff",
-        },
-      });
-      message.setOrigin(0.5, 0.5);
-      message.setStroke("#101010", 3);
-      message.setShadow(10, 10, "#000000", 5, true);
-      this.messageShown = true;
-    }
+    this.scene.start("SelectLevel");
   }
 }
 
