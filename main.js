@@ -107,10 +107,13 @@ class SplashScreen extends Phaser.Scene {
 
   create() {
     this.add.sprite(this.scale.width / 2, this.scale.height / 2, "splash");
+    this.startScene = this.time.now;
   }
 
   update(time) {
-    this.scene.start("SelectLevel");
+    if (time - this.startScene > 2000) {
+      this.scene.start("SelectLevel");
+    }
   }
 }
 
