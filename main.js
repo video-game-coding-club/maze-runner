@@ -1,4 +1,4 @@
-/* global Phaser */
+0/* global Phaser */
 
 const gameData = {
   level: -1,
@@ -92,7 +92,9 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("lock", "assets/lock-1.png");
     this.load.image("splash", "assets/splash_screen.png");
-    this.load.spritesheet("dude", "assets/spritesheets/elf girl idle.png", {frameWidth: 64, frameHeight: 64});
+    //this.load.spritesheet("dude", "assets/spritesheets/elf girl idle.png", {frameWidth: 64, frameHeight: 64});
+    this.load.spritesheet("dude", "assets/spritesheets/elf/crop/tile000.png", {frameWidth: 48, frameHeight: 54});
+    this.load.atlas('dude_elf', 'assets/spritesheets/elf/elf_girl_all.png', 'assets/spritesheets/elf/elf_girl_all.json');
     this.load.spritesheet("heart", "assets/spritesheets/heart.png", {frameWidth: 11, frameHeight: 10});
     this.load.spritesheet("lava", "assets/spritesheets/lava.png", {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("tiles", "assets/tiles.png", {frameWidth: 32, frameHeight: 32});
@@ -253,21 +255,24 @@ class PlayLevel extends Phaser.Scene {
     /* Create Dude animations. */
     this.anims.create({
       key: "dude_idle",
-      frames: [{key: "dude", frame: 0}],
+      //frames: [{key: "dude", frame: 0}],
+      frames: this.anims.generateFrameNames('dude_elf', { prefix: 'tile', start: 39, end: 39, zeroPad: 3 }),
       frameRate: 20,
       repeat: -1,
     });
 
     this.anims.create({
       key: "dude_run",
-      frames: [{key: "dude", frame: 0}],
+      //frames: [{key: "dude", frame: 0}],
+      frames: this.anims.generateFrameNames('dude_elf', { prefix: 'tile', start: 143, end: 151, zeroPad: 3 }),
       frameRate: 20,
       repeat: -1,
     });
 
     this.anims.create({
       key: "dude_jump",
-      frames: [{key: "dude", frame: 0}],
+      //frames: [{key: "dude", frame: 0}],
+      frames: this.anims.generateFrameNames('dude_elf', { prefix: 'tile', start: 200, end: 200, zeroPad: 3 }),
       frameRate: 20,
       repeat: -1,
     });
