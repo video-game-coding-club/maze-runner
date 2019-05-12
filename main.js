@@ -93,7 +93,7 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("lock", "assets/lock-1.png");
     this.load.image("splash", "assets/splash_screen.png");
     //this.load.spritesheet("dude", "assets/spritesheets/elf girl idle.png", {frameWidth: 64, frameHeight: 64});
-    this.load.spritesheet("dude", "assets/spritesheets/elf/crop/tile000.png", {frameWidth: 48, frameHeight: 54});
+    this.load.spritesheet("dude", "assets/spritesheets/elf/idle0.png", {frameWidth: 48, frameHeight: 54});
     this.load.atlas('dude_elf', 'assets/spritesheets/elf/elf_girl_all.png', 'assets/spritesheets/elf/elf_girl_all.json');
     this.load.spritesheet("heart", "assets/spritesheets/heart.png", {frameWidth: 11, frameHeight: 10});
     this.load.spritesheet("lava", "assets/spritesheets/lava.png", {frameWidth: 32, frameHeight: 32});
@@ -256,8 +256,8 @@ class PlayLevel extends Phaser.Scene {
     this.anims.create({
       key: "dude_idle",
       //frames: [{key: "dude", frame: 0}],
-      frames: this.anims.generateFrameNames('dude_elf', { prefix: 'tile', start: 39, end: 39, zeroPad: 3 }),
-      frameRate: 20,
+      frames: this.anims.generateFrameNames('dude_elf', { prefix: 'tile', start: 39, end: 44, zeroPad: 3 }),
+      frameRate: 1,
       repeat: -1,
     });
 
@@ -272,7 +272,14 @@ class PlayLevel extends Phaser.Scene {
     this.anims.create({
       key: "dude_jump",
       //frames: [{key: "dude", frame: 0}],
-      frames: this.anims.generateFrameNames('dude_elf', { prefix: 'tile', start: 200, end: 200, zeroPad: 3 }),
+      frames: this.anims.generateFrameNames('dude_elf', { prefix: 'tile', start: 196, end: 200, zeroPad: 3 }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "dude_hang",
+      frames: this.anims.generateFrameNames('dude_elf', { prefix: 'tile', start: 96, end: 97, zeroPad: 3 }),
       frameRate: 20,
       repeat: -1,
     });
@@ -338,7 +345,7 @@ class PlayLevel extends Phaser.Scene {
     this.dude.setBounce(0.2);
     this.dude.setGravityY(300);
     this.dude.setCollideWorldBounds(true);
-    this.dude.anims.play("dude_idle");
+    this.dude.anims.play("dude_idle",true);
     this.dude.setScale(0.5);
   }
 
@@ -520,7 +527,7 @@ class PlayLevel extends Phaser.Scene {
 
   update(time) {
     if (gameData.levelComplete) {
-      this.dude.anims.play("dude_idle");
+      this.dude.anims.play("dude_idle",true);
       return;
     }
 
@@ -540,7 +547,9 @@ class PlayLevel extends Phaser.Scene {
     } else {
       /* Stop any previous movement. */
       this.dude.setVelocityX(0);
-      this.dude.anims.play("dude_idle");
+      this.dude.anims.play("dude_idle",true);
+      //this.dude.anims.stop();
+
     }
 
     if (this.controls.up.isDown) {
@@ -548,6 +557,8 @@ class PlayLevel extends Phaser.Scene {
       if (this.dude.body.onFloor() || this.dude.body.onFloorOfLooseTile) {
         /* Jump. */
         this.dude.setVelocityY(-130);
+        //this.dude.anims.play("dude_jump",true);
+
       } else if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
         /* Climb. */
         this.dude.setVelocityY(-50);
@@ -556,8 +567,13 @@ class PlayLevel extends Phaser.Scene {
 
     /* When the dude is in the air, play the 'jump' animation. */
     if (!(this.dude.body.onFloor() || this.dude.body.onWall() || this.dude.body.onWallOfLooseTile)) {
-      this.dude.anims.play("dude_jump");
+      this.dude.anims.play("dude_jump",true);
     }
+
+    if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
+      this.dude.anims.play("dude_hang",true);
+    }
+
 
     /* Check whether the dude fell into lava. */
     if (this.physics.world.overlap(this.dude, this.lavaTiles)) {
