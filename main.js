@@ -256,8 +256,8 @@ class PlayLevel extends Phaser.Scene {
     this.anims.create({
       key: "dude_idle",
       //frames: [{key: "dude", frame: 0}],
-      frames: this.anims.generateFrameNames('dude_elf', { prefix: 'tile', start: 39, end: 44, zeroPad: 3 }),
-      frameRate: 1,
+      frames: this.anims.generateFrameNames('dude_elf', { prefix: 'tile', start: 39, end: 45, zeroPad: 3 }),
+      frameRate: 2,
       repeat: -1,
     });
 
@@ -274,7 +274,7 @@ class PlayLevel extends Phaser.Scene {
       //frames: [{key: "dude", frame: 0}],
       frames: this.anims.generateFrameNames('dude_elf', { prefix: 'tile', start: 196, end: 200, zeroPad: 3 }),
       frameRate: 20,
-      repeat: -1,
+      repeat: 0,
     });
 
     this.anims.create({
@@ -536,43 +536,72 @@ class PlayLevel extends Phaser.Scene {
       this.scene.start("SelectLevel");
     }
 
+    // right + up
     if (this.controls.right.isDown) {
       this.dude.setFlipX(false);
       this.dude.setVelocityX(100);
-      this.dude.anims.play("dude_run", true);
+      if (this.controls.up.isDown) {
+        /* Climb or jump. */
+        if (this.dude.body.onFloor() || this.dude.body.onFloorOfLooseTile) {
+          /* Jump. */
+          this.dude.setVelocityY(-130);
+          this.dude.anims.play("dude_jump",true);
+
+        } else if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
+          /* Climb. */
+          this.dude.setVelocityY(-50);
+          this.dude.anims.play("dude_hang",true);
+        } else {
+          this.dude.anims.play("dude_run", true);
+        }
+      }
+    // left + up
     } else if (this.controls.left.isDown) {
       this.dude.setFlipX(true);
       this.dude.setVelocityX(-100);
-      this.dude.anims.play("dude_run", true);
-    } else {
+      if (this.controls.up.isDown) {
+        /* Climb or jump. */
+        if (this.dude.body.onFloor() || this.dude.body.onFloorOfLooseTile) {
+          /* Jump. */
+          this.dude.setVelocityY(-130);
+          this.dude.anims.play("dude_jump",true);
+
+        } else if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
+          /* Climb. */
+          this.dude.setVelocityY(-50);
+          this.dude.anims.play("dude_hang",true);
+        }
+      } else {
+        this.dude.anims.play("dude_run", true);
+      }
+      // up only
+      } else if(this.controls.up.isDown) {
+        /* Climb or jump. */
+        if (this.dude.body.onFloor() || this.dude.body.onFloorOfLooseTile) {
+          /* Jump. */
+          this.dude.setVelocityY(-130);
+          this.dude.anims.play("dude_jump",true);
+
+        } else if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
+          /* Climb. */
+          this.dude.setVelocityY(-50);
+          this.dude.anims.play("dude_hang",true);
+        }
+      }  else {
       /* Stop any previous movement. */
       this.dude.setVelocityX(0);
       this.dude.anims.play("dude_idle",true);
       //this.dude.anims.stop();
-
-    }
-
-    if (this.controls.up.isDown) {
-      /* Climb or jump. */
-      if (this.dude.body.onFloor() || this.dude.body.onFloorOfLooseTile) {
-        /* Jump. */
-        this.dude.setVelocityY(-130);
-        //this.dude.anims.play("dude_jump",true);
-
-      } else if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
-        /* Climb. */
-        this.dude.setVelocityY(-50);
       }
-    }
 
     /* When the dude is in the air, play the 'jump' animation. */
-    if (!(this.dude.body.onFloor() || this.dude.body.onWall() || this.dude.body.onWallOfLooseTile)) {
-      this.dude.anims.play("dude_jump",true);
-    }
+    //if (!(this.dude.body.onFloor() || this.dude.body.onWall() || this.dude.body.onWallOfLooseTile)) {
+    //  this.dude.anims.play("dude_jump",true);
+    //}
 
-    if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
-      this.dude.anims.play("dude_hang",true);
-    }
+    //if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
+    //  this.dude.anims.play("dude_hang",true);
+    //}
 
 
     /* Check whether the dude fell into lava. */
