@@ -205,6 +205,19 @@ class SelectLevel extends Phaser.Scene {
       if (!gameData.levels[i]) {
         this.add.sprite(140, 55 + i * 80, "lock");
       }
+    if(gameData.levelComplete[i]){
+      this.add.text(300,40+i*80, gameData.gemPoints[i],
+        {
+          fontSize: "32px",
+          fill: "#ffffff",
+          stroke: "#202020",
+          strokeThickness: 3,
+          shadowOffsetX: 5,
+          shadowOffsetY: 5,
+          shadowBlur: 2,
+          shadowColor: "#101010",
+        });
+    }
     }
     this.levelControls = this.input.keyboard.addKeys({
       "zero": Phaser.Input.Keyboard.KeyCodes.ZERO,
