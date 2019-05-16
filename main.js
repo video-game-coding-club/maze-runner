@@ -92,7 +92,9 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("lock", "assets/lock-1.png");
     this.load.image("splash", "assets/splash_screen.png");
-    this.load.spritesheet("dude", "assets/spritesheets/elf girl idle.png", {frameWidth: 64, frameHeight: 64});
+    this.load.spritesheet("dude", "assets/spritesheets/elf/idle0.png", {frameWidth: 48, frameHeight: 54});
+    this.load.atlas("dude_elf", "assets/spritesheets/elf/elf_girl_all.png",
+        "assets/spritesheets/elf/elf_girl_all.json");
     this.load.spritesheet("heart", "assets/spritesheets/heart.png", {frameWidth: 11, frameHeight: 10});
     this.load.spritesheet("lava", "assets/spritesheets/lava.png", {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("tiles", "assets/tiles.png", {frameWidth: 32, frameHeight: 32});
@@ -253,21 +255,28 @@ class PlayLevel extends Phaser.Scene {
     /* Create Dude animations. */
     this.anims.create({
       key: "dude_idle",
-      frames: [{key: "dude", frame: 0}],
-      frameRate: 20,
+      frames: this.anims.generateFrameNames("dude_elf", {prefix: "tile", start: 39, end: 45, zeroPad: 3}),
+      frameRate: 2,
       repeat: -1,
     });
 
     this.anims.create({
       key: "dude_run",
-      frames: [{key: "dude", frame: 0}],
+      frames: this.anims.generateFrameNames("dude_elf", {prefix: "tile", start: 143, end: 151, zeroPad: 3}),
       frameRate: 20,
       repeat: -1,
     });
 
     this.anims.create({
       key: "dude_jump",
-      frames: [{key: "dude", frame: 0}],
+      frames: this.anims.generateFrameNames("dude_elf", {prefix: "tile", start: 196, end: 200, zeroPad: 3}),
+      frameRate: 20,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "dude_hang",
+      frames: this.anims.generateFrameNames("dude_elf", {prefix: "tile", start: 96, end: 97, zeroPad: 3}),
       frameRate: 20,
       repeat: -1,
     });
@@ -333,7 +342,7 @@ class PlayLevel extends Phaser.Scene {
     this.dude.setBounce(0.2);
     this.dude.setGravityY(300);
     this.dude.setCollideWorldBounds(true);
-    this.dude.anims.play("dude_idle");
+    this.dude.anims.play("dude_idle", true);
     this.dude.setScale(0.5);
   }
 
@@ -515,7 +524,7 @@ class PlayLevel extends Phaser.Scene {
 
   update(time) {
     if (gameData.levelComplete) {
-      this.dude.anims.play("dude_idle");
+      this.dude.anims.play("dude_idle", true);
       return;
     }
 
@@ -524,34 +533,58 @@ class PlayLevel extends Phaser.Scene {
       this.scene.start("SelectLevel");
     }
 
+    // right + up
     if (this.controls.right.isDown) {
       this.dude.setFlipX(false);
       this.dude.setVelocityX(100);
-      this.dude.anims.play("dude_run", true);
+      if (this.controls.up.isDown) {
+        /* Climb or jump. */
+        if (this.dude.body.onFloor() || this.dude.body.onFloorOfLooseTile) {
+          /* Jump. */
+          this.dude.setVelocityY(-130);
+          this.dude.anims.play("dude_jump", true);
+        } else if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
+          /* Climb. */
+          this.dude.setVelocityY(-50);
+          this.dude.anims.play("dude_hang", true);
+        } else {
+          this.dude.anims.play("dude_run", true);
+        }
+      }
+    // left + up
     } else if (this.controls.left.isDown) {
       this.dude.setFlipX(true);
       this.dude.setVelocityX(-100);
-      this.dude.anims.play("dude_run", true);
-    } else {
-      /* Stop any previous movement. */
-      this.dude.setVelocityX(0);
-      this.dude.anims.play("dude_idle");
-    }
-
-    if (this.controls.up.isDown) {
+      if (this.controls.up.isDown) {
+        /* Climb or jump. */
+        if (this.dude.body.onFloor() || this.dude.body.onFloorOfLooseTile) {
+          /* Jump. */
+          this.dude.setVelocityY(-130);
+          this.dude.anims.play("dude_jump", true);
+        } else if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
+          /* Climb. */
+          this.dude.setVelocityY(-50);
+          this.dude.anims.play("dude_hang", true);
+        }
+      } else {
+        this.dude.anims.play("dude_run", true);
+      }
+      // up only
+    } else if (this.controls.up.isDown) {
       /* Climb or jump. */
       if (this.dude.body.onFloor() || this.dude.body.onFloorOfLooseTile) {
         /* Jump. */
         this.dude.setVelocityY(-130);
+        this.dude.anims.play("dude_jump", true);
       } else if (this.dude.body.onWall() || this.dude.body.onWallOfLooseTile) {
         /* Climb. */
         this.dude.setVelocityY(-50);
+        this.dude.anims.play("dude_hang", true);
       }
-    }
-
-    /* When the dude is in the air, play the 'jump' animation. */
-    if (!(this.dude.body.onFloor() || this.dude.body.onWall() || this.dude.body.onWallOfLooseTile)) {
-      this.dude.anims.play("dude_jump");
+    } else {
+      /* Stop any previous movement. */
+      this.dude.setVelocityX(0);
+      this.dude.anims.play("dude_idle", true);
     }
 
     /* Check whether the dude fell into lava. */
