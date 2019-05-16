@@ -5,7 +5,8 @@ const gameData = {
   levels: [true, false, false, false, false],
   gameOver: false,
   healthPoints: 100,
-  gemPoints: 0,
+  gemPoints: [0, 0, 0, 0, 0],
+  levelComplete: [false, false, false, false, false]
 };
 
 class SplashScreen extends Phaser.Scene {
@@ -92,14 +93,14 @@ class SplashScreen extends Phaser.Scene {
     this.load.image("levelComplete", "assets/level_complete.png");
     this.load.image("lock", "assets/lock-1.png");
     this.load.image("splash", "assets/splash_screen.png");
-    this.load.spritesheet("dude", "assets/spritesheets/elf/idle0.png", {frameWidth: 48, frameHeight: 54});
+    this.load.spritesheet("dude", "assets/spritesheets/elf/idle0.png", { frameWidth: 48, frameHeight: 54 });
     this.load.atlas("dude_elf", "assets/spritesheets/elf/elf_girl_all.png",
-        "assets/spritesheets/elf/elf_girl_all.json");
-    this.load.spritesheet("heart", "assets/spritesheets/heart.png", {frameWidth: 11, frameHeight: 10});
-    this.load.spritesheet("lava", "assets/spritesheets/lava.png", {frameWidth: 32, frameHeight: 32});
-    this.load.spritesheet("tiles", "assets/tiles.png", {frameWidth: 32, frameHeight: 32});
-    this.load.spritesheet("torch", "assets/spritesheets/animated_torch_small.png", {frameWidth: 16, frameHeight: 32});
-    this.load.spritesheet("gems", "assets/spritesheets/jewel_green_animation.png", {frameWidth: 16, frameHeight: 16});
+      "assets/spritesheets/elf/elf_girl_all.json");
+    this.load.spritesheet("heart", "assets/spritesheets/heart.png", { frameWidth: 11, frameHeight: 10 });
+    this.load.spritesheet("lava", "assets/spritesheets/lava.png", { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet("tiles", "assets/tiles.png", { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet("torch", "assets/spritesheets/animated_torch_small.png", { frameWidth: 16, frameHeight: 32 });
+    this.load.spritesheet("gems", "assets/spritesheets/jewel_green_animation.png", { frameWidth: 16, frameHeight: 16 });
     this.load.tilemapTiledJSON("map_0", "assets/maps/map-level-0.json");
     this.load.tilemapTiledJSON("map_1", "assets/maps/map-level-1.json");
     this.load.tilemapTiledJSON("map_2", "assets/maps/map-level-2.json");
@@ -187,23 +188,36 @@ class SelectLevel extends Phaser.Scene {
       button[i] = this.add.sprite(150, 60 + i * 80, "button");
       button[i].setScale(0.3, 0.15);
       button[i].setInteractive().on("pointerdown",
-          (pointer, localX, localY, event) => {
-            this.playLevel(i);
-          });
+        (pointer, localX, localY, event) => {
+          this.playLevel(i);
+        });
       buttonText[i] = this.add.text(80, 40 + i * 80, "Level " + i,
-          {
-            fontSize: "32px",
-            fill: "#ffffff",
-            stroke: "#202020",
-            strokeThickness: 3,
-            shadowOffsetX: 5,
-            shadowOffsetY: 5,
-            shadowBlur: 2,
-            shadowColor: "#101010",
-          });
+        {
+          fontSize: "32px",
+          fill: "#ffffff",
+          stroke: "#202020",
+          strokeThickness: 3,
+          shadowOffsetX: 5,
+          shadowOffsetY: 5,
+          shadowBlur: 2,
+          shadowColor: "#101010",
+        });
       if (!gameData.levels[i]) {
         this.add.sprite(140, 55 + i * 80, "lock");
       }
+    if(gameData.levelComplete[i]){
+      this.add.text(300,40+i*80, gameData.gemPoints[i],
+        {
+          fontSize: "32px",
+          fill: "#ffffff",
+          stroke: "#202020",
+          strokeThickness: 3,
+          shadowOffsetX: 5,
+          shadowOffsetY: 5,
+          shadowBlur: 2,
+          shadowColor: "#101010",
+        });
+    }
     }
     this.levelControls = this.input.keyboard.addKeys({
       "zero": Phaser.Input.Keyboard.KeyCodes.ZERO,
@@ -214,7 +228,7 @@ class SelectLevel extends Phaser.Scene {
     });
 
     this.sound.stopAll();
-    const backgroundMusic = this.sound.add("title_music", {loop: true});
+    const backgroundMusic = this.sound.add("title_music", { loop: true });
     backgroundMusic.play();
 
     this.scene.launch("Credits");
@@ -225,7 +239,7 @@ class SelectLevel extends Phaser.Scene {
       gameData.level = level;
       gameData.gameOver = false;
       gameData.healthPoints = 100;
-      gameData.gemPoints = 0;
+      gameData.gemPoints[level] = 0;
       this.scene.stop("Credits");
       this.scene.start("PlayLevel");
     }
@@ -255,28 +269,28 @@ class PlayLevel extends Phaser.Scene {
     /* Create Dude animations. */
     this.anims.create({
       key: "dude_idle",
-      frames: this.anims.generateFrameNames("dude_elf", {prefix: "tile", start: 39, end: 45, zeroPad: 3}),
+      frames: this.anims.generateFrameNames("dude_elf", { prefix: "tile", start: 39, end: 45, zeroPad: 3 }),
       frameRate: 2,
       repeat: -1,
     });
 
     this.anims.create({
       key: "dude_run",
-      frames: this.anims.generateFrameNames("dude_elf", {prefix: "tile", start: 143, end: 151, zeroPad: 3}),
+      frames: this.anims.generateFrameNames("dude_elf", { prefix: "tile", start: 143, end: 151, zeroPad: 3 }),
       frameRate: 20,
       repeat: -1,
     });
 
     this.anims.create({
       key: "dude_jump",
-      frames: this.anims.generateFrameNames("dude_elf", {prefix: "tile", start: 196, end: 200, zeroPad: 3}),
+      frames: this.anims.generateFrameNames("dude_elf", { prefix: "tile", start: 196, end: 200, zeroPad: 3 }),
       frameRate: 20,
       repeat: 0,
     });
 
     this.anims.create({
       key: "dude_hang",
-      frames: this.anims.generateFrameNames("dude_elf", {prefix: "tile", start: 96, end: 97, zeroPad: 3}),
+      frames: this.anims.generateFrameNames("dude_elf", { prefix: "tile", start: 96, end: 97, zeroPad: 3 }),
       frameRate: 20,
       repeat: -1,
     });
@@ -316,11 +330,11 @@ class PlayLevel extends Phaser.Scene {
     /* Create the door states. */
     this.anims.create({
       key: "exit_closed",
-      frames: [{key: "tiles", frame: 18}],
+      frames: [{ key: "tiles", frame: 18 }],
     });
     this.anims.create({
       key: "exit_open",
-      frames: [{key: "tiles", frame: 19}],
+      frames: [{ key: "tiles", frame: 19 }],
     });
   }
 
@@ -334,9 +348,9 @@ class PlayLevel extends Phaser.Scene {
     const dudeObject = this.map.findObject("objects", (o) => {
       return o.name === "dude";
     });
-    let dudePosition = {x: 10, y: 10};
+    let dudePosition = { x: 10, y: 10 };
     if (dudeObject) {
-      dudePosition = {x: dudeObject.x, y: dudeObject.y};
+      dudePosition = { x: dudeObject.x, y: dudeObject.y };
     }
     this.dude = this.physics.add.sprite(dudePosition.x, dudePosition.y, "dude");
     this.dude.setBounce(0.2);
@@ -383,7 +397,7 @@ class PlayLevel extends Phaser.Scene {
   }
 
   createHearts() {
-    const hearts = this.map.createFromObjects("objects", "heart", {key: "heart"});
+    const hearts = this.map.createFromObjects("objects", "heart", { key: "heart" });
     if (hearts) {
       hearts.forEach((heart) => {
         this.physics.add.existing(heart);
@@ -394,7 +408,7 @@ class PlayLevel extends Phaser.Scene {
   }
 
   createGems() {
-    this.gems = this.map.createFromObjects("objects", "gems", {key: "gems"});
+    this.gems = this.map.createFromObjects("objects", "gems", { key: "gems" });
     if (this.gems) {
       this.gems.forEach((gem) => {
         this.physics.add.existing(gem);
@@ -404,7 +418,7 @@ class PlayLevel extends Phaser.Scene {
   }
 
   createTorches() {
-    this.torches = this.map.createFromObjects("objects", "torch", {key: "torch"});
+    this.torches = this.map.createFromObjects("objects", "torch", { key: "torch" });
     if (this.torches) {
       this.torches.forEach((torch) => {
         this.physics.add.existing(torch);
@@ -446,7 +460,7 @@ class PlayLevel extends Phaser.Scene {
 
   setupSound() {
     this.sound.stopAll();
-    this.backgroundMusic = this.sound.add("background_music", {loop: true});
+    this.backgroundMusic = this.sound.add("background_music", { loop: true });
     this.backgroundMusic.play();
     this.heartSoundEffect = this.sound.add("coin");
   }
@@ -501,7 +515,7 @@ class PlayLevel extends Phaser.Scene {
     this.createGems();
 
     /* Turn on collision detection for the gameLayer. */
-    gameLayer.setCollisionByProperty({collides: true});
+    gameLayer.setCollisionByProperty({ collides: true });
 
     /* Create the colliders. */
     this.createColliders(gameLayer, hearts);
@@ -519,11 +533,11 @@ class PlayLevel extends Phaser.Scene {
     this.scene.launch("StatusDisplay");
 
     gameData.gameOver = false;
-    gameData.levelComplete = false;
+    gameData.levelComplete[gameData.level] = false;
   }
 
   update(time) {
-    if (gameData.levelComplete) {
+    if (gameData.levelComplete[gameData.level]) {
       this.dude.anims.play("dude_idle", true);
       return;
     }
@@ -551,7 +565,7 @@ class PlayLevel extends Phaser.Scene {
           this.dude.anims.play("dude_run", true);
         }
       }
-    // left + up
+      // left + up
     } else if (this.controls.left.isDown) {
       this.dude.setFlipX(true);
       this.dude.setVelocityX(-100);
@@ -651,7 +665,7 @@ class PlayLevel extends Phaser.Scene {
 
   collectGems(dude, gem) {
     gem.destroy();
-    gameData.gemPoints += 1;
+    gameData.gemPoints[gameData.level] += 1;
   }
 
   dudeHitTheFloor(dude) {
@@ -662,11 +676,11 @@ class PlayLevel extends Phaser.Scene {
   }
 
   dudeIsLeaving(dude, exit) {
-    if (gameData.levelComplete) {
+    if (gameData.levelComplete[gameData.level]) {
       return;
     }
 
-    gameData.levelComplete = true;
+    gameData.levelComplete[gameData.level] = true;
     console.warn("The dude is leaving");
     exit.anims.play("exit_open");
     this.physics.pause();
@@ -694,12 +708,12 @@ class StatusDisplay extends Phaser.Scene {
 
   setHealthPoints() {
     this.healthStatus.setCrop(0, 0,
-        this.healthStatus.width * gameData.healthPoints / 100,
-        this.healthStatus.height);
+      this.healthStatus.width * gameData.healthPoints / 100,
+      this.healthStatus.height);
   }
 
   setGemPoints() {
-    if (gameData.gemPoints > this.gems.length) {
+    if (gameData.gemPoints[gameData.level] > this.gems.length) {
       const newGem = this.add.sprite(36 + this.gems.length * 32, 70, "gems");
       newGem.setScale(1.8);
       this.gems.push(newGem);
